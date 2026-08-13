@@ -38,8 +38,9 @@ export function middleware(request: NextRequest) {
 
   const host = request.headers.get("host") ?? "";
   if (host.startsWith("www.")) {
+    const proto = request.headers.get("x-forwarded-proto") ?? "http";
     url.host = host.slice(4);
-    url.protocol = "https:";
+    url.protocol = `${proto}:`;
     return NextResponse.redirect(url, 301);
   }
 

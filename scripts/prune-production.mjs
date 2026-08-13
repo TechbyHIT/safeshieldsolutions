@@ -37,7 +37,8 @@ rmrf("coverage");
 const nextRoot = path.join(root, ".next");
 if (fs.existsSync(nextRoot)) {
   for (const name of fs.readdirSync(nextRoot)) {
-    if (name === "standalone") continue;
+    // Keep hashed CSS/JS at .next/static — Next standalone may resolve from cwd.
+    if (name === "standalone" || name === "static") continue;
     rmrf(path.join(".next", name));
   }
 }

@@ -16,12 +16,15 @@
  *   pm2 set pm2-logrotate:compress true
  *   pm2 set pm2-logrotate:workerInterval 60
  */
+const path = require("path");
+const root = path.join(__dirname, "..");
+
 module.exports = {
   apps: [
     {
       name: "safeshield-solutions",
-      cwd: ".next/standalone",
-      script: "server.js",
+      cwd: root,
+      script: path.join(root, ".next", "standalone", "server.js"),
       instances: 1,
       exec_mode: "fork",
       watch: false,
