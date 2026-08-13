@@ -1,0 +1,525 @@
+Abad Nucleus Mall Area
+Airport Junction Athani
+Akaparambu
+Alangad
+Alangad Junction
+Alinchuvadu
+Allapra
+Aluva
+Aluva East
+Aluva Market
+Aluva Metro Station Area
+Aluva Railway Station Area
+Aluva West
+Amaravathi Fort Kochi
+Amaravathy
+Ambalamedu
+Ambelipadam
+Amrita Hospital Area
+Anchumana
+Andikkadavu
+Angamaly
+Angamaly Airport Road
+Angamaly Railway Station Area
+Angamaly South
+Arayankavu
+Arookutty
+Aroor
+Aroor Ferry
+Asamannoor
+Athani Kakkanad
+Athani Nedumbassery
+Atlantis Junction
+Atlantis Kochi
+Ayyappankavu
+Azad Road
+Azheekal Vypin
+Banerji Road
+Bank Junction Aluva
+Bazar Road Mattancherry
+Bharath Matha College Area
+Binanipuram
+Bolgatty
+Bolgatty Island
+Brahmapuram
+Broadway Kochi
+BTS Road Edappally
+Calvathy
+Cemetery Junction
+Ch Kannamaly
+Chakkalakkal
+Chakkamadam
+Chakkarakkal Tripunithura
+Chakkaraparambu
+Chalikkavattom
+Chalikkavattom Junction
+Chambakkara
+Chambakkara Market
+Champakkara Maradu
+Chandiroor
+Changampuzha Nagar
+Changampuzha Park
+Chathari
+Chelamattom
+Chellanam
+Chembumukku
+Chendamangalam
+Chendamangalam Junction
+Chengamanad
+Cherai
+Cherai Beach
+Cherai Junction
+Cheralai
+Cheranalloor
+Cheranalloor Ferry
+Cheranalloor Junction
+Cheranalloor North
+Cheranalloor South
+Chilavannur
+Chilavannur Bund Road
+Chittethukara
+Chittoor Kochi
+Chittoor Road
+Choondi
+Choorakkode
+Choornikkara
+Chottanikkara
+Chottanikkara Junction
+Chottanikkara Road
+Chottanikkara Temple Area
+Chullickal
+Chunangamvely
+Civil Station Kakkanad
+Cochin Bazaar
+Cochin International Airport Area
+Cochin Special Economic Zone
+Cochin University Area
+Cochin University Metro Area
+Collectorate Junction Kakkanad
+Companypady
+Container Road Kochi
+Convent Junction
+CUSAT Campus
+Cusat Junction
+Deshabhimani Junction
+Deshabhimani Road
+Desom
+Devankulangara
+Durbar Hall
+Earavely
+East Kadungalloor
+Edachira
+Edachira Junction
+Edakochi
+Edakochi Junction
+Edakochi North
+Edakochi South
+Edappally
+Edappally Junction
+Edappally North
+Edappally South
+Edappally Toll
+Edathala
+Edathala North
+Edathala South
+Edavanakad
+Edavoor
+Edayar
+Elamakkara
+Elamakkara Junction
+Elamakkara North
+Elamakkara Railway Gate
+Elamakkara South
+Elamkulam
+Elamkulam Junction
+Elamkulam Kadavanthra
+Elamkulam Metro Area
+Elamkunnapuzha
+Eloor
+Eloor Ferry
+Eloor North
+Eloor South
+Eramalloor
+Ernakulam Boat Jetty
+Ernakulam Central
+Ernakulam Junction Railway Station Area
+Ernakulam North
+Ernakulam South
+Ernakulam Town Railway Station Area
+Eroor
+Eroor Junction
+Eroor North
+Eroor South
+Ezhikkara
+FACT Township
+Foreshore Road
+Fort Kochi
+Fort Kochi Beach
+Fort Kochi Kunnumupuram
+Fort Kochi Veli
+Fort Vypin
+Gandhi Nagar
+Giri Nagar Kadavanthra
+Girinagar
+Glass Colony
+Gold Souk Area Vyttila
+Goshree Junction
+Gujarati Road
+Gundu Island
+High Court Area Kochi
+High Court Junction
+HMT Colony
+HMT Junction
+Infopark Kochi
+Infopark Phase 1
+Infopark Phase 2
+Irumpanam
+Irumpanam Junction
+Island North
+Island South
+Janatha Junction
+Janatha Road Kaloor
+Jawahar Nagar Kadavanthra
+Jew Street Ernakulam
+Jew Town
+JN Stadium Area
+Jos Junction
+Kacheripady Ernakulam
+Kacheripady Palluruthy
+Kadamakkudy
+Kadamakkudy Islands
+Kadavanthra
+Kadavanthra Junction
+Kadebhagam
+Kadungalloor
+Kaitharam
+Kakkanad
+Kakkanad Civil Station
+Kakkanad CSEZ
+Kakkanad Infopark Road
+Kakkanad Junction
+Kakkanad Pallikkara
+Kakkanad West
+Kalamassery
+Kalamassery HMT Junction
+Kalamassery Industrial Estate
+Kalamassery Medical College
+Kalamassery North
+Kalamassery Premier Junction
+Kalamassery South
+Kaloor
+Kaloor International Stadium
+Kaloor Kadavanthra Road
+Kaloor Market
+Kaloor North
+Kaloor South
+Kandakkadavu
+Kandanad
+Kangarappady
+Kangarappady Junction
+Kaniyampuzha
+Kaniyampuzha Road
+Kanjiramattom
+Kanjoor
+Kannamaly
+Kannangatt
+Karanakodam
+Karingachira
+Karingachira Junction
+Karippalam
+Karukappilly
+Karukutty
+Karumalloor
+Karuvelipady
+Kathrikadavu
+Kathrikadavu Extension
+Kathrikadavu Junction
+Keerthi Nagar
+Keezhillam
+Keezhmad
+Kidangoor Angamaly
+Kizhakkambalam
+Kizhakkambalam Road
+Kizhakkekotta
+Kochangadi
+Kochi Marine Drive
+Kochi Metro Aluva Area
+Kochi University Junction
+Kodamthuruth
+Kolenchery
+Kombara
+Konam
+Kongorpilly
+Konthuruthy
+Koonamthai
+Koovappady
+Kothad
+Kothad Junction
+Kottapuram Alangad
+Kottuvally
+KP Vallon Road
+KP Vallon Road Kadavanthra
+Kumbalam
+Kumbalam North
+Kumbalam South
+Kumbalanghi
+Kumbalangi
+Kumbalangi North
+Kumbalangi Road
+Kumbalangi South
+Kundannoor
+Kundannoor Bypass
+Kundannoor Junction
+Kundannoor Maradu
+Kunnathunad
+Kunnumpuram Cheranalloor
+Kunnumpuram Kochi
+Kusumagiri
+Kuthappady
+Kuthiathode
+Kuzhivelippady
+Kuzhuppilly
+Kuzhuppilly Beach
+Kuzhuppilly Junction
+Layam Road
+Lissie Junction
+Lulu Mall Area
+Lulu Mall Junction
+Malippuram
+Mamangalam
+Mamangalam Church Area
+Mamangalam North
+Manassery
+Maneed
+Manjaly
+Manjummel
+Maradu
+Maradu Junction
+Maradu Market
+Marampally
+Marine Drive Extension
+Market Road Ernakulam
+Maruvakkad
+Mattancherry
+Mattancherry Palace Area
+Mattancherry Town
+Mattoor
+Mekkara
+Menaka
+Metro Pillar 450 Area
+MG Road Kochi
+Moolamkuzhy
+Moolampilly
+Moothakunnam
+Mudickal
+Mulanthuruthy
+Mulanthuruthy Junction
+Mulavukad
+Mulavukad Junction
+Mullassery Canal Road
+Munambam
+Mundamveli
+Mundamveli East
+Mundamveli Junction
+Muppathadam
+Muppathadam Junction
+Muttar
+Muttom Aluva
+NAD Aluva
+Nadama
+Nambyapuram
+Nasrath
+Naval Base Kochi
+Nayarambalam
+Nayathode
+Nedumbassery
+Nedumbassery Airport Junction
+Neerikode
+Nettoor
+Nettoor Junction
+Nettoor South
+NGO Quarters Kakkanad
+Njarakkal
+Njarakkal Junction
+North Kalamassery
+North Paravur
+North Paravur Market
+Oberon Mall Area
+Ochanthuruthu
+Okkal
+Pachalam
+Pachalam Junction
+Padamugal
+Padamugal Junction
+Padamugal Kochi
+Padivattom
+Padma Junction
+Palarivattom
+Palarivattom Bypass
+Palarivattom Civil Line Road
+Palarivattom Junction
+Palarivattom Pipeline
+Pallikkara Kakkanad
+Pallippuram Kochi
+Palluruthy
+Palluruthy East
+Palluruthy Kacheripady
+Palluruthy Veli
+Panampilly Nagar
+Panampilly Nagar Avenue
+Panampilly Nagar Central
+Panampilly Nagar South
+Panangad Kochi
+Panayappilly
+Parade Ground Fort Kochi
+Paravoor Kavala
+Paravur Junction Aluva
+Paravur Kavala Aluva
+Paravur Town
+Pathadipalam
+Pathalam
+Pattimattom
+Perumanoor
+Perumanoor Junction
+Perumbavoor
+Perumbavoor Market
+Perumbavoor MC Road
+Perumbavoor Town
+Perumpadappu
+Petta Metro Area
+Pettah Kochi
+Pipeline Junction
+Piravom Road Area
+Pizhala
+Ponekkara
+Ponekkara East
+Ponekkara Temple Area
+Ponnumthuruthu Kochi
+Ponnurunni
+Ponnurunni East
+Ponnurunni Junction
+Ponnurunni Railway Gate
+Ponnurunni Vyttila
+Poonithura
+Poonithura Junction
+Poothotta
+Pottakuzhi Junction
+Pottakuzhy
+Premier Junction
+Princess Street
+Providence Road
+Pulinchodu
+Pulivelipady
+Pullardesam
+Pullepady
+Puthencruz
+Puthenkurish
+Puthenvelikkara
+Puthiya Road
+Puthiyakavu
+Puthukalavattom
+Puthuvype
+Puthuvype Beach
+Rajagiri College Area
+Rajagiri Valley
+Ravipuram
+Ravipuram Junction
+Rayamangalam
+Sahodaran Ayyappan Road
+Saudi Kochi
+Seaport Airport Road
+Seaport Airport Road Tripunithura
+Shanmugham Road
+SmartCity Kochi
+SN Junction
+South Chittoor
+South Kalamassery
+South Kalamassery Metro Area
+Sreemoolanagaram
+SRM Road
+Stadium Area Kaloor
+Stadium Junction Kaloor
+Stadium Link Road
+Statue Junction Tripunithura
+Tatapuram
+Thamaraparambu
+Thammanam
+Thammanam Junction
+Thammanam Pullepady Road
+Thanthonnithuruthu
+Tharebhagam
+Thattaazham
+Thazhuppu
+Thengod
+Thengod Junction
+Thevara
+Thevara Ferry
+Thevara Junction
+Thevara Kundannoor Road
+Thiruvankulam
+Thiruvankulam Junction
+Thoppil Junction
+Thoppumpady
+Thoppumpady Junction
+Thottakkattukara
+Thottumugham
+Thrikkakara
+Thrikkakara North
+Thrikkakara South
+Thrikkakara Temple Area
+Thrikkanarvattom
+Thuravoor Angamaly
+Thuravoor Cherthala
+Thykoodam
+Thykoodam Junction
+Tripunithura
+Tripunithura East
+Tripunithura Petta
+Tripunithura Railway Station Area
+Tripunithura West
+UC College Aluva
+Udayamperoor
+Udayamperoor Junction
+Udyogamandal
+Uliyannoor
+Vadakkekara
+Vadavucode
+Vadavucode Puthencruz
+Vaduthala
+Vaduthala East
+Vaduthala West
+Valanjambalam
+Vallarpadam
+Vallarpadam Container Terminal
+Vallarpadam Junction
+Vallathol Junction
+Varapuzha
+Varapuzha Landing
+Vazhakkala
+Vazhakkala Bypass
+Vazhakkala Junction
+Vazhakkala Kochi
+Vazhakulam Ernakulam
+Vazhakulam Junction Ernakulam
+Veli Fort Kochi
+Vengola
+Vennala
+Vennala Arakkakadavu
+Vennala High School Junction
+Vennala Junction
+Vypin
+Vypin Beach
+Vypin Junction
+Vyttila
+Vyttila Bypass
+Vyttila Hub Area
+Vyttila Janatha
+Vyttila Junction
+Vyttila Mobility Hub
+Vyttila Power House Junction
+Vyttila Service Road
+Warriam Road
+West Kadungalloor
+Willingdon Island
+Willingdon Island Naval Base
+Wonderla Kochi Area
