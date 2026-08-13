@@ -6,7 +6,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 export const metadata = buildPageMetadata({
   title: "Project Gallery | Real Installation Photos",
   description:
-    "Browse 120+ real photos of completed invisible grill, safety net, mosquito net, cloth hanger, cricket net and bird spike installations in Hyderabad and Chennai.",
+    `Browse ${totalPhotoCount} real photos of completed invisible grill, safety net, mosquito net, cloth hanger, cricket net and bird spike installations in Hyderabad and Chennai.`,
   path: "/gallery",
 });
 

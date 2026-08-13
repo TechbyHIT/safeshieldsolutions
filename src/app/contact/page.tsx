@@ -14,9 +14,9 @@ export const metadata = buildPageMetadata({
 
 export default function ContactPage() {
   const samplePhotos = [
-    ...getPhotosForFolder("balcony-invisible-grills", 2),
-    ...getPhotosForFolder("safety-nets", 2),
-    ...getPhotosForFolder("pigeon-safety-nets", 2),
+    ...getPhotosForFolder("balcony-invisible-grills", 4),
+    ...getPhotosForFolder("safety-nets", 4),
+    ...getPhotosForFolder("pigeon-safety-nets", 4),
   ];
 
   return (

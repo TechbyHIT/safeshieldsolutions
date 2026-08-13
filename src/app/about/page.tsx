@@ -1,7 +1,7 @@
 import { Section } from "@/components/ui/Section";
-import { SeoImage } from "@/components/ui/SeoImage";
+import { ProjectPhotoImage } from "@/components/ui/PhotoGallery";
 import { ProcessSteps } from "@/components/home/ProcessSteps";
-import { imageCatalog } from "@/config/images";
+import { getHeroPhoto } from "@/config/photo-catalog";
 import { business } from "@/config/business";
 import { buildPageMetadata } from "@/lib/metadata";
 
@@ -32,7 +32,7 @@ const whyPoints = [
 ];
 
 export default function AboutPage() {
-  const image = imageCatalog.why!;
+  const image = getHeroPhoto();
 
   return (
     <>
@@ -69,7 +69,7 @@ export default function AboutPage() {
               ))}
             </ul>
           </div>
-          <SeoImage image={image} />
+          <ProjectPhotoImage photo={image} priority />
         </div>
       </Section>
       <ProcessSteps />

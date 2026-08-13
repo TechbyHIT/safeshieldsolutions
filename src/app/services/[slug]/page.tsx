@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: PageProps) {
   });
 
   const primaryPhoto = getPrimaryServicePhoto(service.slug);
-  const galleryPhotos = getPhotosForService(service.slug, 12);
+  const galleryPhotos = getPhotosForService(service.slug, 36);
   const breadcrumbItems = buildServiceBreadcrumbs(service.name, service.slug);
   const allServices = await getActiveServices();
 

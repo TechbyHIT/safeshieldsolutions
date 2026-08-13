@@ -3,7 +3,7 @@ export const site = {
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? "SafeShield Solutions",
   locale: "en-IN",
   defaultLanguage: "en",
-  themeColor: "#1a5ef5",
+  themeColor: "#5A1F29",
   revalidateSeconds: 86400,
   /** Max paths for audits / warm lists — not build-time SSG (see NEXT_BUILD_* env). */
   staticParamsLimit: 48,

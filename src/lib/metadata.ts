@@ -6,6 +6,7 @@ import { truncate, titleCase } from "@/lib/slug";
 import {
   buildAreaServiceKeywords,
 } from "@/lib/seo-keywords";
+import { getHeroPhoto, getServiceOgImage } from "@/config/photo-catalog";
 
 export interface MetadataInput {
   title: string;
@@ -29,7 +30,7 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
   const title = truncate(input.title, seoDefaults.maxTitleLength);
   const description = truncate(input.description, seoDefaults.maxDescriptionLength);
   const canonical = buildCanonicalUrl(input.path);
-  const ogImage = input.ogImage ?? seoDefaults.ogImage;
+  const ogImage = input.ogImage ?? getHeroPhoto().src;
 
   return {
     title,
@@ -72,7 +73,7 @@ export function buildServiceMetadata(
     ),
     path: `/services/${serviceSlug}`,
     keywords: [serviceName, "installation", "Hyderabad", "Chennai"],
-    ogImage: `/images/${serviceSlug}.svg`,
+    ogImage: getServiceOgImage(serviceSlug),
   });
 }
 
@@ -143,7 +144,7 @@ export function buildCityServiceMetadata(
     ),
     path: `/${citySlug}/${pageSlug}`,
     keywords: [serviceName, cityName, `${serviceName} ${cityName}`, "installation", cityName],
-    ogImage: `/images/${serviceSlug}.svg`,
+    ogImage: getServiceOgImage(serviceSlug),
   });
 }
 
@@ -174,6 +175,6 @@ export function buildAreaServiceMetadata(
       areaName,
       cityName,
     }),
-    ogImage: `/images/${serviceSlug}.svg`,
+    ogImage: getServiceOgImage(serviceSlug),
   });
 }

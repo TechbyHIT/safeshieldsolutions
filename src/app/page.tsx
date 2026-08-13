@@ -25,7 +25,7 @@ export const metadata: Metadata = buildPageMetadata({
   title:
     "Invisible Grills Near Me | Safety Nets, Pigeon Nets & Premium Installation — Chennai, Hyderabad, Coimbatore, Kochi",
   description:
-    "Best premium invisible grills, safety nets, pigeon nets, mosquito nets & cloth hangers near me. 700k+ local SEO pages, 120+ project photos, free site survey across Chennai, Hyderabad, Coimbatore & Kochi.",
+    "Best premium invisible grills, safety nets, pigeon nets, mosquito nets & cloth hangers near me. 700k+ local SEO pages, 447 real project photos, free site survey across Chennai, Hyderabad, Coimbatore & Kochi.",
   path: "/",
   keywords: [...homeKeywordTags],
 });

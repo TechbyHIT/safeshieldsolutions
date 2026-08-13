@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { navigation } from "@/config/navigation";
@@ -10,6 +11,9 @@ import { PhoneIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { TopBar } from "@/components/layout/TopBar";
 import { MegaMenuDropdown, useMegaMenu } from "@/components/layout/MegaMenu";
 
+const whatsappHref = `https://wa.me/${business.whatsapp.replace(/\D/g, "")}`;
+const telHref = `tel:${business.phone.replace(/\s/g, "")}`;
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const mega = useMegaMenu();
@@ -19,25 +23,19 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 bg-neutral-50 shadow-sm">
       <TopBar />
-      <div className="relative border-b border-neutral-200 bg-white/95 backdrop-blur">
-        <div className="container flex h-16 items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2.5">
-            <span
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-700 text-sm font-bold text-white shadow-sm"
-              aria-hidden
-            >
-              SS
-            </span>
-            <span className="flex flex-col leading-tight">
-              <span className="text-sm font-bold uppercase tracking-wide text-neutral-900">
-                {business.name}
-              </span>
-              <span className="hidden text-[10px] font-medium uppercase tracking-wider text-neutral-500 sm:block">
-                Quality · Trust · Growth
-              </span>
-            </span>
+      <div className="relative border-b border-neutral-200 bg-[rgba(255,253,248,0.94)] backdrop-blur">
+        <div className="container flex h-16 items-center justify-between gap-3">
+          <Link href="/" className="flex min-w-0 shrink items-center">
+            <Image
+              src="/images/logo.png"
+              alt="Safe Shield Solutions"
+              width={280}
+              height={64}
+              priority
+              className="h-12 w-auto max-w-[min(240px,48vw)] object-contain object-left sm:max-w-[320px] lg:max-w-[400px]"
+            />
           </Link>
 
           <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
@@ -45,7 +43,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-brand-700"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-100 hover:text-brand-700"
               >
                 {item.label}
               </Link>
@@ -53,7 +51,7 @@ export function Header() {
             <button
               type="button"
               aria-expanded={mega.active === "services"}
-              className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-brand-700"
+              className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-100 hover:text-brand-700 aria-expanded:text-brand-600"
               onClick={() => mega.toggle("services")}
             >
               Services
@@ -62,7 +60,7 @@ export function Header() {
             <button
               type="button"
               aria-expanded={mega.active === "areas"}
-              className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-brand-700"
+              className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-100 hover:text-brand-700 aria-expanded:text-brand-600"
               onClick={() => mega.toggle("areas")}
             >
               Areas
@@ -72,42 +70,42 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-brand-700"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-100 hover:text-brand-700"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md transition hover:bg-[#20bd5a]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md transition hover:bg-[#20bd5a] sm:h-11 sm:w-11"
               aria-label="WhatsApp"
             >
-              <WhatsAppIcon className="h-6 w-6" />
+              <WhatsAppIcon className="h-5 w-5 sm:h-6 sm:w-6" />
             </a>
             <a
-              href={`tel:${business.phone.replace(/\s/g, "")}`}
-              className="inline-flex items-center gap-2 rounded-full bg-accent-400 px-5 py-2.5 text-sm font-bold text-neutral-950 shadow-cta transition hover:bg-accent-300"
+              href={telHref}
+              className="inline-flex items-center gap-2 rounded-full bg-brand-900 px-3 py-2 text-xs font-bold text-[#FFFDF8] shadow-cta transition hover:bg-brand-800 sm:px-5 sm:py-2.5 sm:text-sm"
             >
               <PhoneIcon className="h-4 w-4" />
-              Call Now
+              <span className="hidden sm:inline">Call Now</span>
+              <span className="sm:hidden">Call</span>
             </a>
+            <button
+              type="button"
+              className="rounded-lg p-2 text-neutral-800 lg:hidden"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span className="sr-only">Toggle menu</span>
+              {menuOpen ? "✕" : "☰"}
+            </button>
           </div>
-
-          <button
-            type="button"
-            className="rounded-lg p-2 text-neutral-700 lg:hidden"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span className="sr-only">Toggle menu</span>
-            {menuOpen ? "✕" : "☰"}
-          </button>
         </div>
 
         <MegaMenuDropdown type={mega.active} onClose={mega.close} />
@@ -117,14 +115,14 @@ export function Header() {
         <nav
           id="mobile-menu"
           aria-label="Mobile navigation"
-          className="border-t border-neutral-200 bg-white px-4 py-4 lg:hidden"
+          className="border-t border-neutral-200 bg-neutral-50 px-4 py-4 lg:hidden"
         >
           <ul className="flex flex-col gap-1">
             {navigation.main.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="block rounded-lg px-3 py-2 text-neutral-700 hover:bg-neutral-50"
+                  className="block rounded-lg px-3 py-2 text-neutral-800 hover:bg-neutral-100 hover:text-brand-700"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}

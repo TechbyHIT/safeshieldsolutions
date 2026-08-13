@@ -40,7 +40,7 @@ export function ProjectPhotoImage({
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover transition hover:scale-105"
+          className="object-cover object-center transition hover:scale-105"
         />
       </div>
       <figcaption className="mt-2 text-center text-xs text-neutral-500">
@@ -81,7 +81,7 @@ export function PhotoGallery({
               title={photo.title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition duration-300 group-hover:scale-105"
+              className="object-cover object-center transition duration-300 group-hover:scale-105"
             />
           </div>
           {showCaptions && (

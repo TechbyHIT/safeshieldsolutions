@@ -8,7 +8,7 @@ export function TrustBadges() {
       {trustBadges.map((badge) => (
         <span
           key={badge}
-          className="rounded-full border border-white/30 bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+          className="rounded-full border border-white/30 bg-brand-950/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
         >
           {badge}
         </span>
@@ -37,7 +37,7 @@ export function AreaExplorer() {
           {cityAreaHighlights.map((city) => (
             <article
               key={city.citySlug}
-              className="rounded-2xl border border-neutral-200 p-6 hover:border-brand-200 hover:shadow-md"
+              className="rounded-2xl border border-neutral-200 p-6 hover:border-accent-500 hover:shadow-md"
             >
               <h3 className="text-lg font-bold text-neutral-900">{city.cityName}</h3>
               <ul className="mt-4 space-y-2">

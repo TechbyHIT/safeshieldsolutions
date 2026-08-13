@@ -139,11 +139,11 @@ export function PageContentRenderer({ content, h1 }: PageContentRendererProps) {
         </section>
       )}
 
-      <section className="mt-12 rounded-2xl bg-brand-700 px-6 py-10 text-white md:px-10">
+      <section className="mt-12 rounded-2xl bg-brand-950 px-6 py-10 text-[#FFF9F4] md:px-10">
         <h2 className="text-2xl font-bold">{content.cta.heading}</h2>
-        <p className="mt-3 max-w-2xl text-brand-100">{content.cta.text}</p>
+        <p className="mt-3 max-w-2xl text-[#D0C4BE]">{content.cta.text}</p>
         <div className="mt-6 flex flex-wrap gap-4">
-          <Button href="/contact" variant="primary" className="bg-accent-500 hover:bg-accent-600">
+          <Button href="/contact" variant="primary" className="bg-accent-500 text-neutral-950 hover:bg-accent-400">
             Send Photo for Estimate
           </Button>
           <Button

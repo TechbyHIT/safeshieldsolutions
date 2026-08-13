@@ -28,7 +28,7 @@ export default async function LocationsIndexPage() {
           <Link
             key={city.slug}
             href={routes.city(city.slug)}
-            className="rounded-2xl border border-neutral-200 bg-white p-8 shadow-card transition hover:border-brand-200"
+            className="rounded-2xl border border-neutral-200 bg-white p-8 shadow-card transition hover:border-accent-500"
           >
             <h2 className="text-2xl font-bold text-neutral-900">{city.name}</h2>
             <p className="mt-3 text-neutral-600">

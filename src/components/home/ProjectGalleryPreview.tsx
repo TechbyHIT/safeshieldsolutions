@@ -7,7 +7,7 @@ import { routes } from "@/config/routes";
 
 export function ProjectGalleryPreview() {
   const categories = getAllGalleryPhotos();
-  const featured = categories.flatMap((c) => c.photos.slice(0, 4)).slice(0, 24);
+  const featured = categories.flatMap((c) => c.photos.slice(0, 6)).slice(0, 40);
 
   return (
     <Section className="bg-white" ariaLabel="Project gallery">
@@ -32,7 +32,7 @@ export function ProjectGalleryPreview() {
           <Link
             key={cat.folder}
             href={routes.gallery}
-            className="rounded-full bg-neutral-100 px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-brand-50 hover:text-brand-800"
+            className="rounded-full bg-neutral-100 px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-brand-50 hover:text-brand-900"
           >
             {cat.label} ({cat.photos.length})
           </Link>

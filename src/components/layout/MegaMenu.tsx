@@ -54,7 +54,7 @@ function ServicesMegaMenu({ onClose }: { onClose: () => void }) {
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="text-sm text-neutral-600 hover:text-brand-700 hover:underline"
+                    className="text-sm text-neutral-600 hover:text-brand-900 hover:underline"
                   >
                     {link.label}
                   </Link>
@@ -71,7 +71,7 @@ function ServicesMegaMenu({ onClose }: { onClose: () => void }) {
         <Link
           href={routes.services}
           onClick={onClose}
-          className="text-sm font-semibold text-brand-700 hover:underline"
+          className="text-sm font-semibold text-brand-700 hover:text-brand-900 hover:underline"
         >
           View all services →
         </Link>
@@ -89,7 +89,7 @@ function AreasMegaMenu({ onClose }: { onClose: () => void }) {
             <Link
               href={routes.city(city.citySlug)}
               onClick={onClose}
-              className="text-sm font-bold uppercase tracking-wide text-neutral-900 hover:text-brand-700"
+              className="text-sm font-bold uppercase tracking-wide text-neutral-900 hover:text-brand-900"
             >
               {city.cityName}
             </Link>
@@ -99,7 +99,7 @@ function AreasMegaMenu({ onClose }: { onClose: () => void }) {
                   <Link
                     href={area.href}
                     onClick={onClose}
-                    className="text-sm text-neutral-600 hover:text-brand-700 hover:underline"
+                    className="text-sm text-neutral-600 hover:text-brand-900 hover:underline"
                   >
                     {area.label}
                   </Link>
@@ -109,7 +109,7 @@ function AreasMegaMenu({ onClose }: { onClose: () => void }) {
             <Link
               href={routes.city(city.citySlug)}
               onClick={onClose}
-              className="mt-3 inline-block text-xs font-semibold text-brand-600 hover:underline"
+              className="mt-3 inline-block text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline"
             >
               All {city.cityName} areas →
             </Link>
@@ -123,7 +123,7 @@ function AreasMegaMenu({ onClose }: { onClose: () => void }) {
         <Link
           href={routes.locations}
           onClick={onClose}
-          className="text-sm font-semibold text-brand-700 hover:underline"
+          className="text-sm font-semibold text-brand-700 hover:text-brand-900 hover:underline"
         >
           Browse all locations →
         </Link>

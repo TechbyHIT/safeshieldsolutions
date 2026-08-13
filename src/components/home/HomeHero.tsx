@@ -33,10 +33,10 @@ export function HomeHero() {
         aria-hidden
       />
       <div
-        className="absolute inset-0 bg-gradient-to-r from-neutral-950/90 via-neutral-950/75 to-neutral-950/45"
+        className="absolute inset-0 bg-gradient-to-r from-brand-950/90 via-brand-950/75 to-brand-950/45"
         aria-hidden
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/30" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-transparent to-brand-950/30" aria-hidden />
 
       <div className="container relative z-10 flex min-h-[min(780px,92vh)] flex-col justify-center py-10 md:min-h-[min(680px,88vh)] md:py-14">
         <div className="max-w-3xl">
@@ -53,7 +53,7 @@ export function HomeHero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href={routes.contact}
-              className={`${pillBase} bg-accent-400 text-neutral-950 shadow-cta hover:bg-accent-300`}
+              className={`${pillBase} bg-accent-500 text-neutral-950 shadow-cta hover:bg-accent-400`}
             >
               Get Free Quote
               <span aria-hidden>→</span>
@@ -81,7 +81,7 @@ export function HomeHero() {
           {trustBadges.map((badge) => (
             <li
               key={badge}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-brand-950/35 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
             >
               <span className="text-accent-400" aria-hidden>
                 ✓

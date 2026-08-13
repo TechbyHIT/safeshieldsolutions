@@ -19,7 +19,7 @@ export const seoDefaults = {
     "Coimbatore",
     "Kochi",
   ],
-  ogImage: "/images/hero.svg",
+  ogImage: "/images/photos/balcony-invisible-grills/01.png",
   twitterHandle: "@safeshieldsolutions",
   robotsDefault: "index, follow",
   maxTitleLength: 60,

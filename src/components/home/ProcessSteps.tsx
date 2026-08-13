@@ -22,7 +22,7 @@ export function ProcessSteps() {
             key={step.step}
             className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-card"
           >
-            <span className="text-3xl font-bold text-brand-200">{step.step}</span>
+            <span className="text-3xl font-bold text-brand-700">{step.step}</span>
             <h3 className="mt-3 text-lg font-semibold text-neutral-900">
               {step.title}
             </h3>

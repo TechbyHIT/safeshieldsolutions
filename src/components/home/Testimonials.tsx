@@ -24,7 +24,7 @@ const testimonials = [
 ];
 
 export function Testimonials() {
-  const balconyPhotos = getPhotosForService("invisible-grills", 3);
+  const balconyPhotos = getPhotosForService("invisible-grills", 6);
 
   return (
     <Section ariaLabel="Customer testimonials">

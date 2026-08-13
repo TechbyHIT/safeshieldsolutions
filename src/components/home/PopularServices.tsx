@@ -24,7 +24,7 @@ export function PopularServices() {
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         {popularServices.map((service) => {
           const photo = getPrimaryServicePhoto(service.slug);
-          const imgSrc = photo?.src ?? `/images/${service.slug}.svg`;
+          const imgSrc = photo?.src ?? "/images/photos/balcony-invisible-grills/01.png";
           const imgAlt =
             photo?.alt ??
             `Premium ${service.title} installation near me — Chennai, Hyderabad, Coimbatore, Kochi`;
@@ -34,13 +34,13 @@ export function PopularServices() {
               key={service.slug}
               className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-card"
             >
-              <div className="relative aspect-[16/10] bg-neutral-100">
+              <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100">
                 <Image
                   src={imgSrc}
                   alt={imgAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover object-center transition duration-300 hover:scale-105"
                 />
               </div>
               <div className="p-6">
@@ -56,13 +56,13 @@ export function PopularServices() {
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
                   <Link
                     href={routes.service(service.slug)}
-                    className="text-sm font-semibold text-brand-700 hover:underline"
+                    className="text-sm font-semibold text-brand-700 hover:text-brand-900 hover:underline"
                   >
                     {service.title} guide →
                   </Link>
                   <Link
                     href={routes.service(service.slug)}
-                    className="text-sm text-brand-600 hover:underline"
+                    className="text-sm text-brand-700 hover:text-brand-900 hover:underline"
                   >
                     Premium {service.title.toLowerCase()} →
                   </Link>

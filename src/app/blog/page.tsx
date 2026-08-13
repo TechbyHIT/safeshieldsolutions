@@ -73,7 +73,7 @@ export default function BlogPage() {
             <Link
               key={city.slug}
               href={routes.city(city.slug)}
-              className="rounded-xl border border-neutral-200 p-5 hover:border-brand-300 hover:bg-brand-50"
+              className="rounded-xl border border-neutral-200 p-5 hover:border-accent-500 hover:bg-neutral-100"
             >
               <h3 className="font-bold text-neutral-900">{city.name} near me</h3>
               <p className="mt-2 text-sm text-neutral-600">

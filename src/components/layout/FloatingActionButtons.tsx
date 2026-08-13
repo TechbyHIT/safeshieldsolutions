@@ -28,7 +28,7 @@ function QuoteIcon() {
 }
 
 const fabBase =
-  "flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-lg ring-2 ring-white/90 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2";
+  "flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-lg ring-2 ring-white/90 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2";
 
 /**
  * Mobile floating circle buttons (Call, WhatsApp, quote) + scroll-to-top after hero.
@@ -82,7 +82,7 @@ export function FloatingActionButtons() {
 
         <Link
           href={routes.contact}
-          className={`${fabBase} bg-brand-600 text-white hover:bg-brand-700`}
+          className={`${fabBase} bg-brand-900 text-[#FFFDF8] hover:bg-brand-800`}
           aria-label="Free quote"
         >
           <QuoteIcon />
@@ -90,7 +90,7 @@ export function FloatingActionButtons() {
 
         <a
           href={telUrl}
-          className={`${fabBase} bg-accent-500 text-white hover:bg-accent-600`}
+          className={`${fabBase} bg-accent-500 text-neutral-950 hover:bg-accent-400`}
           aria-label={`Call ${business.phone}`}
         >
           <PhoneIcon />

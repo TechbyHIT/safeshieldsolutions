@@ -1,3 +1,5 @@
+import { getPrimaryServicePhoto } from "./photo-catalog";
+
 export interface ImageAsset {
   slug: string;
   src: string;
@@ -363,8 +365,17 @@ export function getImage(slug: string): ImageAsset | undefined {
 }
 
 export function getServiceImage(serviceSlug: string): ImageAsset {
-  return (
-    imageCatalog[serviceSlug] ??
-    imageCatalog["invisible-grills"]!
-  );
+  const photo = getPrimaryServicePhoto(serviceSlug);
+  if (photo) {
+    return {
+      slug: serviceSlug,
+      src: photo.src,
+      alt: photo.alt,
+      title: photo.title,
+      width: 1200,
+      height: 760,
+      keywords: [serviceSlug],
+    };
+  }
+  return imageCatalog[serviceSlug] ?? imageCatalog["invisible-grills"]!;
 }
