@@ -12,7 +12,7 @@
     "build:next": "next build",
     "storage:report": "node scripts/storage-report.mjs",
     "deploy:prune": "node scripts/prune-production.mjs",
-    "deploy:prod": "npm ci && npm run build && npm run deploy:prune",
+    "deploy:prod": "npm install --no-audit --no-fund && npm run build && npm run deploy:prune",
     "start": "next start -p 3010",
     "start:standalone": "node .next/standalone/server.js",
     "pm2:start": "pm2 start deploy/ecosystem.config.cjs",
