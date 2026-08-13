@@ -119,20 +119,18 @@ export function getAllGalleryPhotos(): { folder: string; label: string; photos: 
 /** Interleave categories so home/gallery previews stay mixed. */
 export function getInterleavedPhotos(limit?: number): ProjectPhoto[] {
   const groups = getAllGalleryPhotos().map((group) => group.photos);
+  const maxLength = groups.reduce((max, group) => Math.max(max, group.length), 0);
   const out: ProjectPhoto[] = [];
-  let index = 0;
-  while (true) {
-    let added = false;
+
+  for (let index = 0; index < maxLength; index += 1) {
     for (const group of groups) {
       const photo = group[index];
       if (!photo) continue;
       out.push(photo);
-      added = true;
       if (limit && out.length >= limit) return out;
     }
-    if (!added) break;
-    index += 1;
   }
+
   return out;
 }
 
