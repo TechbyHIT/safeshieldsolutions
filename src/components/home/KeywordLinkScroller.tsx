@@ -84,7 +84,7 @@ export function KeywordLinkScroller({
             <button
               type="button"
               onClick={() => setVisible((v) => v + batchSize)}
-              className="rounded-lg bg-brand-900 px-6 py-3 text-sm font-semibold text-[#FFFDF8] hover:bg-brand-800"
+              className="rounded-lg bg-brand-900 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-800"
             >
               Load more local pages ({filtered.length - visible} remaining)
             </button>

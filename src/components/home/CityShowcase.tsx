@@ -6,15 +6,15 @@ import { routes } from "@/config/routes";
 
 export function CityShowcase() {
   return (
-    <Section className="bg-brand-950 text-[#FFF9F4]" ariaLabel="Service cities">
+    <Section className="bg-brand-950 text-white" ariaLabel="Service cities">
       <div className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+        <p className="text-sm font-semibold uppercase tracking-wide text-shield-400">
           Active service cities
         </p>
         <h2 className="mt-2 text-3xl font-bold">
           Best safety nets & invisible grills near me in your city
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-[#D0C4BE]">
+        <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
           Premium near-me installation hubs for Chennai, Hyderabad, Coimbatore, and Kochi — each
           city links to 500+ locality pages with dealers, price, and free survey booking.
         </p>
@@ -26,7 +26,7 @@ export function CityShowcase() {
             className="rounded-2xl border border-brand-800 bg-brand-900/50 p-8"
           >
             <h3 className="text-2xl font-bold">Safety Nets in {city.name}</h3>
-            <p className="mt-3 text-[#D0C4BE]">{city.summary}</p>
+            <p className="mt-3 text-neutral-300">{city.summary}</p>
             <ul className="mt-4 flex flex-wrap gap-2">
               {city.highlights.map((tag) => (
                 <li
@@ -39,7 +39,7 @@ export function CityShowcase() {
             </ul>
             <Link
               href={routes.city(city.slug)}
-              className="mt-6 inline-flex font-semibold text-accent-400 hover:text-accent-300"
+              className="mt-6 inline-flex font-semibold text-shield-400 hover:text-shield-300"
             >
               Explore {city.name} areas and services →
             </Link>
@@ -90,17 +90,17 @@ export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
 export function FinalCta() {
   return (
     <Section className="bg-gradient-to-r from-brand-950 to-brand-800" ariaLabel="Contact">
-      <div className="text-center text-[#FFF9F4]">
+      <div className="text-center text-white">
         <h2 className="text-3xl font-bold">
           Ready to compare the right safety solution for your space?
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-[#D0C4BE]">
+        <p className="mx-auto mt-4 max-w-2xl text-neutral-300">
           Send the opening, your city, and the main concern — children, pets,
           birds, visibility, or sports use. That is enough to start a useful
           conversation.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button href="/contact" size="lg" className="bg-accent-500 text-neutral-950 hover:bg-accent-400">
+          <Button href="/contact" size="lg" className="bg-accent-500 text-white hover:bg-accent-400">
             Send Photo for Estimate
           </Button>
           <Button

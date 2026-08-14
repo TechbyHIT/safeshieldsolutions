@@ -52,7 +52,7 @@ export function PageHero({
         aria-hidden
       />
       <div
-        className="absolute inset-0 bg-gradient-to-r from-brand-950/92 via-brand-950/78 to-brand-950/48"
+        className="absolute inset-0 bg-gradient-to-r from-brand-950/92 via-brand-900/78 to-shield-900/40"
         aria-hidden
       />
       <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-transparent to-brand-950/35" aria-hidden />
@@ -83,7 +83,7 @@ export function PageHero({
         )}
 
         {eyebrow && (
-          <p className="text-sm font-bold uppercase tracking-wide text-accent-400">{eyebrow}</p>
+          <p className="text-sm font-bold uppercase tracking-wide text-shield-400">{eyebrow}</p>
         )}
         <h1 className="mt-2 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
           {title}
@@ -94,7 +94,7 @@ export function PageHero({
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href={routes.contact}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-neutral-950 shadow-cta transition hover:bg-accent-400"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white shadow-cta transition hover:bg-accent-400"
             >
               Get Free Quote
               <span aria-hidden>→</span>

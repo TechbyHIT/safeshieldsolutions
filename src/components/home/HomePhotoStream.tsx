@@ -52,7 +52,7 @@ export function HomePhotoStream() {
   });
 
   return (
-    <Section className="bg-neutral-950 text-[#FFF9F4]" ariaLabel="Installation photo stream">
+    <Section className="bg-neutral-950 text-white" ariaLabel="Installation photo stream">
       <div className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-accent-400">
           {totalPhotoCount} real project photos
@@ -60,7 +60,7 @@ export function HomePhotoStream() {
         <h2 className="mt-2 text-3xl font-bold">
           Premium invisible grills, safety nets & pigeon nets — completed work
         </h2>
-        <p className="mx-auto mt-3 max-w-3xl text-[#D0C4BE]">
+        <p className="mx-auto mt-3 max-w-3xl text-neutral-300">
           Scroll through installation photos from Chennai, Hyderabad, Coimbatore, and Kochi
           projects. Each image links to a near-me locality page with pricing, dealer, and
           installation guides.

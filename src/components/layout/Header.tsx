@@ -99,7 +99,7 @@ export function Header() {
             </a>
             <Link
               href={routes.contact}
-              className="hidden rounded-full bg-accent-500 px-4 py-2.5 text-sm font-bold text-neutral-950 shadow-cta transition hover:bg-accent-400 lg:inline-flex"
+              className="hidden rounded-full bg-accent-500 px-4 py-2.5 text-sm font-bold text-white shadow-cta transition hover:bg-accent-400 lg:inline-flex"
             >
               Get Free Quote
             </Link>

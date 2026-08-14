@@ -38,7 +38,7 @@ export function PhotoStreamGrid({ items }: { items: PhotoStreamItem[] }) {
                 className="object-cover object-center transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-brand-950/15 to-transparent opacity-90" />
-              <p className="absolute bottom-0 left-0 right-0 p-3 text-xs font-medium leading-snug text-[#FFF9F4] md:text-sm">
+              <p className="absolute bottom-0 left-0 right-0 p-3 text-xs font-medium leading-snug text-white md:text-sm">
                 {item.caption}
               </p>
             </div>
@@ -50,7 +50,7 @@ export function PhotoStreamGrid({ items }: { items: PhotoStreamItem[] }) {
           <button
             type="button"
             onClick={() => setVisible((count) => Math.min(count + STEP, items.length))}
-            className="rounded-lg bg-brand-900 px-6 py-3 text-sm font-semibold text-[#FFFDF8] hover:bg-brand-800"
+            className="rounded-lg bg-brand-900 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-800"
           >
             Show more photos ({remaining} remaining)
           </button>

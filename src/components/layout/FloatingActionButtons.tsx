@@ -82,7 +82,7 @@ export function FloatingActionButtons() {
 
         <Link
           href={routes.contact}
-          className={`${fabBase} bg-brand-900 text-[#FFFDF8] hover:bg-brand-800`}
+          className={`${fabBase} bg-accent-500 text-white hover:bg-accent-400`}
           aria-label="Free quote"
         >
           <QuoteIcon />
@@ -90,7 +90,7 @@ export function FloatingActionButtons() {
 
         <a
           href={telUrl}
-          className={`${fabBase} bg-accent-500 text-neutral-950 hover:bg-accent-400`}
+          className={`${fabBase} bg-brand-800 text-white hover:bg-brand-700`}
           aria-label={`Call ${business.phone}`}
         >
           <PhoneIcon />
