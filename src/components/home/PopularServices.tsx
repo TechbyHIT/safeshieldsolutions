@@ -24,7 +24,7 @@ export function PopularServices() {
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         {popularServices.map((service) => {
           const photo = getPrimaryServicePhoto(service.slug);
-          const imgSrc = photo?.src ?? "/images/photos/balcony-invisible-grills/01.png";
+          const imgSrc = photo?.src ?? "/images/photos/balcony-invisible-grills/01.webp";
           const imgAlt =
             photo?.alt ??
             `Premium ${service.title} installation near me — Chennai, Hyderabad, Coimbatore, Kochi`;

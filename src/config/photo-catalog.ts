@@ -1,4 +1,4 @@
-import { photoManifest } from "./photo-manifest";
+import { photoManifest, type PhotoFolder } from "./photo-manifest";
 
 export interface ProjectPhoto {
   src: string;
@@ -22,15 +22,15 @@ const folderLabels: Record<string, string> = {
 
 /** Highest-resolution installation photos for heroes (file size verified on disk). */
 const hdHeroFiles: Record<string, string> = {
-  "balcony-invisible-grills": "168.jpeg",
-  "safety-nets": "103.jpeg",
-  "window-invisible-grills": "13.jpg",
-  "pigeon-safety-nets": "08.jpg",
-  "cloth-hangers": "08.jpeg",
-  "cricket-nets": "10.png",
-  "mosquito-nets": "03.jpg",
-  "child-safety-grills": "01.jpg",
-  "pet-safety-nets": "05.jpg",
+  "balcony-invisible-grills": "168.webp",
+  "safety-nets": "103.webp",
+  "window-invisible-grills": "13.webp",
+  "pigeon-safety-nets": "08.webp",
+  "cloth-hangers": "08.webp",
+  "cricket-nets": "10.webp",
+  "mosquito-nets": "03.webp",
+  "child-safety-grills": "01.webp",
+  "pet-safety-nets": "05.webp",
   "bird-spikes": "03.webp",
 };
 
@@ -38,12 +38,20 @@ function isPhotoFile(name: string): boolean {
   return /\.(jpe?g|webp|png|avif)$/i.test(name);
 }
 
+function folderFiles(folder: string): string[] {
+  const files = photoManifest[folder as PhotoFolder];
+  return Array.isArray(files) ? [...files].filter(isPhotoFile) : [];
+}
+
 function pickHdFilename(folder: string): string | undefined {
+  const files = folderFiles(folder);
   const preferred = hdHeroFiles[folder];
-  const files = (photoManifest[folder as keyof typeof photoManifest] ?? []).filter(isPhotoFile);
+  const preferredWebp = preferred?.replace(/\.[^.]+$/, ".webp");
   if (preferred && files.includes(preferred)) return preferred;
+  if (preferredWebp && files.includes(preferredWebp)) return preferredWebp;
+  const webp = files.find((file) => /\.webp$/i.test(file));
   const jpeg = files.find((file) => /\.jpe?g$/i.test(file));
-  return jpeg ?? files[0];
+  return webp ?? jpeg ?? files[0];
 }
 
 /** Maps service slugs to real photo folders in public/images/photos/ */
@@ -102,7 +110,7 @@ function buildPhoto(folder: string, filename: string, index: number): ProjectPho
 }
 
 export function getPhotosForFolder(folder: string, limit?: number): ProjectPhoto[] {
-  const files = photoManifest[folder as keyof typeof photoManifest] ?? [];
+  const files = folderFiles(folder);
   const selected = limit ? files.slice(0, limit) : files;
   return selected.map((file, i) => buildPhoto(folder, file, i));
 }
@@ -114,12 +122,16 @@ export function getPhotosForService(serviceSlug: string, limit = 6): ProjectPhot
 }
 
 export function getHdPhoto(folder = "balcony-invisible-grills"): ProjectPhoto {
-  const files = photoManifest[folder as keyof typeof photoManifest] ?? [];
-  const filename = pickHdFilename(folder) ?? files[0] ?? hdHeroFiles["balcony-invisible-grills"] ?? "168.jpeg";
-  const resolvedFolder = files.length ? folder : "balcony-invisible-grills";
-  const resolvedFiles = photoManifest[resolvedFolder as keyof typeof photoManifest] ?? [];
+  const files = folderFiles(folder);
+  const fallbackFolder = files.length ? folder : "balcony-invisible-grills";
+  const resolvedFiles = folderFiles(fallbackFolder);
+  const filename =
+    pickHdFilename(folder) ??
+    resolvedFiles[0] ??
+    hdHeroFiles["balcony-invisible-grills"] ??
+    "168.webp";
   const index = Math.max(0, resolvedFiles.indexOf(filename));
-  return buildPhoto(resolvedFolder, filename, index);
+  return buildPhoto(fallbackFolder, filename, index);
 }
 
 export function getHeroPhoto(): ProjectPhoto {

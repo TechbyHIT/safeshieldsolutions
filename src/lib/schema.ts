@@ -45,7 +45,7 @@ export function buildLocalBusinessSchema(cityName?: string) {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
     name: business.name,
-    image: buildCanonicalUrl("/images/photos/balcony-invisible-grills/01.png"),
+    image: buildCanonicalUrl("/images/photos/balcony-invisible-grills/168.webp"),
     url: site.url,
     telephone: business.phone,
     priceRange: "₹₹",
