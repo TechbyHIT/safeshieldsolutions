@@ -41,7 +41,7 @@ export const business = {
   },
   certifications: [
     "ISO 9001:2015 Quality Management",
-    "SS304 Grade Stainless Steel Materials",
+    "SS304 & SS316 Grade Stainless Steel",
     "Trained & Verified Installation Team",
   ],
 } as const;

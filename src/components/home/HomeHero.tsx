@@ -18,7 +18,7 @@ const pillBase =
 const brandPillars = [
   { title: "Safe Living", note: "Child, pet and balcony protection", tone: "text-brand-700" },
   { title: "Smart Comfort", note: "Nets, screens and hangers that stay usable", tone: "text-shield-700" },
-  { title: "Stylish Spaces", note: "Slim SS304 finish that keeps the view", tone: "text-accent-600" },
+  { title: "Stylish Spaces", note: "Slim SS304 / SS316 finish that keeps the view", tone: "text-accent-600" },
   { title: "Strong Protection", note: "Measured install with written warranty", tone: "text-brand-900" },
 ] as const;
 

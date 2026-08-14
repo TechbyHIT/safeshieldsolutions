@@ -1,7 +1,7 @@
 import { routes } from "./routes";
 
 export const heroBullets = [
-  "Premium SS304 invisible grills & UV-stable safety nets near you",
+  "Premium SS304 invisible grills, SS316 marine-grade options & UV-stable safety nets",
   "Cricket box grass, zip screens, mesh doors & 36 service lines",
   "Near-me pages for 1,991 neighbourhoods — installation, price, dealers, best",
   "Free site survey in Chennai, Hyderabad, Coimbatore & Kochi",
@@ -13,7 +13,7 @@ export const homeHero = {
     "#1 for Invisible Grills & Safety Nets in Chennai, Hyderabad, Coimbatore & Kochi",
   title: "SafeShield Solutions – Premium Invisible Grills & Safety Nets",
   description:
-    "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection for apartments, villas, and commercial buildings across South India.",
+    "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection. We use SS304 stainless steel as standard and SS316 marine-grade cables for coastal or high-humidity openings.",
 };
 
 export const problemCategories = [
@@ -107,6 +107,64 @@ export const popularServices = [
   },
 ];
 
+/** Hiranaya-style 3×3 homepage catalog cards. */
+export const homeCatalogServices = [
+  {
+    slug: "invisible-grills",
+    title: "Invisible Grills",
+    description:
+      "SS304 and SS316 cable systems that protect balconies and windows while keeping daylight and a clear outward view.",
+  },
+  {
+    slug: "balcony-invisible-grills",
+    title: "Balcony Invisible Grills",
+    description:
+      "Measured cable layouts for front and side balcony returns, including corners and AC outdoor-unit cut-outs.",
+  },
+  {
+    slug: "window-invisible-grills",
+    title: "Window Invisible Grills",
+    description:
+      "Slim cable barriers for bedroom and hall windows where child safety matters without darkening the room.",
+  },
+  {
+    slug: "invisible-grills",
+    title: "Invisible Grills for Apartments",
+    description:
+      "High-rise balcony and window packages planned around society working hours and facade rules.",
+  },
+  {
+    slug: "child-safety-grills",
+    title: "Invisible Grills for Child Safety",
+    description:
+      "Closer-spaced cable layouts for openings where toddlers use balconies, windows, or stair edges.",
+  },
+  {
+    slug: "invisible-grills",
+    title: "Invisible Grill Installation",
+    description:
+      "Site measurement, written quotation, neat SS304 or SS316 fitting, and handover checks for apartments and villas.",
+  },
+  {
+    slug: "safety-nets",
+    title: "Safety Nets",
+    description:
+      "UV-stable mesh systems that add a protective plane across balcony, terrace, and utility openings.",
+  },
+  {
+    slug: "balcony-safety-nets",
+    title: "Balcony Safety Nets",
+    description:
+      "Fitted across balcony openings to reduce fall risk for family use while keeping the space airy and usable.",
+  },
+  {
+    slug: "child-safety-nets",
+    title: "Kids Safety Nets",
+    description:
+      "Closer-spaced mesh planned for toddler balconies and window openings, alongside adult supervision.",
+  },
+];
+
 export const extendedServices = [
   {
     slug: "balcony-invisible-grills",
@@ -118,7 +176,7 @@ export const extendedServices = [
     slug: "window-invisible-grills",
     title: "Window Invisible Grills",
     description:
-      "Slim vertical SS304 cables for windows that need child safety without blocking ventilation.",
+      "Slim vertical SS304 cables, with SS316 for coastal exposure, for windows that need child safety without blocking ventilation.",
   },
   {
     slug: "terrace-safety-nets",
@@ -181,6 +239,19 @@ export const priceFactors = [
   },
 ];
 
+export const materialGrades = [
+  {
+    grade: "SS304",
+    title: "SS304 quality — standard rust-resistant steel",
+    note: "Our default invisible-grill and hardware grade for apartments and inland homes. Strong, food-grade stainless that stays neat in everyday humidity.",
+  },
+  {
+    grade: "SS316",
+    title: "SS316 quality — marine-grade for coastal homes",
+    note: "Higher molybdenum content for Chennai, Kochi, and other salt-air or pool-facing openings. Recommended where corrosion risk is higher.",
+  },
+] as const;
+
 export const designComparisons = [
   {
     title: "Balcony safety net",
@@ -200,7 +271,7 @@ export const designComparisons = [
   {
     title: "Invisible grill",
     use: "Modern balconies and windows needing a clear view",
-    look: "Slim vertical SS304 stainless-steel cables in fixed channels",
+    look: "Slim vertical SS304 or SS316 stainless-steel cables in fixed channels",
   },
 ];
 
@@ -232,6 +303,11 @@ export const installSteps = [
 ];
 
 export const homeFaqs = [
+  {
+    question: "Do you use SS304 or SS316 steel?",
+    answer:
+      "Both. SS304 is our standard rust-resistant grade for most apartments and inland homes. SS316 is marine-grade steel with extra corrosion resistance for Chennai, Kochi, sea-facing, and pool-adjacent openings. The survey recommends the grade after we see the exposure.",
+  },
   {
     question: "Which safety solution is best for a balcony?",
     answer:
@@ -265,7 +341,7 @@ export const homeFaqs = [
   {
     question: "Where can I find premium invisible grills near me?",
     answer:
-      "Browse city near-me hubs or search your locality on the homepage keyword sections. Premium SS304 invisible grill pages explain cable spacing, channel finish, society compliance, and warranty for high-rises in Gachibowli, Peelamedu, Kakkanad, Adyar, and 1,900+ other areas.",
+      "Browse city near-me hubs or search your locality on the homepage keyword sections. Premium SS304 and SS316 invisible grill pages explain cable spacing, channel finish, society compliance, and warranty for high-rises in Gachibowli, Peelamedu, Kakkanad, Adyar, and 1,900+ other areas.",
   },
   {
     question: "Who are the best pigeon net dealers near me in Coimbatore or Kochi?",
@@ -275,7 +351,7 @@ export const homeFaqs = [
   {
     question: "Do you offer affordable safety nets with premium materials?",
     answer:
-      "Yes. Affordable packages often combine multiple openings in one visit. Premium does not mean overpriced — it means SS304 where exposed, correct knotless GSM for bird nets, and documented installation. Area pages list price factors for your specific locality.",
+      "Yes. Affordable packages often combine multiple openings in one visit. Premium does not mean overpriced — it means SS304 as standard, SS316 for coastal or pool-facing openings, correct knotless GSM for bird nets, and documented installation.",
   },
   {
     question: "How many local pages does SafeShield Solutions publish?",

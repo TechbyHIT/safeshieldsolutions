@@ -17,7 +17,7 @@ export const serviceMegaMenu: ServiceMegaCategory[] = [
       { label: "Invisible Grills", href: routes.service("invisible-grills") },
       { label: "Balcony Invisible Grills", href: routes.service("balcony-invisible-grills") },
       { label: "Window Invisible Grills", href: routes.service("window-invisible-grills") },
-      { label: "SS304 Invisible Grills", href: routes.service("stainless-steel-invisible-grills") },
+      { label: "SS304 & SS316 Invisible Grills", href: routes.service("stainless-steel-invisible-grills") },
       { label: "Child Safety Grills", href: routes.service("child-safety-grills") },
       { label: "Pet Safety Grills", href: routes.service("pet-safety-grills") },
     ],
@@ -154,7 +154,7 @@ export const cityAreaHighlights: CityAreaHighlight[] = [
 export const trustBadges = [
   "Certified Installation",
   "Warranty Support",
-  "Premium SS304 Materials",
+  "Premium SS304 & SS316 Materials",
   "Fast Installation",
   "Affordable Pricing",
   "Free Site Survey",
