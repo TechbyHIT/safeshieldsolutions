@@ -23,15 +23,15 @@ module.exports = {
   apps: [
     {
       name: "safeshield-solutions",
-      cwd: root,
-      script: path.join(root, ".next", "standalone", "server.js"),
+      cwd: path.join(root, ".next", "standalone"),
+      script: "server.js",
       instances: 1,
       exec_mode: "fork",
       watch: false,
       vizion: false,
       autorestart: true,
       min_uptime: "10s",
-      max_restarts: 12,
+      max_restarts: 30,
       restart_delay: 2000,
       kill_timeout: 8000,
       listen_timeout: 10000,

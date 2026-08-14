@@ -93,6 +93,33 @@ if (fs.existsSync(staticDir)) {
   console.log("Copied .next/static → .next/standalone/.next/static/");
 }
 
+function copyDirMerge(src, dest) {
+  if (!fs.existsSync(src)) return false;
+  fs.mkdirSync(dest, { recursive: true });
+  fs.cpSync(src, dest, { recursive: true });
+  return true;
+}
+
+const nextSrc = path.join(root, "node_modules", "next", "dist");
+const nextDest = path.join(standaloneDir, "node_modules", "next", "dist");
+for (const part of ["server", "shared", "lib", "compiled"]) {
+  const from = path.join(nextSrc, part);
+  const to = path.join(nextDest, part);
+  if (copyDirMerge(from, to)) {
+    console.log(`Synced next/dist/${part} into standalone`);
+  }
+}
+
+const nextServerJs = path.join(nextDest, "server", "next-server.js");
+const imageOptimizerJs = path.join(nextDest, "server", "image-optimizer.js");
+if (fs.existsSync(nextServerJs)) {
+  const nextServerSrc = fs.readFileSync(nextServerJs, "utf8");
+  if (nextServerSrc.includes("./image-optimizer") && !fs.existsSync(imageOptimizerJs)) {
+    console.error("FATAL: next-server.js requires ./image-optimizer but the file is missing.");
+    process.exit(1);
+  }
+}
+
 const maps = stripSourceMaps(standaloneDir);
 if (maps) console.log(`Removed ${maps} source map file(s) from standalone`);
 

@@ -23,7 +23,12 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   experimental: {
-    optimizePackageImports: ["@/components", "@/lib"],
+    outputFileTracingIncludes: {
+      "*": [
+        "./node_modules/next/dist/server/**/*",
+        "./node_modules/next/dist/shared/**/*",
+      ],
+    },
   },
   // Programmatic routes use empty generateStaticParams — do not pre-render 730k URLs.
   staticPageGenerationTimeout: 60,

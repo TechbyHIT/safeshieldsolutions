@@ -10,6 +10,9 @@ git fetch origin
 git reset --hard origin/main
 echo "Deploying $(git log -1 --oneline)"
 
+echo "==> Remove old .next so standalone cannot mix Next versions"
+rm -rf .next
+
 if [ ! -f .env ]; then
   cp .env.example .env
   echo "Created .env from .env.example — edit NEXT_PUBLIC_SITE_URL if needed"
