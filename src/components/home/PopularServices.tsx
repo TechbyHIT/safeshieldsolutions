@@ -40,6 +40,7 @@ export function PopularServices() {
                   alt={imgAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={85}
                   className="object-cover object-center transition duration-300 hover:scale-105"
                 />
               </div>

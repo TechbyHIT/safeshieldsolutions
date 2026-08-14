@@ -20,6 +20,32 @@ const folderLabels: Record<string, string> = {
   "bird-spikes": "Bird Spikes",
 };
 
+/** Highest-resolution installation photos for heroes (file size verified on disk). */
+const hdHeroFiles: Record<string, string> = {
+  "balcony-invisible-grills": "168.jpeg",
+  "safety-nets": "103.jpeg",
+  "window-invisible-grills": "13.jpg",
+  "pigeon-safety-nets": "08.jpg",
+  "cloth-hangers": "08.jpeg",
+  "cricket-nets": "10.png",
+  "mosquito-nets": "03.jpg",
+  "child-safety-grills": "01.jpg",
+  "pet-safety-nets": "05.jpg",
+  "bird-spikes": "03.webp",
+};
+
+function isPhotoFile(name: string): boolean {
+  return /\.(jpe?g|webp|png|avif)$/i.test(name);
+}
+
+function pickHdFilename(folder: string): string | undefined {
+  const preferred = hdHeroFiles[folder];
+  const files = (photoManifest[folder as keyof typeof photoManifest] ?? []).filter(isPhotoFile);
+  if (preferred && files.includes(preferred)) return preferred;
+  const jpeg = files.find((file) => /\.jpe?g$/i.test(file));
+  return jpeg ?? files[0];
+}
+
 /** Maps service slugs to real photo folders in public/images/photos/ */
 export const servicePhotoFolders: Record<string, string> = {
   "invisible-grills": "balcony-invisible-grills",
@@ -87,21 +113,40 @@ export function getPhotosForService(serviceSlug: string, limit = 6): ProjectPhot
   return getPhotosForFolder(folder, limit);
 }
 
+export function getHdPhoto(folder = "balcony-invisible-grills"): ProjectPhoto {
+  const files = photoManifest[folder as keyof typeof photoManifest] ?? [];
+  const filename = pickHdFilename(folder) ?? files[0] ?? hdHeroFiles["balcony-invisible-grills"] ?? "168.jpeg";
+  const resolvedFolder = files.length ? folder : "balcony-invisible-grills";
+  const resolvedFiles = photoManifest[resolvedFolder as keyof typeof photoManifest] ?? [];
+  const index = Math.max(0, resolvedFiles.indexOf(filename));
+  return buildPhoto(resolvedFolder, filename, index);
+}
+
 export function getHeroPhoto(): ProjectPhoto {
-  const photos = getPhotosForFolder("balcony-invisible-grills", 1);
-  return (
-    photos[0] ?? {
-      src: "/images/photos/balcony-invisible-grills/01.png",
-      alt: "Professional invisible grill installation on apartment balcony",
-      title: "Premium Invisible Grills",
-      folder: "balcony-invisible-grills",
-    }
-  );
+  return getHdPhoto("balcony-invisible-grills");
+}
+
+const hdFolderOrder = [
+  "balcony-invisible-grills",
+  "safety-nets",
+  "window-invisible-grills",
+  "pigeon-safety-nets",
+  "cloth-hangers",
+  "cricket-nets",
+  "mosquito-nets",
+  "child-safety-grills",
+  "pet-safety-nets",
+  "bird-spikes",
+] as const;
+
+export function getHdPhotoSet(limit = 4): ProjectPhoto[] {
+  return hdFolderOrder.slice(0, limit).map((folder) => getHdPhoto(folder));
 }
 
 export function getPrimaryServicePhoto(serviceSlug: string): ProjectPhoto | null {
-  const photos = getPhotosForService(serviceSlug, 1);
-  return photos[0] ?? null;
+  const folder = servicePhotoFolders[serviceSlug];
+  if (!folder) return null;
+  return getHdPhoto(folder);
 }
 
 export function getServiceOgImage(serviceSlug: string): string {

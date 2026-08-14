@@ -1,10 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { serviceCities } from "@/config/home-content";
+import { getHdPhotoSet } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 
 export function CityShowcase() {
+  const photos = getHdPhotoSet(4);
+
   return (
     <Section className="bg-brand-950 text-white" ariaLabel="Service cities">
       <div className="text-center">
@@ -20,31 +24,48 @@ export function CityShowcase() {
         </p>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {serviceCities.map((city) => (
-          <article
-            key={city.slug}
-            className="rounded-2xl border border-brand-800 bg-brand-900/50 p-8"
-          >
-            <h3 className="text-2xl font-bold">Safety Nets in {city.name}</h3>
-            <p className="mt-3 text-neutral-300">{city.summary}</p>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {city.highlights.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full bg-brand-800 px-3 py-1 text-xs font-medium text-brand-100"
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={routes.city(city.slug)}
-              className="mt-6 inline-flex font-semibold text-shield-400 hover:text-shield-300"
+        {serviceCities.map((city, index) => {
+          const photo = photos[index];
+          return (
+            <article
+              key={city.slug}
+              className="overflow-hidden rounded-2xl border border-brand-800 bg-brand-900/50"
             >
-              Explore {city.name} areas and services →
-            </Link>
-          </article>
-        ))}
+              {photo && (
+                <div className="relative aspect-[16/10] bg-brand-900">
+                  <Image
+                    src={photo.src}
+                    alt={`${city.name} invisible grill and safety net installation`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    quality={85}
+                    className="object-cover object-center"
+                  />
+                </div>
+              )}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold">Safety Nets in {city.name}</h3>
+                <p className="mt-3 text-neutral-300">{city.summary}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {city.highlights.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full bg-brand-800 px-3 py-1 text-xs font-medium text-brand-100"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={routes.city(city.slug)}
+                  className="mt-6 inline-flex font-semibold text-shield-400 hover:text-shield-300"
+                >
+                  Explore {city.name} areas and services →
+                </Link>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </Section>
   );

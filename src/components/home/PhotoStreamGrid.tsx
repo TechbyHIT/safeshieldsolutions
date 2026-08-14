@@ -35,9 +35,10 @@ export function PhotoStreamGrid({ items }: { items: PhotoStreamItem[] }) {
                 title={item.photo.title}
                 fill
                 sizes="(max-width: 768px) 50vw, 20vw"
+                quality={80}
                 className="object-cover object-center transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-brand-950/15 to-transparent opacity-90" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/70 to-transparent pt-10" />
               <p className="absolute bottom-0 left-0 right-0 p-3 text-xs font-medium leading-snug text-white md:text-sm">
                 {item.caption}
               </p>

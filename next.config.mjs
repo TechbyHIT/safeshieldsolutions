@@ -14,8 +14,8 @@ const nextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    // Fewer variants = smaller image cache on a 50-site VPS. Covers phones → 1080p.
-    deviceSizes: [360, 640, 768, 1080, 1280, 1920],
+    // Hero-grade variants up to 2K so balcony photos stay sharp.
+    deviceSizes: [360, 640, 768, 1080, 1280, 1920, 2560],
     imageSizes: [32, 64, 96, 128, 256],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

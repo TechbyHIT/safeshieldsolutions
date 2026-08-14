@@ -40,6 +40,7 @@ export function ServiceCard({
           title={name}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
+          quality={85}
           className="object-cover object-center transition duration-300 group-hover:scale-105"
         />
       </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PageHero } from "@/components/layout/PageHero";
 import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { routes } from "@/config/routes";
-import { getInterleavedPhotos } from "@/config/photo-catalog";
+import { getHdPhoto, getHdPhotoSet, getInterleavedPhotos } from "@/config/photo-catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getActiveCities } from "@/lib/queries";
 
@@ -20,6 +20,7 @@ export const metadata = buildPageMetadata({
 export default async function LocationsIndexPage() {
   const cities = await getActiveCities();
   const photos = getInterleavedPhotos(12);
+  const cityPhotos = getHdPhotoSet(4);
 
   return (
     <>
@@ -27,7 +28,7 @@ export default async function LocationsIndexPage() {
         eyebrow="Service cities"
         title="Our Locations"
         description="We provide invisible grills, safety nets, and home protection services across major cities in South India — Chennai, Hyderabad, Coimbatore, and Kochi."
-        photo={photos[0]}
+        photo={getHdPhoto("safety-nets")}
         breadcrumbs={[
           { label: "Home", href: routes.home },
           { label: "Locations" },
@@ -36,7 +37,7 @@ export default async function LocationsIndexPage() {
       <Section>
         <div className="grid gap-6 md:grid-cols-2">
           {cities.map((city, index) => {
-            const photo = photos[index + 1] ?? photos[0];
+            const photo = cityPhotos[index] ?? photos[index] ?? photos[0];
             return (
               <Link
                 key={city.slug}
@@ -50,6 +51,7 @@ export default async function LocationsIndexPage() {
                       alt={`${city.name} invisible grill and safety net installation`}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={85}
                       className="object-cover transition duration-300 group-hover:scale-105"
                     />
                   </div>

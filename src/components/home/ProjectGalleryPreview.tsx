@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
-import { getAllGalleryPhotos, totalPhotoCount } from "@/config/photo-catalog";
+import { getAllGalleryPhotos, getHdPhoto, totalPhotoCount } from "@/config/photo-catalog";
 import { HOME_CITIES } from "@/config/home-seo-links";
 import { routes } from "@/config/routes";
 
 export function ProjectGalleryPreview() {
   const categories = getAllGalleryPhotos();
-  const featured = categories.flatMap((c) => c.photos.slice(0, 6)).slice(0, 40);
+  const featured = categories
+    .flatMap((c) => {
+      const hd = getHdPhoto(c.folder);
+      const rest = c.photos.filter((photo) => photo.src !== hd.src).slice(0, 5);
+      return [hd, ...rest];
+    })
+    .slice(0, 40);
 
   return (
     <Section className="bg-white" ariaLabel="Project gallery">

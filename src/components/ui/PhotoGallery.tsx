@@ -22,10 +22,11 @@ export function ProjectPhotoImage({
         src={photo.src}
         alt={photo.alt}
         title={photo.title}
-        fill
-        priority={priority}
-        sizes={sizes}
-        className={`object-cover ${className}`}
+          fill
+          priority={priority}
+          quality={85}
+          sizes={sizes}
+          className={`object-cover ${className}`}
       />
     );
   }
@@ -39,6 +40,7 @@ export function ProjectPhotoImage({
           title={photo.title}
           fill
           priority={priority}
+          quality={85}
           sizes={sizes}
           className="object-cover object-center transition hover:scale-105"
         />
@@ -81,6 +83,7 @@ export function PhotoGallery({
               title={photo.title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
+              quality={80}
               className="object-cover object-center transition duration-300 group-hover:scale-105"
             />
           </div>

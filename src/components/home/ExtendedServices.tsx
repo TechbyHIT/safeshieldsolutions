@@ -36,6 +36,7 @@ export function ExtendedServices() {
                     alt={photo.alt}
                     fill
                     sizes="(max-width: 768px) 100vw, 25vw"
+                    quality={85}
                     className="object-cover object-center"
                   />
                 </Link>

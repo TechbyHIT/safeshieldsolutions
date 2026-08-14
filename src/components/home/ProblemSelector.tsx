@@ -4,7 +4,7 @@ import { problemCategories } from "@/config/home-content";
 
 export function ProblemSelector() {
   return (
-    <Section id="find-solution" className="pt-24 md:pt-28" ariaLabel="Choose by problem">
+    <Section id="find-solution" ariaLabel="Choose by problem">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-neutral-900">
           What do you want the safety solution to solve?

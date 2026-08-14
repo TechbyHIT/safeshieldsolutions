@@ -4,8 +4,8 @@ export const business = {
   tagline: "Premium invisible grills, safety nets & home protection across South India",
   description:
     "Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, zip screens, mesh doors, cricket box grass, and bird protection solutions for apartments, villas, and commercial properties.",
-  phone: "+91-9876543210",
-  whatsapp: "+919876543210",
+  phone: "+91-8977235565",
+  whatsapp: "+918977235565",
   email: "info@safeshieldsolutions.in",
   address: {
     street: "Main Road, A.S. Rao Nagar",
