@@ -1,8 +1,11 @@
 import { Section } from "@/components/ui/Section";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
 import { Button } from "@/components/ui/Button";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { business } from "@/config/business";
-import { getPhotosForFolder } from "@/config/photo-catalog";
+import { getPhotosForFolder, getInterleavedPhotos } from "@/config/photo-catalog";
+import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
@@ -14,24 +17,28 @@ export const metadata = buildPageMetadata({
 
 export default function ContactPage() {
   const samplePhotos = [
-    ...getPhotosForFolder("balcony-invisible-grills", 4),
-    ...getPhotosForFolder("safety-nets", 4),
-    ...getPhotosForFolder("pigeon-safety-nets", 4),
+    ...getPhotosForFolder("balcony-invisible-grills", 6),
+    ...getPhotosForFolder("safety-nets", 6),
+    ...getPhotosForFolder("pigeon-safety-nets", 6),
   ];
+  const extraPhotos = getInterleavedPhotos(8);
 
   return (
     <>
+      <PageHero
+        eyebrow="Free site survey"
+        title="Contact Us"
+        description="Get a free site survey and quotation for invisible grills, safety nets, and home protection solutions. Send a clear photo of your opening with your city — we respond within 2 hours during business hours."
+        photo={samplePhotos[0]}
+        breadcrumbs={[
+          { label: "Home", href: routes.home },
+          { label: "Contact" },
+        ]}
+      />
       <Section>
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">Contact Us</h1>
-            <p className="prose-content mt-4">
-              Get a free site survey and quotation for invisible grills, safety nets, and
-              home protection solutions. Send a clear photo of your opening with your city
-              — we respond within 2 hours during business hours.
-            </p>
-
-            <div className="mt-6 rounded-xl bg-brand-50 p-5">
+            <div className="rounded-xl bg-brand-50 p-5">
               <p className="font-semibold text-brand-900">What to send for a clear estimate</p>
               <ul className="mt-3 space-y-2 text-sm text-brand-800">
                 <li>• Full photo of the balcony, window, or terrace opening</li>
@@ -73,8 +80,8 @@ export default function ContactPage() {
               <div>
                 <dt className="font-semibold text-neutral-900">Address</dt>
                 <dd className="text-neutral-600">
-                  {business.address.street}, {business.address.area},{" "}
-                  {business.address.city} – {business.address.pincode}
+                  {business.address.street}, {business.address.area}, {business.address.city} –{" "}
+                  {business.address.pincode}
                 </dd>
               </div>
               <div>
@@ -109,6 +116,12 @@ export default function ContactPage() {
           </div>
         </div>
       </Section>
+      <PagePhotoStrip
+        photos={extraPhotos}
+        heading="More project photos"
+        description="Share a similar opening photo on WhatsApp for a faster estimate."
+        columns={4}
+      />
     </>
   );
 }

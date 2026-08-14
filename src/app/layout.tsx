@@ -35,6 +35,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN">
       <body className={`${inter.variable} font-sans`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:inline-block focus:h-auto focus:w-auto focus:overflow-visible focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-brand-900"
+        >
+          Skip to main content
+        </a>
         <JsonLd data={buildOrganizationSchema()} />
         <Header />
         <main id="main-content" className="mobile-fab-padding">

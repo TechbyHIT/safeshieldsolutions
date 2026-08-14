@@ -44,6 +44,8 @@ module.exports = {
         PORT: 3010,
         NODE_OPTIONS: "--max-old-space-size=384",
         NEXT_TELEMETRY_DISABLED: "1",
+        NEXT_PUBLIC_SITE_URL: "https://safeshieldsolutions.in",
+        NEXT_PUBLIC_SITE_NAME: "SafeShield Solutions",
       },
     },
   ],

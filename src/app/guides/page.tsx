@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { guideArticles, allGuideServiceLinks, guideAreaLinks } from "@/config/guides-content";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 import { routes } from "@/config/routes";
 
@@ -21,18 +24,21 @@ export const metadata = buildPageMetadata({
 
 export default function GuidesPage() {
   const serviceLinks = allGuideServiceLinks();
+  const photos = getInterleavedPhotos(9);
 
   return (
+    <>
+    <PageHero
+      eyebrow="Guides"
+      title="Premium Installation Guides — Near Me, Price & Dealers"
+      description="Expert guides for invisible grills, safety nets, pigeon protection, mosquito nets, cloth hangers, sports nets, and bird spikes. Each guide links to neighbourhood pages with installation, price, dealers, and premium intent variants."
+      photo={photos[0]}
+      breadcrumbs={[
+        { label: "Home", href: routes.home },
+        { label: "Guides" },
+      ]}
+    />
     <Section>
-      <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-        Premium Installation Guides — Near Me, Price & Dealers
-      </h1>
-      <p className="prose-content mt-4 max-w-3xl">
-        Expert guides for invisible grills, safety nets, pigeon protection, mosquito nets, cloth
-        hangers, sports nets, and bird spikes. Each guide links to 1,991 neighbourhood pages with
-        installation, price, dealers, best, and premium intent variants across Chennai, Hyderabad,
-        Coimbatore, and Kochi.
-      </p>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-2">
         {guideArticles.map((guide) => (
@@ -91,5 +97,7 @@ export default function GuidesPage() {
         </ul>
       </section>
     </Section>
+    <PagePhotoStrip photos={photos} heading="Photos that pair with these guides" columns={3} />
+    </>
   );
 }

@@ -33,10 +33,7 @@ fi
 
 echo "==> Nginx HTTP → 127.0.0.1:3010"
 if command -v nginx >/dev/null 2>&1; then
-  ln -sfn "$ROOT/deploy/nginx-safeshield-http.conf" /etc/nginx/sites-enabled/safeshield
-  rm -f /etc/nginx/sites-enabled/default
-  nginx -t
-  systemctl reload nginx
+  bash "$ROOT/deploy/install-nginx.sh" "$ROOT"
 fi
 
 echo "==> Health check"

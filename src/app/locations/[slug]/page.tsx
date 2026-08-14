@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { RelatedLinks } from "@/components/content/RelatedLinks";
 import { AreaBrowser } from "@/components/locations/AreaBrowser";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildCityBreadcrumbs, buildAreaHubLinks, buildCityServiceHubLinks } from "@/lib/internal-links";
@@ -51,6 +53,7 @@ export default async function CityPage({ params }: PageProps) {
     services.map((s) => ({ slug: s.slug, name: s.name })),
   );
   const hubContent = buildCityHubContent(city.slug, city.name);
+  const photos = getInterleavedPhotos(12);
 
   return (
     <>
@@ -61,19 +64,15 @@ export default async function CityPage({ params }: PageProps) {
         ]}
       />
 
+      <PageHero
+        eyebrow={`${city.name} installation`}
+        title={`Invisible Grills & Safety Solutions in ${city.name}`}
+        description={`SafeShield Solutions provides professional invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, cricket box grass, zip screens, motorized zip screens, mesh doors, sliding mesh doors, and bird protection across ${city.name}. Free site survey, SS304 materials, trained technicians, and 5-year warranty.`}
+        photo={photos[0]}
+        breadcrumbs={breadcrumbItems.map((b) => ({ label: b.name, href: b.url }))}
+      />
+
       <Section>
-        <Breadcrumbs
-          items={breadcrumbItems.map((b) => ({ label: b.name, href: b.url }))}
-        />
-        <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-          Invisible Grills & Safety Solutions in {city.name}
-        </h1>
-        <p className="prose-content mt-4 max-w-3xl">
-          SafeShield Solutions provides professional invisible grills, safety nets, mosquito
-          nets, cloth hangers, sports nets, cricket box grass, zip screens, motorized zip screens,
-          mesh doors, sliding mesh doors, and bird protection across {city.name}. Free site
-          survey, SS304 materials, trained technicians, and 5-year warranty.
-        </p>
 
         {hubContent.sections.map((section) => (
           <article key={section.id} className="mt-10 max-w-3xl">
@@ -136,6 +135,11 @@ export default async function CityPage({ params }: PageProps) {
           </dl>
         </section>
       </Section>
+      <PagePhotoStrip
+        photos={photos}
+        heading={`Completed work for ${city.name} homes`}
+        columns={4}
+      />
     </>
   );
 }

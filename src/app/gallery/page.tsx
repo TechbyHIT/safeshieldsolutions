@@ -1,6 +1,8 @@
 import { Section } from "@/components/ui/Section";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
+import { PageHero } from "@/components/layout/PageHero";
 import { getAllGalleryPhotos, totalPhotoCount } from "@/config/photo-catalog";
+import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
@@ -12,19 +14,20 @@ export const metadata = buildPageMetadata({
 
 export default function GalleryPage() {
   const categories = getAllGalleryPhotos();
+  const heroPhoto = categories[0]?.photos[0];
 
   return (
     <>
-      <Section>
-        <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-          Project Gallery — Real Installation Photos
-        </h1>
-        <p className="prose-content mt-4 max-w-3xl">
-          Browse {totalPhotoCount} real project photos from our Hyderabad and Chennai
-          teams. Review cable spacing, edge fixing, balcony corners, mesh quality, and
-          finish details before choosing your safety solution.
-        </p>
-      </Section>
+      <PageHero
+        eyebrow="Completed work"
+        title="Project Gallery — Real Installation Photos"
+        description={`Browse ${totalPhotoCount} real project photos from our Hyderabad and Chennai teams. Review cable spacing, edge fixing, balcony corners, mesh quality, and finish details before choosing your safety solution.`}
+        photo={heroPhoto}
+        breadcrumbs={[
+          { label: "Home", href: routes.home },
+          { label: "Gallery" },
+        ]}
+      />
 
       {categories.map((category) => (
         <Section

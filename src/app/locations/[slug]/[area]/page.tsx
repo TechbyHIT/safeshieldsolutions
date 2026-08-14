@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
 import { getAreasForCity } from "@/data/areas";
@@ -46,22 +48,21 @@ export default async function AreaHubPage({ params }: PageProps) {
   const nearby = getAreasForCity(city.slug)
     .filter((a) => a.slug !== area)
     .slice(0, 12);
+  const photos = getInterleavedPhotos(9);
 
   return (
     <>
       <JsonLd
         data={[buildLocalBusinessSchema(city.name), buildBreadcrumbSchema(breadcrumbs)]}
       />
+      <PageHero
+        eyebrow={`${areaData.name}, ${city.name}`}
+        title={`Home safety services in ${areaData.name}, ${city.name}`}
+        description={`SafeShield Solutions installs invisible grills, safety nets, mosquito nets, zip screens, mesh doors, and cloth hangers in ${areaData.name}. Choose a service below for neighbourhood-specific installation, price, and near-me pages.`}
+        photo={photos[0]}
+        breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
+      />
       <Section>
-        <Breadcrumbs items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))} />
-        <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-          Home safety services in {areaData.name}, {city.name}
-        </h1>
-        <p className="prose-content mt-4 max-w-3xl">
-          SafeShield Solutions installs invisible grills, safety nets, mosquito nets, zip screens,
-          mesh doors, and cloth hangers in {areaData.name}. Choose a service below for
-          neighbourhood-specific installation, price, and near-me pages.
-        </p>
 
         <h2 className="mt-10 text-xl font-bold text-neutral-900">Services in {areaData.name}</h2>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,6 +97,11 @@ export default async function AreaHubPage({ params }: PageProps) {
           </Link>
         </p>
       </Section>
+      <PagePhotoStrip
+        photos={photos}
+        heading={`Project photos for ${areaData.name} homes`}
+        columns={3}
+      />
     </>
   );
 }

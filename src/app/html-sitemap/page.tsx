@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/components/layout/PageHero";
 import { CITIES } from "@/data/cities";
 import { getAreasForCity } from "@/data/areas";
 import { SEO_SERVICES } from "@/data/seo-services";
 import { guideArticles, blogPosts } from "@/config/guides-content";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getTotalUrlCount } from "@/lib/sitemap-urls";
@@ -32,15 +34,22 @@ const HUB_LINKS = [
 
 export default function HtmlSitemapPage() {
   const total = getTotalUrlCount();
+  const photos = getInterleavedPhotos(1);
 
   return (
+    <>
+    <PageHero
+      eyebrow="Sitemap"
+      title="HTML sitemap"
+      description={`Crawl hubs for every published section. ${total.toLocaleString("en-IN")} indexable URLs are listed in the XML sitemap index. Locality pages live under each city hub to keep this page useful and shallow.`}
+      photo={photos[0]}
+      breadcrumbs={[
+        { label: "Home", href: routes.home },
+        { label: "HTML Sitemap" },
+      ]}
+      showCtas={false}
+    />
     <Section>
-      <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">HTML sitemap</h1>
-      <p className="prose-content mt-4 max-w-3xl">
-        Crawl hubs for every published section. {total.toLocaleString("en-IN")} indexable URLs are
-        listed in the XML sitemap index. Locality pages live under each city hub to keep this page
-        useful and shallow.
-      </p>
 
       <h2 className="mt-12 text-xl font-bold text-neutral-900">Primary hubs</h2>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -119,5 +128,6 @@ export default function HtmlSitemapPage() {
         ))}
       </ul>
     </Section>
+    </>
   );
 }

@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { PageContentRenderer } from "@/components/content/PageContentRenderer";
 import { RelatedLinks } from "@/components/content/RelatedLinks";
 import { ServicePhotoGallery, ServicePhotoSidebar } from "@/components/content/ServicePhotos";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
+import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import {
   buildCityServiceContent,
   buildAreaServiceContent,
@@ -158,12 +159,16 @@ export default async function CitySegmentPage({ params }: PageProps) {
             buildFaqSchema(content.faqs),
           ]}
         />
+        <PageHero
+          eyebrow={`${cityData.name} service`}
+          title={h1}
+          description={content.intro}
+          photo={getPrimaryServicePhoto(serviceData.slug)}
+          breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
+        />
         <Section>
-          <Breadcrumbs
-            items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
-          />
           <div className="grid gap-10 lg:grid-cols-2">
-            <PageContentRenderer content={content} h1={h1} />
+            <PageContentRenderer content={content} h1={h1} hideH1 />
             <ServicePhotoSidebar
               serviceSlug={serviceData.slug}
               serviceName={serviceData.name}
@@ -251,13 +256,17 @@ export default async function CitySegmentPage({ params }: PageProps) {
           buildBreadcrumbSchema(breadcrumbs),
           buildFaqSchema(content.faqs),
         ]}
-      />
-      <Section>
-        <Breadcrumbs
-          items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
         />
-        <div className="grid gap-10 lg:grid-cols-2">
-          <PageContentRenderer content={content} h1={h1} />
+        <PageHero
+          eyebrow={`${areaData.name}, ${cityData.name}`}
+          title={h1}
+          description={content.intro}
+          photo={getPrimaryServicePhoto(serviceData.slug)}
+          breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
+        />
+        <Section>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <PageContentRenderer content={content} h1={h1} hideH1 />
           <ServicePhotoSidebar
             serviceSlug={serviceData.slug}
             serviceName={serviceData.name}

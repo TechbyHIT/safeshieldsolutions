@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { blogPosts, blogRelatedLinks } from "@/config/guides-content";
+import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
@@ -40,6 +42,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     { name: "Blog", url: routes.blog },
     { name: post.title, url: routes.blogPost(post.slug) },
   ];
+  const photos = getPhotosForService(post.serviceSlug, 9);
 
   return (
     <>
@@ -49,13 +52,14 @@ export default async function BlogPostPage({ params }: PageProps) {
           buildBreadcrumbSchema(breadcrumbs),
         ]}
       />
+      <PageHero
+        eyebrow={post.date}
+        title={post.title}
+        description={post.excerpt}
+        photo={getPrimaryServicePhoto(post.serviceSlug)}
+        breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
+      />
       <Section>
-        <Breadcrumbs items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))} />
-        <time className="text-sm text-neutral-500" dateTime={post.date}>
-          {post.date}
-        </time>
-        <h1 className="mt-2 text-3xl font-bold text-neutral-900 md:text-4xl">{post.title}</h1>
-        <p className="prose-content mt-4 max-w-3xl">{post.excerpt}</p>
         <p className="prose-content max-w-3xl">
           This locality note covers {post.serviceSlug.replace(/-/g, " ")} work in{" "}
           {post.areaSlug.replace(/-/g, " ")}, {post.citySlug}. Open the full area service page for
@@ -88,6 +92,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </Link>
         </p>
       </Section>
+      <PagePhotoStrip photos={photos} heading="Related installation photos" columns={3} />
     </>
   );
 }

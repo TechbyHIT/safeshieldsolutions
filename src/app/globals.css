@@ -184,4 +184,116 @@
   .prose-content a {
     @apply text-brand-700 underline underline-offset-2 hover:text-brand-900;
   }
+
+  .mobile-fab-padding {
+    padding-bottom: 6.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-fab-padding {
+      padding-bottom: 0;
+    }
+  }
+
+  .site-header__link {
+    @apply rounded-lg px-3 py-2 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100 hover:text-brand-800;
+  }
+
+  .site-header__link--btn {
+    @apply inline-flex items-center gap-1 aria-expanded:bg-neutral-100 aria-expanded:text-brand-800;
+  }
+
+  .site-header__burger {
+    @apply flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-lg text-neutral-800;
+  }
+
+  .site-mobile-nav {
+    @apply fixed inset-0 z-[60] flex items-start justify-center px-3 pb-3 pt-[4.75rem];
+  }
+
+  .site-mobile-nav__backdrop {
+    @apply absolute inset-0 bg-brand-950/45;
+  }
+
+  .site-mobile-nav__panel {
+    animation: site-menu-in 0.22s ease-out;
+    @apply relative flex w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-white shadow-xl;
+    max-height: min(86vh, 760px);
+  }
+
+  .site-mobile-nav__head {
+    @apply flex items-center justify-between border-b border-neutral-200 px-5 py-4;
+  }
+
+  .site-mobile-nav__close {
+    @apply flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-800;
+  }
+
+  .site-mobile-nav__body {
+    @apply flex-1 overflow-y-auto px-2 py-2;
+  }
+
+  .site-mobile-nav__link,
+  .site-mobile-nav__accordion {
+    @apply flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-base font-semibold text-neutral-900;
+  }
+
+  .site-mobile-nav__accordion--nested {
+    @apply py-2 text-sm font-semibold text-neutral-800;
+  }
+
+  .site-mobile-nav__chevron {
+    @apply text-sm font-bold text-brand-700;
+  }
+
+  .site-mobile-nav__sub {
+    @apply mb-1 ml-2 border-l border-neutral-200 pl-2;
+  }
+
+  .site-mobile-nav__nested {
+    @apply py-0.5;
+  }
+
+  .site-mobile-nav__list {
+    @apply mb-2 space-y-0.5 pl-2;
+  }
+
+  .site-mobile-nav__child {
+    @apply block rounded-md px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand-800;
+  }
+
+  .site-mobile-nav__all {
+    @apply mx-3 mb-2 inline-block text-sm font-bold text-brand-700 hover:underline;
+  }
+
+  .site-mobile-nav__actions {
+    @apply grid gap-2 border-t border-neutral-200 p-4;
+  }
+
+  .site-mobile-nav__cta {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold;
+  }
+
+  .site-mobile-nav__cta--quote {
+    @apply bg-accent-500 text-neutral-950 hover:bg-accent-400;
+  }
+
+  .site-mobile-nav__cta--call {
+    @apply border border-neutral-300 bg-white text-neutral-900;
+  }
+
+  .site-mobile-nav__cta--wa {
+    @apply bg-[#25D366] text-white hover:bg-[#20bd5a];
+  }
+}
+
+@keyframes site-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

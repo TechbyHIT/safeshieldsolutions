@@ -32,7 +32,7 @@ function MegaPanel({ open, onClose, children }: MegaPanelProps) {
   return (
     <div
       ref={ref}
-      className="absolute left-0 right-0 top-full z-50 border-b border-neutral-200 bg-white shadow-xl"
+      className="site-megamenu absolute left-0 right-0 top-full z-50 hidden border-b border-neutral-200 bg-white shadow-xl xl:block"
     >
       <div className="container py-8">{children}</div>
     </div>

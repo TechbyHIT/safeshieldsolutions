@@ -62,11 +62,25 @@ Point each nginx `server` block at the matching `127.0.0.1:PORT`.
 
 ## nginx
 
-See `deploy/nginx-safeshield.conf`. Enable HTTPS with certbot, then:
+Copy the vhost into **sites-available** (do not symlink a missing `/var/www/safeshield` path):
 
 ```bash
-sudo nginx -t && sudo systemctl reload nginx
+# from the real clone, e.g. /root/safeshieldsolutions
+bash deploy/install-nginx.sh
 ```
+
+If **safeshieldsolutions.in opens Deva Safety Nets** or curl says the SSL name does not match, there is no Let's Encrypt cert for this domain yet, so SNI falls through to another site. After the HTTP vhost is live:
+
+```bash
+mkdir -p /var/www/certbot
+certbot certonly --webroot -w /var/www/certbot \
+  -d safeshieldsolutions.in -d www.safeshieldsolutions.in
+bash deploy/install-nginx.sh
+curl -sIk https://safeshieldsolutions.in | grep -i x-site-brand
+# must include: X-Site-Brand: SafeShield-Solutions
+```
+
+Do **not** mark this server block `default_server` on a multi-site VPS.
 
 ## Environment
 

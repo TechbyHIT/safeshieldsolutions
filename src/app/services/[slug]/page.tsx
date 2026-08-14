@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { PageContentRenderer } from "@/components/content/PageContentRenderer";
 import { RelatedLinks } from "@/components/content/RelatedLinks";
 import { PhotoGallery, ProjectPhotoImage } from "@/components/ui/PhotoGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
 import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { getServiceImage } from "@/config/images";
 import { SeoImage } from "@/components/ui/SeoImage";
@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: PageProps) {
   });
 
   const primaryPhoto = getPrimaryServicePhoto(service.slug);
-  const galleryPhotos = getPhotosForService(service.slug, 36);
+  const galleryPhotos = getPhotosForService(service.slug, 48);
   const breadcrumbItems = buildServiceBreadcrumbs(service.name, service.slug);
   const allServices = await getActiveServices();
 
@@ -80,15 +80,20 @@ export default async function ServicePage({ params }: PageProps) {
         ]}
       />
 
+      <PageHero
+        eyebrow={service.category ?? "Service"}
+        title={service.name}
+        description={service.description ?? content.intro}
+        photo={primaryPhoto}
+        breadcrumbs={breadcrumbItems.map((b) => ({ label: b.name, href: b.url }))}
+      />
+
       <Section>
-        <Breadcrumbs
-          items={breadcrumbItems.map((b) => ({ label: b.name, href: b.url }))}
-        />
         <div className="grid gap-10 lg:grid-cols-2">
-          <PageContentRenderer content={content} h1={service.name} />
+          <PageContentRenderer content={content} h1={service.name} hideH1 />
           <div className="lg:sticky lg:top-24 lg:self-start">
             {primaryPhoto ? (
-              <ProjectPhotoImage photo={primaryPhoto} priority />
+              <ProjectPhotoImage photo={primaryPhoto} />
             ) : (
               <SeoImage image={getServiceImage(service.slug)} />
             )}

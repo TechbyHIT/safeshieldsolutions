@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { homeFaqs } from "@/config/home-content";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { CITIES } from "@/data/cities";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
@@ -23,18 +26,22 @@ const breadcrumbs = [
 ];
 
 export default function FaqPage() {
+  const photos = getInterleavedPhotos(9);
   return (
     <>
       <JsonLd data={[buildFaqSchema(homeFaqs), buildBreadcrumbSchema(breadcrumbs)]} />
+      <PageHero
+        eyebrow="Helpful answers"
+        title="Frequently asked questions"
+        description="Common questions about invisible grills, safety nets, zip screens, and installation across South India. Need a quote? Book a free site survey."
+        photo={photos[0]}
+        breadcrumbs={[
+          { label: "Home", href: routes.home },
+          { label: "FAQ" },
+        ]}
+      />
       <Section>
-        <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-          Frequently asked questions
-        </h1>
-        <p className="prose-content mt-4 max-w-3xl">
-          Common questions about invisible grills, safety nets, zip screens, and installation
-          across South India. Need a quote? Book a free site survey.
-        </p>
-        <dl className="mt-10 max-w-3xl space-y-8">
+        <dl className="max-w-3xl space-y-8">
           {homeFaqs.map((faq) => (
             <div key={faq.question}>
               <dt className="text-lg font-semibold text-neutral-900">{faq.question}</dt>
@@ -61,6 +68,7 @@ export default function FaqPage() {
           </Link>
         </p>
       </Section>
+      <PagePhotoStrip photos={photos} heading="Installation examples" columns={3} />
     </>
   );
 }

@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { guideArticles, guideAreaLinks } from "@/config/guides-content";
+import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
@@ -41,6 +43,7 @@ export default async function GuideArticlePage({ params }: PageProps) {
     { name: "Guides", url: routes.guides },
     { name: guide.title, url: routes.guide(guide.slug) },
   ];
+  const photos = getPhotosForService(guide.serviceSlug, 9);
 
   return (
     <>
@@ -50,10 +53,14 @@ export default async function GuideArticlePage({ params }: PageProps) {
           buildBreadcrumbSchema(breadcrumbs),
         ]}
       />
+      <PageHero
+        eyebrow="Installation guide"
+        title={guide.title}
+        description={guide.summary}
+        photo={getPrimaryServicePhoto(guide.serviceSlug)}
+        breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
+      />
       <Section>
-        <Breadcrumbs items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))} />
-        <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">{guide.title}</h1>
-        <p className="prose-content mt-4 max-w-3xl">{guide.summary}</p>
         <p className="prose-content max-w-3xl">
           This guide covers buying, installation, and local intent searches for{" "}
           {guide.serviceSlug.replace(/-/g, " ")} across Chennai, Hyderabad, Coimbatore, and Kochi.
@@ -83,6 +90,7 @@ export default async function GuideArticlePage({ params }: PageProps) {
           </Link>
         </p>
       </Section>
+      <PagePhotoStrip photos={photos} heading="Photos for this guide" columns={3} />
     </>
   );
 }

@@ -32,7 +32,7 @@ export function ServicePhotoGallery({
   serviceName,
   cityName,
 }: ServicePhotosProps) {
-  const photos = getPhotosForService(serviceSlug, 24);
+  const photos = getPhotosForService(serviceSlug, 36);
   if (photos.length === 0) return null;
 
   return (

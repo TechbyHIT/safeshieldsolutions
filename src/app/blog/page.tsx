@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/components/layout/PageHero";
+import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { blogPosts, blogRelatedLinks } from "@/config/guides-content";
 import { HOME_CITIES } from "@/config/home-seo-links";
+import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 import { routes } from "@/config/routes";
 
@@ -21,16 +24,20 @@ export const metadata = buildPageMetadata({
 });
 
 export default function BlogPage() {
+  const photos = getInterleavedPhotos(9);
   return (
+    <>
+    <PageHero
+      eyebrow="Blog"
+      title="Local Installation Blog — Premium Near-Me Tips by City"
+      description="Real locality-focused articles linking to full 20,000+ word SEO pages. Browse project tips for Gachibowli, Kakkanad, Peelamedu, Adyar, and more — each post connects to installation, price, dealers, and near-me variants."
+      photo={photos[0]}
+      breadcrumbs={[
+        { label: "Home", href: routes.home },
+        { label: "Blog" },
+      ]}
+    />
     <Section>
-      <h1 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-        Local Installation Blog — Premium Near-Me Tips by City
-      </h1>
-      <p className="prose-content mt-4 max-w-3xl">
-        Real locality-focused articles linking to full 20,000+ word SEO pages. Browse project tips
-        for Gachibowli, Kakkanad, Peelamedu, Adyar, and more — each post connects to installation,
-        price, dealers, and near-me variants.
-      </p>
 
       <div className="mt-12 space-y-10">
         {blogPosts.map((post) => (
@@ -84,5 +91,7 @@ export default function BlogPage() {
         </div>
       </section>
     </Section>
+    <PagePhotoStrip photos={photos} heading="Project photos from the cities we write about" columns={3} />
+    </>
   );
 }

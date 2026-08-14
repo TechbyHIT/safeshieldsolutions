@@ -6,6 +6,7 @@ import { TableOfContents, sectionAnchorId } from "@/components/content/TableOfCo
 interface PageContentRendererProps {
   content: PageContent;
   h1: string;
+  hideH1?: boolean;
 }
 
 function BulletList({ items, title }: { items: string[]; title: string }) {
@@ -24,13 +25,15 @@ function BulletList({ items, title }: { items: string[]; title: string }) {
   );
 }
 
-export function PageContentRenderer({ content, h1 }: PageContentRendererProps) {
+export function PageContentRenderer({ content, h1, hideH1 = false }: PageContentRendererProps) {
   return (
     <article>
-      <h1 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
-        {h1}
-      </h1>
-      <p className="prose-content mt-6 text-lg">{content.intro}</p>
+      {!hideH1 && (
+        <h1 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
+          {h1}
+        </h1>
+      )}
+      <p className={`prose-content text-lg ${hideH1 ? "mt-0" : "mt-6"}`}>{content.intro}</p>
 
       <TableOfContents sections={content.sections} faqCount={content.faqs.length} />
 
