@@ -30,7 +30,13 @@ npm run deploy:prod    # npm ci + build + standalone + prune
 
 `prepare-standalone` copies runtime `public/` + `.next/static` into `.next/standalone/` and strips `.map` files. `deploy:prune` then removes `node_modules` and leftover `.next/*` except `standalone/`.
 
-To rebuild later: `npm run deploy:prod && pm2 reload deploy/ecosystem.config.cjs`.
+To rebuild later from GitHub:
+
+```bash
+bash deploy/vps-run.sh /root/safeshieldsolutions
+```
+
+`git pull` alone does **not** update the live site. PM2 serves `.next/standalone/server.js`, so you must run `npm run deploy:prod` and restart PM2.
 
 ## Run with PM2
 

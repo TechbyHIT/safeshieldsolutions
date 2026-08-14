@@ -5,8 +5,10 @@ set -euo pipefail
 ROOT="${1:-$HOME/safeshieldsolutions}"
 cd "$ROOT"
 
-echo "==> Pull latest"
-git pull origin main
+echo "==> Pull latest from GitHub (origin/main)"
+git fetch origin
+git reset --hard origin/main
+echo "Deploying $(git log -1 --oneline)"
 
 if [ ! -f .env ]; then
   cp .env.example .env

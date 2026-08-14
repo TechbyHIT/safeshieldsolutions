@@ -19,11 +19,13 @@ Disk plan for **SafeShield Solutions** on Ubuntu 24.04 with **50+ Next.js sites*
 ## Deploy (smallest runtime)
 
 ```bash
-cd /var/www/safeshield
-git pull
-npm run deploy:prod          # npm ci + next build + standalone + prune
-pm2 reload deploy/ecosystem.config.cjs
-npm run storage:report
+cd /root/safeshieldsolutions   # real clone path — not /var/www/safeshield unless that is the repo
+git fetch origin
+git reset --hard origin/main
+npm run deploy:prod          # npm install + next build + standalone + prune
+pm2 delete safeshield-solutions || true
+pm2 start deploy/ecosystem.config.cjs
+pm2 save
 ```
 
 `deploy:prod` keeps `.next/standalone` and removes `node_modules` plus leftover `.next/*` (cache, server, traces). Source maps are stripped during `prepare-standalone`.
