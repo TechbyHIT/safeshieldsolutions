@@ -1,4 +1,4 @@
-import { getPrimaryServicePhoto } from "./photo-catalog";
+import { getHeroPhoto, getPrimaryServicePhoto } from "./photo-catalog";
 
 export interface ImageAsset {
   slug: string;
@@ -360,22 +360,28 @@ for (let i = 1; i <= 6; i++) {
   };
 }
 
+function photoAsset(slug: string, fallbackTitle: string): ImageAsset {
+  const photo = getPrimaryServicePhoto(slug) ?? getHeroPhoto();
+  return {
+    slug,
+    src: photo.src,
+    alt: photo.alt,
+    title: fallbackTitle,
+    width: 1600,
+    height: 1200,
+    keywords: [slug],
+  };
+}
+
 export function getImage(slug: string): ImageAsset | undefined {
-  return imageCatalog[slug];
+  const listed = imageCatalog[slug];
+  if (!listed) return photoAsset(slug, slug);
+  if (listed.src.endsWith(".svg")) {
+    return photoAsset(slug, listed.title);
+  }
+  return listed;
 }
 
 export function getServiceImage(serviceSlug: string): ImageAsset {
-  const photo = getPrimaryServicePhoto(serviceSlug);
-  if (photo) {
-    return {
-      slug: serviceSlug,
-      src: photo.src,
-      alt: photo.alt,
-      title: photo.title,
-      width: 1200,
-      height: 760,
-      keywords: [serviceSlug],
-    };
-  }
-  return imageCatalog[serviceSlug] ?? imageCatalog["invisible-grills"]!;
+  return photoAsset(serviceSlug, imageCatalog[serviceSlug]?.title ?? serviceSlug);
 }

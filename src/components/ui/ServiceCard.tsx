@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { getPrimaryServicePhoto } from "@/config/photo-catalog";
-import { getServiceImage } from "@/config/images";
+import { getHeroPhoto, getPrimaryServicePhoto } from "@/config/photo-catalog";
 
 interface ServiceCardProps {
   name: string;
@@ -18,15 +17,13 @@ export function ServiceCard({
   name,
   slug,
   description,
-  imageSlug,
   photoSrc,
   photoAlt,
   href,
 }: ServiceCardProps) {
-  const photo = slug ? getPrimaryServicePhoto(slug) : null;
-  const fallback = getServiceImage(imageSlug ?? slug ?? "invisible-grills");
-  const imgSrc = photoSrc ?? photo?.src ?? fallback.src;
-  const alt = photoAlt ?? photo?.alt ?? fallback.alt;
+  const photo = getPrimaryServicePhoto(slug) ?? getHeroPhoto();
+  const imgSrc = photoSrc ?? photo.src;
+  const alt = photoAlt ?? photo.alt;
 
   return (
     <Link

@@ -20,18 +20,29 @@ const folderLabels: Record<string, string> = {
   "bird-spikes": "Bird Spikes",
 };
 
-/** Highest-resolution installation photos for heroes (file size verified on disk). */
+/** Landscape HD installation photos — skip placeholders, portraits, and blurry close-ups. */
 const hdHeroFiles: Record<string, string> = {
   "balcony-invisible-grills": "168.webp",
   "safety-nets": "103.webp",
-  "window-invisible-grills": "13.webp",
-  "pigeon-safety-nets": "08.webp",
+  "window-invisible-grills": "24.webp",
+  "pigeon-safety-nets": "11.webp",
   "cloth-hangers": "08.webp",
-  "cricket-nets": "10.webp",
+  "cricket-nets": "02.webp",
   "mosquito-nets": "03.webp",
-  "child-safety-grills": "01.webp",
-  "pet-safety-nets": "05.webp",
+  "child-safety-grills": "168.webp",
+  "pet-safety-nets": "103.webp",
   "bird-spikes": "03.webp",
+};
+
+/** Categories without a clean landscape install shot reuse a matching HD folder. */
+const displayFolderAlias: Record<string, string> = {
+  "child-safety-grills": "balcony-invisible-grills",
+  "pet-safety-nets": "safety-nets",
+};
+
+const skipDisplayFiles: Record<string, string[]> = {
+  "child-safety-grills": ["01.webp", "02.webp", "03.webp", "04.webp"],
+  "cricket-nets": ["01.webp", "09.webp", "10.webp"],
 };
 
 function isPhotoFile(name: string): boolean {
@@ -40,18 +51,23 @@ function isPhotoFile(name: string): boolean {
 
 function folderFiles(folder: string): string[] {
   const files = photoManifest[folder as PhotoFolder];
-  return Array.isArray(files) ? [...files].filter(isPhotoFile) : [];
+  const skipped = new Set(skipDisplayFiles[folder] ?? []);
+  return Array.isArray(files) ? [...files].filter((file) => isPhotoFile(file) && !skipped.has(file)) : [];
+}
+
+function displayFolder(folder: string): string {
+  const aliased = displayFolderAlias[folder] ?? folder;
+  return folderFiles(aliased).length ? aliased : "balcony-invisible-grills";
 }
 
 function pickHdFilename(folder: string): string | undefined {
-  const files = folderFiles(folder);
-  const preferred = hdHeroFiles[folder];
+  const resolved = displayFolder(folder);
+  const files = folderFiles(resolved);
+  const preferred = hdHeroFiles[folder] ?? hdHeroFiles[resolved];
   const preferredWebp = preferred?.replace(/\.[^.]+$/, ".webp");
   if (preferred && files.includes(preferred)) return preferred;
   if (preferredWebp && files.includes(preferredWebp)) return preferredWebp;
-  const webp = files.find((file) => /\.webp$/i.test(file));
-  const jpeg = files.find((file) => /\.jpe?g$/i.test(file));
-  return webp ?? jpeg ?? files[0];
+  return files[0];
 }
 
 /** Maps service slugs to real photo folders in public/images/photos/ */
@@ -110,9 +126,12 @@ function buildPhoto(folder: string, filename: string, index: number): ProjectPho
 }
 
 export function getPhotosForFolder(folder: string, limit?: number): ProjectPhoto[] {
-  const files = folderFiles(folder);
-  const selected = limit ? files.slice(0, limit) : files;
-  return selected.map((file, i) => buildPhoto(folder, file, i));
+  const resolved = displayFolder(folder);
+  const files = folderFiles(resolved);
+  const hd = pickHdFilename(folder);
+  const ordered = hd ? [hd, ...files.filter((file) => file !== hd)] : files;
+  const selected = limit ? ordered.slice(0, limit) : ordered;
+  return selected.map((file, i) => buildPhoto(resolved, file, i));
 }
 
 export function getPhotosForService(serviceSlug: string, limit = 6): ProjectPhoto[] {
@@ -122,16 +141,11 @@ export function getPhotosForService(serviceSlug: string, limit = 6): ProjectPhot
 }
 
 export function getHdPhoto(folder = "balcony-invisible-grills"): ProjectPhoto {
-  const files = folderFiles(folder);
-  const fallbackFolder = files.length ? folder : "balcony-invisible-grills";
-  const resolvedFiles = folderFiles(fallbackFolder);
-  const filename =
-    pickHdFilename(folder) ??
-    resolvedFiles[0] ??
-    hdHeroFiles["balcony-invisible-grills"] ??
-    "168.webp";
-  const index = Math.max(0, resolvedFiles.indexOf(filename));
-  return buildPhoto(fallbackFolder, filename, index);
+  const resolved = displayFolder(folder);
+  const files = folderFiles(resolved);
+  const filename = pickHdFilename(folder) ?? files[0] ?? "168.webp";
+  const index = Math.max(0, files.indexOf(filename));
+  return buildPhoto(resolved, filename, index);
 }
 
 export function getHeroPhoto(): ProjectPhoto {
@@ -157,7 +171,7 @@ export function getHdPhotoSet(limit = 4): ProjectPhoto[] {
 
 export function getPrimaryServicePhoto(serviceSlug: string): ProjectPhoto | null {
   const folder = servicePhotoFolders[serviceSlug];
-  if (!folder) return null;
+  if (!folder) return getHeroPhoto();
   return getHdPhoto(folder);
 }
 
@@ -166,11 +180,13 @@ export function getServiceOgImage(serviceSlug: string): string {
 }
 
 export function getAllGalleryPhotos(): { folder: string; label: string; photos: ProjectPhoto[] }[] {
-  return Object.keys(photoManifest).map((folder) => ({
-    folder,
-    label: folderLabels[folder] ?? folder,
-    photos: getPhotosForFolder(folder),
-  }));
+  return Object.keys(photoManifest)
+    .filter((folder) => folder !== "child-safety-grills")
+    .map((folder) => ({
+      folder,
+      label: folderLabels[folder] ?? folder,
+      photos: getPhotosForFolder(folder),
+    }));
 }
 
 /** Interleave categories so home/gallery previews stay mixed. */

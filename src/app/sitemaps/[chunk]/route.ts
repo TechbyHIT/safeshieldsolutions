@@ -1,4 +1,4 @@
-import { imageCatalog } from "@/config/images";
+import { getImage, imageCatalog } from "@/config/images";
 import { site } from "@/config/site";
 import { getSitemapLastmodIso } from "@/lib/seo-freshness";
 import {
@@ -25,7 +25,10 @@ function xmlEscape(value: string): string {
 function imageSitemapBody(): string {
   const base = site.url.replace(/\/$/, "");
   const lastmod = getSitemapLastmodIso();
-  const images = Object.values(imageCatalog);
+  const images = Object.keys(imageCatalog).flatMap((slug) => {
+    const img = getImage(slug);
+    return img && !img.src.endsWith(".svg") ? [img] : [];
+  });
   const urls = images
     .map((img) => {
       const loc = img.src.startsWith("http") ? img.src : `${base}${img.src}`;

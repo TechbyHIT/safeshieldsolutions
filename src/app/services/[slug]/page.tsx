@@ -6,9 +6,7 @@ import { RelatedLinks } from "@/components/content/RelatedLinks";
 import { PhotoGallery, ProjectPhotoImage } from "@/components/ui/PhotoGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/layout/PageHero";
-import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
-import { getServiceImage } from "@/config/images";
-import { SeoImage } from "@/components/ui/SeoImage";
+import { getHeroPhoto, getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { noBuildStaticParams } from "@/config/build-static";
 import { routes } from "@/config/routes";
 import { buildServiceContent } from "@/lib/content";
@@ -58,7 +56,7 @@ export default async function ServicePage({ params }: PageProps) {
     category: service.category,
   });
 
-  const primaryPhoto = getPrimaryServicePhoto(service.slug);
+  const primaryPhoto = getPrimaryServicePhoto(service.slug) ?? getHeroPhoto();
   const galleryPhotos = getPhotosForService(service.slug, 48);
   const breadcrumbItems = buildServiceBreadcrumbs(service.name, service.slug);
   const allServices = await getActiveServices();
@@ -92,11 +90,7 @@ export default async function ServicePage({ params }: PageProps) {
         <div className="grid gap-10 lg:grid-cols-2">
           <PageContentRenderer content={content} h1={service.name} hideH1 />
           <div className="lg:sticky lg:top-24 lg:self-start">
-            {primaryPhoto ? (
-              <ProjectPhotoImage photo={primaryPhoto} />
-            ) : (
-              <SeoImage image={getServiceImage(service.slug)} />
-            )}
+            <ProjectPhotoImage photo={primaryPhoto} />
           </div>
         </div>
       </Section>

@@ -1,7 +1,5 @@
 import { PhotoGallery, ProjectPhotoImage } from "@/components/ui/PhotoGallery";
-import { SeoImage } from "@/components/ui/SeoImage";
-import { getServiceImage } from "@/config/images";
-import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
+import { getHeroPhoto, getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { Section } from "@/components/ui/Section";
 
 interface ServicePhotosProps {
@@ -11,15 +9,11 @@ interface ServicePhotosProps {
 }
 
 export function ServicePhotoSidebar({ serviceSlug, serviceName }: ServicePhotosProps) {
-  const primaryPhoto = getPrimaryServicePhoto(serviceSlug);
+  const primaryPhoto = getPrimaryServicePhoto(serviceSlug) ?? getHeroPhoto();
 
   return (
     <div className="lg:sticky lg:top-24 lg:self-start">
-      {primaryPhoto ? (
-        <ProjectPhotoImage photo={primaryPhoto} priority />
-      ) : (
-        <SeoImage image={getServiceImage(serviceSlug)} />
-      )}
+      <ProjectPhotoImage photo={primaryPhoto} priority />
       <p className="mt-3 text-center text-sm text-neutral-500">
         Real {serviceName} installation photo
       </p>

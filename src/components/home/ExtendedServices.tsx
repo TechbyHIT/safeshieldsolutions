@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { extendedServices } from "@/config/home-content";
 import { HOME_CITIES } from "@/config/home-seo-links";
-import { getPrimaryServicePhoto } from "@/config/photo-catalog";
+import { getHeroPhoto, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 
 export function ExtendedServices() {
@@ -18,29 +18,27 @@ export function ExtendedServices() {
           construction covering — with near-me pages in every city.
         </p>
       </div>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2">
         {extendedServices.map((service) => {
-          const photo = getPrimaryServicePhoto(service.slug);
+          const photo = getPrimaryServicePhoto(service.slug) ?? getHeroPhoto();
           return (
             <article
               key={service.slug}
-              className="overflow-hidden rounded-xl border border-neutral-200 bg-white transition hover:border-accent-500 hover:shadow-md"
+              className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-card transition hover:border-accent-500 hover:shadow-md"
             >
-              {photo && (
-                <Link
-                  href={routes.service(service.slug)}
-                  className="relative block aspect-[16/10] bg-neutral-100"
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 25vw"
-                    quality={85}
-                    className="object-cover object-center"
-                  />
-                </Link>
-              )}
+              <Link
+                href={routes.service(service.slug)}
+                className="relative block aspect-[16/10] bg-neutral-100"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={85}
+                  className="object-cover object-center"
+                />
+              </Link>
               <div className="p-5">
                 <Link href={routes.service(service.slug)}>
                   <h3 className="font-semibold text-neutral-900">{service.title}</h3>
