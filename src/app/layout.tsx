@@ -5,7 +5,6 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingActionButtons } from "@/components/layout/FloatingActionButtons";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildOrganizationSchema } from "@/lib/schema";
-import { buildPageMetadata } from "@/lib/metadata";
 import { site } from "@/config/site";
 import "./globals.css";
 
@@ -15,13 +14,8 @@ const inter = Inter({
   display: "swap",
 });
 
+/** Site-wide defaults only. Do not set robots/canonical here — they leak onto noindex pages. */
 export const metadata: Metadata = {
-  ...buildPageMetadata({
-    title: "Invisible Grills Near Me | Safety Nets & Premium Home Protection",
-    description:
-      "Best premium invisible grills, safety nets, pigeon nets, mosquito nets and cloth hangers near me. Free site survey in Chennai, Hyderabad, Coimbatore and Kochi — 700k+ local pages.",
-    path: "/",
-  }),
   metadataBase: new URL(site.url),
 };
 

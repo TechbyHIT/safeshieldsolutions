@@ -26,14 +26,14 @@ export function AreaExplorer() {
             2,000+ neighbourhoods
           </p>
           <h2 className="mt-2 text-3xl font-bold text-neutral-900">
-            Premium invisible grills & safety nets near me — 1,991 neighbourhoods
+            Premium invisible grills & safety nets near me — 2,199 neighbourhoods
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
             Best installation, price, dealers, and near-me pages for every locality — Chennai,
-            Hyderabad, Coimbatore, and Kochi. Click any area for 20,000+ words of local SEO content.
+            Hyderabad, Coimbatore, Kochi, and Chhattisgarh. Click any area for 20,000+ words of local SEO content.
           </p>
         </div>
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {cityAreaHighlights.map((city) => (
             <article
               key={city.citySlug}

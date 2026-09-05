@@ -7,7 +7,11 @@ import { routes } from "@/config/routes";
 
 export const metadata: Metadata = {
   title: "Page not found | SafeShield Solutions",
-  robots: { index: false, follow: true },
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: { index: false, follow: true },
+  },
 };
 
 export default function NotFound() {

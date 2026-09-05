@@ -13,7 +13,7 @@ export const revalidate = 86400;
 export const metadata = buildPageMetadata({
   title: "Local Project Blog | Invisible Grills & Safety Nets Near Me",
   description:
-    "Premium installation stories and near-me tips for invisible grills, safety nets, and pigeon nets in Chennai, Hyderabad, Coimbatore, and Kochi localities.",
+    "Premium installation stories and near-me tips for invisible grills, safety nets, and pigeon nets in Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh localities.",
   path: "/blog",
   keywords: [
     "safety nets blog",

@@ -3,7 +3,7 @@ export const seoDefaults = {
   defaultTitle:
     "Invisible Grills Near Me | Safety Nets & Zip Screens | SafeShield Solutions",
   defaultDescription:
-    "SafeShield Solutions — invisible grills near me, safety nets, pigeon nets, zip screens, mesh doors & cricket box grass in Chennai, Hyderabad, Coimbatore & Kochi. Free site survey, SS304 materials, 5-year warranty.",
+    "SafeShield Solutions — invisible grills near me, safety nets, pigeon nets, zip screens, mesh doors & cricket box grass in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh. Free site survey, SS304 materials, 5-year warranty.",
   defaultKeywords: [
     "invisible grills near me",
     "safety nets near me",
@@ -18,6 +18,7 @@ export const seoDefaults = {
     "Hyderabad",
     "Coimbatore",
     "Kochi",
+    "Chhattisgarh",
   ],
   ogImage: "/images/photos/balcony-invisible-grills/168.webp",
   twitterHandle: "@safeshieldsolutions",

@@ -3,14 +3,14 @@ import { routes } from "./routes";
 export const heroBullets = [
   "Premium SS304 invisible grills, SS316 marine-grade options & UV-stable safety nets",
   "Cricket box grass, zip screens, mesh doors & 36 service lines",
-  "Near-me pages for 1,991 neighbourhoods — installation, price, dealers, best",
-  "Free site survey in Chennai, Hyderabad, Coimbatore & Kochi",
+  "Near-me pages for 2,199 neighbourhoods — installation, price, dealers, best",
+  "Free site survey in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
   "20,000+ word local guides on every area × service page",
 ];
 
 export const homeHero = {
   eyebrow:
-    "#1 for Invisible Grills & Safety Nets in Chennai, Hyderabad, Coimbatore & Kochi",
+    "#1 for Invisible Grills & Safety Nets in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
   title: "SafeShield Solutions – Premium Invisible Grills & Safety Nets",
   description:
     "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection. We use SS304 stainless steel as standard and SS316 marine-grade cables for coastal or high-humidity openings.",
@@ -321,7 +321,7 @@ export const homeFaqs = [
   {
     question: "How do I find safety nets near me?",
     answer:
-      "Open our Locations page, choose Chennai, Hyderabad, Coimbatore, or Kochi, then select your neighbourhood. Each area page covers near-me, installation, price, dealers, premium, and best intent searches with 20,000+ words of local guidance. Send a photo and pin code before booking.",
+      "Open our Locations page, choose Chennai, Hyderabad, Coimbatore, Kochi, or Chhattisgarh, then select your neighbourhood. Each area page covers near-me, installation, price, dealers, premium, and best intent searches with 20,000+ words of local guidance. Send a photo and pin code before booking.",
   },
   {
     question: "Will a safety net block airflow or the balcony view?",
@@ -356,7 +356,7 @@ export const homeFaqs = [
   {
     question: "How many local pages does SafeShield Solutions publish?",
     answer:
-      "Over 700,000 indexable URLs across 1,991 neighbourhoods and 36 core services, with high-intent variants like installation, price, near-me, dealers, best, and premium on every locality page.",
+      "Over 700,000 indexable URLs across 2,199 neighbourhoods and 36 core services, with high-intent variants like installation, price, near-me, dealers, best, and premium on every locality page.",
   },
   {
     question: "Can I book same-day invisible grill installation near me?",
@@ -393,5 +393,12 @@ export const serviceCities = [
     summary:
       "Coastal-grade SS304 grills and UV nets for Kakkanad, Edappally, Vyttila, Fort Kochi, and Aluva apartments.",
     highlights: ["Safety Nets", "Pigeon Nets", "Cloth Hangers"],
+  },
+  {
+    slug: "chhattisgarh",
+    name: "Chhattisgarh",
+    summary:
+      "Invisible grills and safety nets for Raipur, Bhilai, Durg, Bilaspur, Korba, district towns, and other Chhattisgarh service areas.",
+    highlights: ["Invisible Grills", "Safety Nets", "Pigeon Nets"],
   },
 ];

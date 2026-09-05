@@ -27,7 +27,7 @@ export function ProjectGalleryPreview() {
         <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
           Browse {totalPhotoCount}+ completed photos — invisible grills, safety nets, pigeon nets,
           mosquito nets, cloth hangers, cricket nets, and bird spikes across Chennai, Hyderabad,
-          Coimbatore, and Kochi.
+          Coimbatore, Kochi, and Chhattisgarh.
         </p>
       </div>
       <div className="mt-10">

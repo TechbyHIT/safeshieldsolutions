@@ -146,11 +146,13 @@ export function getAreaZoneId(areaSlug: string): string {
 import { getChennaiZone, getChennaiZoneId } from "@/config/chennai-zones";
 import { getCoimbatoreZone, getCoimbatoreZoneId } from "@/config/coimbatore-zones";
 import { getKochiZone, getKochiZoneId } from "@/config/kochi-zones";
+import { getChhattisgarhZone, getChhattisgarhZoneId } from "@/config/chhattisgarh-zones";
 
 export function getAreaZoneForCity(citySlug: string, areaSlug: string): AreaZone {
   if (citySlug === "chennai") return getChennaiZone(areaSlug);
   if (citySlug === "coimbatore") return getCoimbatoreZone(areaSlug);
   if (citySlug === "kochi") return getKochiZone(areaSlug);
+  if (citySlug === "chhattisgarh") return getChhattisgarhZone(areaSlug);
   const zoneId = getAreaZoneId(areaSlug);
   return AREA_ZONES[zoneId] ?? AREA_ZONES["west-hyderabad"]!;
 }
@@ -159,6 +161,7 @@ export function getAreaZoneIdForCity(citySlug: string, areaSlug: string): string
   if (citySlug === "chennai") return getChennaiZoneId(areaSlug);
   if (citySlug === "coimbatore") return getCoimbatoreZoneId(areaSlug);
   if (citySlug === "kochi") return getKochiZoneId(areaSlug);
+  if (citySlug === "chhattisgarh") return getChhattisgarhZoneId(areaSlug);
   return getAreaZoneId(areaSlug);
 }
 

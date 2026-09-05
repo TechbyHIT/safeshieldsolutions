@@ -7,7 +7,7 @@ import { getHdPhotoSet } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 
 export function CityShowcase() {
-  const photos = getHdPhotoSet(4);
+  const photos = getHdPhotoSet(5);
 
   return (
     <Section className="bg-brand-950 text-white" ariaLabel="Service cities">
@@ -19,11 +19,11 @@ export function CityShowcase() {
           Best safety nets & invisible grills near me in your city
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-          Premium near-me installation hubs for Chennai, Hyderabad, Coimbatore, and Kochi — each
-          city links to 500+ locality pages with dealers, price, and free survey booking.
+          Premium near-me installation hubs for Chennai, Hyderabad, Coimbatore, Kochi, and
+          Chhattisgarh — each city links to locality pages with dealers, price, and free survey booking.
         </p>
       </div>
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {serviceCities.map((city, index) => {
           const photo = photos[index];
           return (

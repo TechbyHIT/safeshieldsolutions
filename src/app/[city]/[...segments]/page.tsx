@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (segments.length === 1) {
     const pageSlug = segments[0]!;
-    const resolved = resolveAreaPageSlug(pageSlug);
+    const resolved = resolveAreaPageSlug(pageSlug, city);
     const serviceSlug = resolved?.serviceSlug ?? pageSlug;
     const serviceData = await getServiceBySlug(serviceSlug);
     if (!serviceData || (!resolved && !getSeoService(pageSlug))) notFound();
@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (segments.length === 2) {
     const areaData = await getAreaBySlugs(city, segments[0]!);
-    const resolved = resolveAreaPageSlug(segments[1]!);
+    const resolved = resolveAreaPageSlug(segments[1]!, city);
     if (!areaData || !resolved) notFound();
     const serviceData = await getServiceBySlug(resolved.serviceSlug);
     if (!serviceData) notFound();
@@ -104,7 +104,7 @@ export default async function CitySegmentPage({ params }: PageProps) {
 
   if (segments.length === 1) {
     const pageSlug = segments[0]!;
-    const resolved = resolveAreaPageSlug(pageSlug);
+    const resolved = resolveAreaPageSlug(pageSlug, city);
     const serviceSlug = resolved?.serviceSlug ?? pageSlug;
     const serviceData = await getServiceBySlug(serviceSlug);
     if (!serviceData || (!resolved && !getSeoService(pageSlug))) notFound();
@@ -195,7 +195,7 @@ export default async function CitySegmentPage({ params }: PageProps) {
   const areaSlug = segments[0]!;
   const pageSlug = segments[1]!;
   const areaData = await getAreaBySlugs(city, areaSlug);
-  const resolved = resolveAreaPageSlug(pageSlug);
+  const resolved = resolveAreaPageSlug(pageSlug, city);
   if (!areaData || !resolved) notFound();
 
   const serviceData = await getServiceBySlug(resolved.serviceSlug);

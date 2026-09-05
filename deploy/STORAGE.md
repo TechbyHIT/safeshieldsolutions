@@ -84,7 +84,9 @@ sudo journalctl --vacuum-time=7d
 
 ## Sitemaps
 
-Dynamic (`/sitemap.xml`, `/sitemaps/[chunk]`). No 727k XML files on disk.
+Build-time XML in `public/` (`catalog:build` → `sitemap:build` → `next build`).
+Universal layout: `/sitemap.xml` (index) → `/sitemap-1.xml`, `/sitemap-2.xml`, … (urlsets, max 40k URLs, under Google’s 50k). Children are never nested indexes.
+`SITEMAP_PHASE=1` for low-RAM deploys (hubs + menu only). Phase 4 is capped to menu services × areas — not every keyword × every neighbourhood.
 
 ## Multi-site ports
 

@@ -1,19 +1,18 @@
 import { site } from "@/config/site";
 
-export const dynamic = "force-dynamic";
-
 export default function robots() {
-  const base = site.url.replace(/\/$/, "");
+  const origin = site.url.replace(/\/$/, "");
+  const host = new URL(origin.startsWith("http") ? origin : `https://${origin}`).hostname;
 
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/admin/", "/private/", "/_next/"],
+        disallow: ["/api/", "/*?*"],
       },
     ],
-    sitemap: `${base}/sitemap.xml`,
-    host: base,
+    sitemap: `${origin}/sitemap.xml`,
+    host,
   };
 }

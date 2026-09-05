@@ -61,7 +61,7 @@ export function HomePhotoStream() {
           Premium invisible grills, safety nets & pigeon nets — completed work
         </h2>
         <p className="mx-auto mt-3 max-w-3xl text-neutral-300">
-          Scroll through installation photos from Chennai, Hyderabad, Coimbatore, and Kochi
+          Scroll through installation photos from Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh
           projects. Each image links to a near-me locality page with pricing, dealer, and
           installation guides.
         </p>

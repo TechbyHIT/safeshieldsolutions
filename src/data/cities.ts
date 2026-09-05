@@ -49,6 +49,14 @@ export const CITIES: CityConfig[] = [
       "Professional invisible grills, safety nets, cloth hangers, and bird control across Kochi and Ernakulam.",
     sortOrder: 4,
   },
+  {
+    slug: "chhattisgarh",
+    name: "Chhattisgarh",
+    state: "Chhattisgarh",
+    description:
+      "Professional invisible grills, safety nets, cloth hangers, and bird control across Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur, Korba, and district towns statewide.",
+    sortOrder: 5,
+  },
 ];
 
 export function getCityConfig(slug: string): CityConfig | undefined {

@@ -1,7 +1,7 @@
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
 import { getAreasForCity } from "@/data/areas";
 import { routes } from "@/config/routes";
-import { PAGE_INTENT_SUFFIXES } from "@/lib/area-page-slugs-types";
+import { intentSuffixesForCity } from "@/lib/area-page-slugs-types";
 import { contentSeed } from "@/lib/content-seed";
 
 export interface InternalLinkGroup {
@@ -9,22 +9,18 @@ export interface InternalLinkGroup {
   links: { href: string; label: string }[];
 }
 
-const TOP_INTENTS = PAGE_INTENT_SUFFIXES.filter(
-  (s) =>
-    s &&
-    [
-      "-installation",
-      "-price",
-      "-dealers",
-      "-near-me",
-      "-cost",
-      "-contractors",
-      "-company",
-      "-quote",
-      "-best",
-      "-affordable",
-    ].includes(s),
-);
+const FEATURED_INTENTS = [
+  "-installation",
+  "-price",
+  "-dealers",
+  "-near-me",
+  "-cost",
+  "-contractors",
+  "-company",
+  "-quote",
+  "-best",
+  "-affordable",
+] as const;
 
 /** SEO internal links for area-service pages. */
 export function buildPageInternalLinks(input: {
@@ -36,6 +32,9 @@ export function buildPageInternalLinks(input: {
   serviceName: string;
   pageSlug: string;
 }): InternalLinkGroup[] {
+  const topIntents = intentSuffixesForCity(input.citySlug).filter((s) =>
+    FEATURED_INTENTS.includes(s as (typeof FEATURED_INTENTS)[number]),
+  );
   const seed = contentSeed(input.areaSlug, input.serviceSlug);
   const zoneAreas = getAreasForCity(input.citySlug).filter((a) => a.slug !== input.areaSlug);
   const nearbyCount = 18;
@@ -50,7 +49,7 @@ export function buildPageInternalLinks(input: {
     });
   }
 
-  const intentLinks = TOP_INTENTS.map((suffix) => ({
+  const intentLinks = topIntents.map((suffix) => ({
     href: routes.areaService(input.citySlug, input.areaSlug, `${input.serviceSlug}${suffix}`),
     label: `${input.serviceName}${suffix.replace(/-/g, " ")} in ${input.areaName}`,
   }));

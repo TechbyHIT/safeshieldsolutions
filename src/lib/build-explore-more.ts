@@ -2,7 +2,7 @@ import { CITIES } from "@/data/cities";
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
 import { getAreasForCity } from "@/data/areas";
 import { routes } from "@/config/routes";
-import { PAGE_INTENT_SUFFIXES } from "@/lib/area-page-slugs-types";
+import { intentSuffixesForCity } from "@/lib/area-page-slugs-types";
 import { contentSeed, pickMany } from "@/lib/content-seed";
 import { guideArticles, blogPosts } from "@/config/guides-content";
 import {
@@ -65,13 +65,14 @@ function buildCardPool(ctx: ExploreMoreContext, used: Set<string>): ExploreMoreC
   const otherAreas = areas.filter((a) => a.slug !== ctx.areaSlug);
   const otherCities = CITIES.filter((c) => c.slug !== ctx.citySlug);
   const otherServices = AREA_PAGE_SERVICES.filter((s) => s.slug !== ctx.serviceSlug);
-  const intents = PAGE_INTENT_SUFFIXES.filter((s) => s !== "");
+  const pageIntents = intentSuffixesForCity(ctx.citySlug);
+  const intents = pageIntents.filter((s) => s !== "");
   const blogsForCity = blogPosts.filter((b) => b.citySlug === ctx.citySlug);
   const blogsRotated = shuffleOrder(blogsForCity.length ? blogsForCity : blogPosts, seed);
 
   const cards: ExploreMoreCardData[] = [];
 
-  const currentLinks: ExploreMoreLink[] = PAGE_INTENT_SUFFIXES.map((suffix) => {
+  const currentLinks: ExploreMoreLink[] = pageIntents.map((suffix) => {
     const slug = `${ctx.serviceSlug}${suffix}`;
     const href =
       ctx.pageType === "area-service" && ctx.areaSlug
@@ -210,7 +211,7 @@ function buildCardPool(ctx: ExploreMoreContext, used: Set<string>): ExploreMoreC
   });
 
   const popularSuffixes = pickMany(
-    PAGE_INTENT_SUFFIXES.filter((s) => s !== ""),
+    pageIntents.filter((s) => s !== ""),
     seed,
     12,
   );

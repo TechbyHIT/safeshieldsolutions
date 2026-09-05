@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { seoDefaults } from "@/config/seo";
-import type { PageIndexabilityInput } from "@/lib/indexability";
+import {
+  isPageIndexable,
+  type PageIndexabilityInput,
+} from "@/lib/indexability";
 import { truncate, titleCase } from "@/lib/slug";
 import {
   buildAreaServiceKeywords,
@@ -15,6 +18,10 @@ export interface MetadataInput {
   keywords?: string[];
   ogImage?: string;
   indexability?: PageIndexabilityInput;
+  robots?: {
+    index?: boolean;
+    follow?: boolean;
+  };
 }
 
 export function buildCanonicalUrl(path: string): string {
@@ -31,6 +38,12 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
   const description = truncate(input.description, seoDefaults.maxDescriptionLength);
   const canonical = buildCanonicalUrl(input.path);
   const ogImage = input.ogImage ?? getHeroPhoto().src;
+  const follow = input.robots?.follow ?? true;
+  const indexableFromRules =
+    input.indexability === undefined
+      ? true
+      : isPageIndexable(input.indexability).indexable;
+  const index = input.robots?.index ?? indexableFromRules;
 
   return {
     title,
@@ -38,9 +51,9 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
     keywords: [...(input.keywords ?? seoDefaults.defaultKeywords)],
     alternates: { canonical },
     robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true },
+      index,
+      follow,
+      googleBot: { index, follow },
     },
     openGraph: {
       title,
@@ -68,7 +81,7 @@ export function buildServiceMetadata(
   return buildPageMetadata({
     title: `${serviceName} Near Me | Installation, Price & Dealers`,
     description: truncate(
-      `${serviceDescription} ${serviceName} near me — free site survey, installation, price per sq ft, dealers & premium options. SafeShield Solutions across Chennai, Hyderabad, Coimbatore & Kochi.`,
+      `${serviceDescription} ${serviceName} near me — free site survey, installation, price per sq ft, dealers & premium options. SafeShield Solutions across Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh.`,
       seoDefaults.maxDescriptionLength,
     ),
     path: `/services/${serviceSlug}`,

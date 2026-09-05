@@ -43,9 +43,9 @@ prisma/*.db-journal
 /reports/*.csv
 !/reports/.gitkeep
 
-# public sitemaps (generated)
-/public/sitemaps/*.xml
-!/public/sitemaps/.gitkeep
+# public sitemaps (generated at build; index stays /sitemap.xml, children /sitemap-N.xml)
+/public/sitemap.xml
+/public/sitemap-*.xml
 
 # typescript
 *.tsbuildinfo

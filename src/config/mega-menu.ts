@@ -149,6 +149,18 @@ export const cityAreaHighlights: CityAreaHighlight[] = [
       { label: "Palarivattom", href: routes.areaService("kochi", "palarivattom", "invisible-grills") },
     ],
   },
+  {
+    citySlug: "chhattisgarh",
+    cityName: "Chhattisgarh",
+    areas: [
+      { label: "Raipur", href: routes.areaService("chhattisgarh", "raipur", "invisible-grills") },
+      { label: "Bhilai", href: routes.areaService("chhattisgarh", "bhilai", "invisible-grills") },
+      { label: "Durg", href: routes.areaService("chhattisgarh", "durg", "invisible-grills") },
+      { label: "Bilaspur", href: routes.areaService("chhattisgarh", "bilaspur", "invisible-grills") },
+      { label: "Korba", href: routes.areaService("chhattisgarh", "korba", "invisible-grills") },
+      { label: "Rajnandgaon", href: routes.areaService("chhattisgarh", "rajnandgaon", "invisible-grills") },
+    ],
+  },
 ];
 
 export const trustBadges = [

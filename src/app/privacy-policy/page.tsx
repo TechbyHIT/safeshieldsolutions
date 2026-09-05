@@ -8,6 +8,7 @@ export const metadata = buildPageMetadata({
   title: "Privacy Policy | SafeShield Solutions",
   description: "Privacy policy for SafeShield Solutions website and contact enquiries.",
   path: "/privacy-policy",
+  robots: { index: false, follow: true },
 });
 
 export default function PrivacyPolicyPage() {
@@ -34,8 +35,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             We do not sell personal data. Information is used solely for service delivery, follow-up
-            on installation enquiries, and warranty support in Chennai, Hyderabad, Coimbatore, and
-            Kochi service areas.
+            on installation enquiries, and warranty support in Chennai, Hyderabad, Coimbatore, Kochi,
+            and Chhattisgarh service areas.
           </p>
           <p>
             For data requests or deletion, contact us through the phone number listed on our contact

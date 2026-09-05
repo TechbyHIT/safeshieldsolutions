@@ -65,6 +65,14 @@ export const LANDMARKS_BY_CITY: Record<string, readonly string[]> = {
     "Fort Kochi heritage",
     "Vyttila hub",
   ],
+  chhattisgarh: [
+    "Raipur",
+    "Bhilai",
+    "Durg",
+    "Bilaspur",
+    "Korba",
+    "Jagdalpur",
+  ],
 };
 
 export const IT_PARKS_BY_CITY: Record<string, readonly string[]> = {
@@ -72,6 +80,7 @@ export const IT_PARKS_BY_CITY: Record<string, readonly string[]> = {
   hyderabad: ["Cyber Towers", "WaveRock", "DivyaSree Orion", "Phoenix Tech Park"],
   coimbatore: ["CHIL SEZ", "KCT Tech Park", "Peelamedu tech belt"],
   kochi: ["Infopark Phase 1", "Infopark Phase 2", "SmartCity Kochi"],
+  chhattisgarh: ["Naya Raipur", "Raipur", "Bhilai", "Bilaspur"],
 };
 
 export const POPULAR_SEARCH_MODIFIERS = [

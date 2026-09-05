@@ -1,7 +1,7 @@
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
 import { HOME_CITY_AREAS } from "@/config/home-seo-links";
 import { routes } from "@/config/routes";
-import { PAGE_INTENT_SUFFIXES } from "@/lib/area-page-slugs-types";
+import { intentSuffixesForCity } from "@/lib/area-page-slugs-types";
 import { contentSeed } from "@/lib/content-seed";
 
 export interface InternalLinkGroup {
@@ -9,9 +9,16 @@ export interface InternalLinkGroup {
   links: { href: string; label: string }[];
 }
 
-const CITY_INTENTS = PAGE_INTENT_SUFFIXES.filter((s) =>
-  ["", "-near-me", "-installation", "-price", "-dealers", "-best", "-premium", "-affordable"].includes(s),
-);
+const CITY_INTENT_ALLOW = [
+  "",
+  "-near-me",
+  "-installation",
+  "-price",
+  "-dealers",
+  "-best",
+  "-premium",
+  "-affordable",
+] as const;
 
 /** Internal links for city×service pages (not area-specific). */
 export function buildCityPageInternalLinks(input: {
@@ -21,6 +28,9 @@ export function buildCityPageInternalLinks(input: {
   serviceName: string;
   pageSlug: string;
 }): InternalLinkGroup[] {
+  const cityIntents = intentSuffixesForCity(input.citySlug).filter((s) =>
+    CITY_INTENT_ALLOW.includes(s as (typeof CITY_INTENT_ALLOW)[number]),
+  );
   const seed = contentSeed(input.citySlug, input.serviceSlug);
   const areas = HOME_CITY_AREAS[input.citySlug] ?? [];
   const areaLinks: { href: string; label: string }[] = [];
@@ -34,7 +44,7 @@ export function buildCityPageInternalLinks(input: {
     });
   }
 
-  const intentLinks = CITY_INTENTS.filter((s) => s).map((suffix) => ({
+  const intentLinks = cityIntents.filter((s) => s).map((suffix) => ({
     href: routes.cityService(input.citySlug, `${input.serviceSlug}${suffix}`),
     label: `${input.serviceName}${suffix.replace(/-/g, " ")} in ${input.cityName}`,
   }));

@@ -107,6 +107,6 @@ export function isPageIndexable(input: PageIndexabilityInput): IndexabilityResul
   };
 }
 
-export function getRobotsDirective(_input: PageIndexabilityInput): string {
-  return "index, follow";
+export function getRobotsDirective(input: PageIndexabilityInput): string {
+  return isPageIndexable(input).indexable ? "index, follow" : "noindex, follow";
 }

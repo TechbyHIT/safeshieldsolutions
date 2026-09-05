@@ -102,7 +102,7 @@ export function buildServiceContent(ctx: ServiceContentContext): PageContent {
       {
         question: "Which areas do you serve?",
         answer:
-          "We serve Chennai, Hyderabad, Coimbatore, and Kochi including all major residential and commercial localities. Contact us or browse our locations index to confirm service availability in your neighbourhood.",
+          "We serve Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh including all major residential and commercial localities. Contact us or browse our locations index to confirm service availability in your neighbourhood.",
       },
       ...detail.extraFaqs,
     ],
@@ -178,7 +178,7 @@ export function buildCityServiceContent(
       {
         id: "price-dealers-city",
         heading: `${serviceName} price & dealers in ${city}`,
-        body: `"${serviceLower} price in ${city}" and "dealers near me" queries should compare itemised scope: anchors, edge treatment, transport, GST, and warranty. We operate as manufacturer-installer across Chennai, Hyderabad, Coimbatore, and Kochi — ${city} residents get direct fitting without middleman markup.`,
+        body: `"${serviceLower} price in ${city}" and "dealers near me" queries should compare itemised scope: anchors, edge treatment, transport, GST, and warranty. We operate as manufacturer-installer across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh — ${city} residents get direct fitting without middleman markup.`,
         level: 2,
       },
       {
@@ -220,7 +220,7 @@ export function buildCityServiceContent(
       },
       {
         question: "Is site survey free?",
-        answer: "Yes. We offer a free site survey and measurement for all residential enquiries in Chennai, Hyderabad, Coimbatore, and Kochi.",
+        answer: "Yes. We offer a free site survey and measurement for all residential enquiries in Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh.",
       },
       ...longform.faqs,
     ],

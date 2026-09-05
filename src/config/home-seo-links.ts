@@ -55,6 +55,7 @@ export const HOME_CITIES = [
   { slug: "hyderabad", name: "Hyderabad" },
   { slug: "coimbatore", name: "Coimbatore" },
   { slug: "kochi", name: "Kochi" },
+  { slug: "chhattisgarh", name: "Chhattisgarh" },
 ] as const;
 
 /** Featured localities per city — deep-linked on homepage for crawl + near-me SEO */
@@ -146,6 +147,30 @@ export const HOME_CITY_AREAS: Record<string, HomeAreaLink[]> = {
     { slug: "kumbalangi", name: "Kumbalangi" },
     { slug: "perumbavoor", name: "Perumbavoor" },
   ],
+  chhattisgarh: [
+    { slug: "raipur", name: "Raipur" },
+    { slug: "naya-raipur", name: "Naya Raipur" },
+    { slug: "shankar-nagar", name: "Shankar Nagar" },
+    { slug: "bhilai", name: "Bhilai" },
+    { slug: "durg", name: "Durg" },
+    { slug: "bilaspur", name: "Bilaspur" },
+    { slug: "korba", name: "Korba" },
+    { slug: "rajnandgaon", name: "Rajnandgaon" },
+    { slug: "dongargarh", name: "Dongargarh" },
+    { slug: "raigarh", name: "Raigarh" },
+    { slug: "jagdalpur", name: "Jagdalpur" },
+    { slug: "ambikapur", name: "Ambikapur" },
+    { slug: "dhamtari", name: "Dhamtari" },
+    { slug: "mahasamund", name: "Mahasamund" },
+    { slug: "bhatapara", name: "Bhatapara" },
+    { slug: "janjgir", name: "Janjgir" },
+    { slug: "champa", name: "Champa" },
+    { slug: "kanker", name: "Kanker" },
+    { slug: "kawardha", name: "Kawardha" },
+    { slug: "bemetara", name: "Bemetara" },
+    { slug: "balod", name: "Balod" },
+    { slug: "baloda-bazar", name: "Baloda Bazar" },
+  ],
 };
 
 export interface KeywordLinkItem {
@@ -207,8 +232,8 @@ export const HOME_PRIMARY_INTENTS = HOME_SEARCH_INTENTS.filter((i) =>
 export const homeSeoParagraphs = [
   {
     id: "near-me",
-    heading: "Premium invisible grills & safety nets near me — Chennai, Hyderabad, Coimbatore & Kochi",
-    body: `Searching "invisible grills near me", "safety nets near me", or "pigeon nets near me" should lead to a local team that surveys your opening, specifies SS304 or UV-stable materials, and installs with warranty — not a generic dealer list. SafeShield Solutions publishes dedicated pages for 1,991 neighbourhoods across four cities, each with 20,000+ words covering installation, price, dealers, contractors, and premium options. Whether you are in Peelamedu IT corridor, Kakkanad Infopark, Gachibowli high-rises, or Adyar sea-facing flats, the same quality standard applies: measured scope, itemised quotes, and society-friendly finishes.`,
+    heading: "Premium invisible grills & safety nets near me — Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
+    body: `Searching "invisible grills near me", "safety nets near me", or "pigeon nets near me" should lead to a local team that surveys your opening, specifies SS304 or UV-stable materials, and installs with warranty — not a generic dealer list. SafeShield Solutions publishes dedicated pages across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh — including Raipur, Bhilai, Durg, and Bilaspur — each covering installation, price, dealers, contractors, and premium options. Whether you are in Peelamedu IT corridor, Kakkanad Infopark, Gachibowli high-rises, Adyar sea-facing flats, or Raipur apartments, the same quality standard applies: measured scope, itemised quotes, and society-friendly finishes.`,
   },
   {
     id: "premium",

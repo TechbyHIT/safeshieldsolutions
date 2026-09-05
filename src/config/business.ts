@@ -19,7 +19,7 @@ export const business = {
     latitude: 17.4849,
     longitude: 78.5418,
   },
-  serviceAreas: ["Chennai", "Hyderabad", "Coimbatore", "Kochi"],
+  serviceAreas: ["Chennai", "Hyderabad", "Coimbatore", "Kochi", "Chhattisgarh"],
   workingHours: {
     weekdays: "9:00 AM – 7:00 PM",
     saturday: "9:00 AM – 6:00 PM",

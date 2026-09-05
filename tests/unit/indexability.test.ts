@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isPageIndexable } from "@/lib/indexability";
+import { getRobotsDirective, isPageIndexable } from "@/lib/indexability";
 import { slugify, countWords, truncate } from "@/lib/slug";
 
 describe("slugify", () => {
@@ -55,5 +55,12 @@ describe("isPageIndexable", () => {
     const result = isPageIndexable({ ...baseInput, status: "DRAFT" });
     expect(result.indexable).toBe(false);
     expect(result.reasons).toContain("Page is not published");
+  });
+
+  it("emits noindex, follow when a page should not rank", () => {
+    expect(getRobotsDirective(baseInput)).toBe("index, follow");
+    expect(getRobotsDirective({ ...baseInput, indexStatus: "NOINDEX" })).toBe(
+      "noindex, follow",
+    );
   });
 });

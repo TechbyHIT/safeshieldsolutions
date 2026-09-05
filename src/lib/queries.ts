@@ -1,5 +1,5 @@
 import { CITIES, getCityConfig } from "@/data/cities";
-import { getAreaByCitySlugs, getAreasForCity, CHENNAI_AREA_COUNT, HYDERABAD_AREA_COUNT } from "@/data/areas";
+import { getAreaByCitySlugs, getAreasForCity, getTotalAreaCount } from "@/data/areas";
 import { SEO_SERVICES, AREA_PAGE_SERVICES, getSeoService } from "@/data/seo-services";
 import { site } from "@/config/site";
 import {
@@ -177,7 +177,7 @@ function getWarmPaths(limit = site.staticParamsLimit): DataPage[] {
     const areas = getAreasForCity(city.slug).filter((a) => a.priorityTier === 1);
     for (const area of areas) {
       for (const pageSlug of pageSlugs) {
-        const resolved = resolveAreaPageSlug(pageSlug);
+        const resolved = resolveAreaPageSlug(pageSlug, city.slug);
         if (!resolved) continue;
         paths.push({
           path: `/${city.slug}/${area.slug}/${pageSlug}`,
@@ -214,8 +214,7 @@ export async function getStaticParamsForPageType(pageType: PageType): Promise<Da
 
 export async function countPages(): Promise<number> {
   return (
-    countAreaPagesPerCity(CHENNAI_AREA_COUNT) +
-    countAreaPagesPerCity(HYDERABAD_AREA_COUNT) +
+    countAreaPagesPerCity(getTotalAreaCount()) +
     countCityServicePages() * CITIES.length
   );
 }

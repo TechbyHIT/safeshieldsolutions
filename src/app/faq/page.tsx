@@ -15,7 +15,7 @@ export const revalidate = 86400;
 export const metadata = buildPageMetadata({
   title: "FAQ | Invisible Grills, Safety Nets & Free Site Survey",
   description:
-    "Answers on invisible grill price, safety net installation, free surveys, warranty, and service areas across Chennai, Hyderabad, Coimbatore, and Kochi.",
+    "Answers on invisible grill price, safety net installation, free surveys, warranty, and service areas across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh.",
   path: routes.faq,
   keywords: ["invisible grill faq", "safety net price", "free site survey"],
 });

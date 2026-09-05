@@ -32,6 +32,7 @@ export const navigation = {
     { label: "Hyderabad", href: routes.city("hyderabad") },
     { label: "Coimbatore", href: routes.city("coimbatore") },
     { label: "Kochi", href: routes.city("kochi") },
+    { label: "Chhattisgarh", href: routes.city("chhattisgarh") },
   ],
   footer: [
     { label: "FAQ", href: routes.faq },

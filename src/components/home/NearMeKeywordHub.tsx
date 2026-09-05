@@ -18,32 +18,14 @@ export function NearMeKeywordHub() {
     buildCityKeywordLinks(city.slug, city.name, HOME_TOP_SERVICES.slice(0, 8), HOME_PRIMARY_INTENTS),
   );
 
-  const chennaiLinks = buildAreaKeywordLinks(
-    "chennai",
-    HOME_CITY_AREAS.chennai ?? [],
-    HOME_TOP_SERVICES.slice(0, 6),
-    HOME_PRIMARY_INTENTS.slice(0, 5),
+  const allAreaLinks = HOME_CITIES.flatMap((city) =>
+    buildAreaKeywordLinks(
+      city.slug,
+      HOME_CITY_AREAS[city.slug] ?? [],
+      HOME_TOP_SERVICES.slice(0, 6),
+      HOME_PRIMARY_INTENTS.slice(0, 5),
+    ),
   );
-  const hyderabadLinks = buildAreaKeywordLinks(
-    "hyderabad",
-    HOME_CITY_AREAS.hyderabad ?? [],
-    HOME_TOP_SERVICES.slice(0, 6),
-    HOME_PRIMARY_INTENTS.slice(0, 5),
-  );
-  const coimbatoreLinks = buildAreaKeywordLinks(
-    "coimbatore",
-    HOME_CITY_AREAS.coimbatore ?? [],
-    HOME_TOP_SERVICES.slice(0, 6),
-    HOME_PRIMARY_INTENTS.slice(0, 5),
-  );
-  const kochiLinks = buildAreaKeywordLinks(
-    "kochi",
-    HOME_CITY_AREAS.kochi ?? [],
-    HOME_TOP_SERVICES.slice(0, 6),
-    HOME_PRIMARY_INTENTS.slice(0, 5),
-  );
-
-  const allAreaLinks = [...chennaiLinks, ...hyderabadLinks, ...coimbatoreLinks, ...kochiLinks];
 
   return (
     <>
@@ -57,7 +39,7 @@ export function NearMeKeywordHub() {
           </h2>
           <p className="mx-auto mt-3 max-w-3xl text-neutral-600">
             Every link opens a unique 20,000+ word local guide — installation, price, dealers,
-            contractors, premium SS304 options, and free site survey booking across South India.
+            contractors, premium SS304 options, and free site survey booking.
           </p>
         </div>
 
@@ -83,7 +65,7 @@ export function NearMeKeywordHub() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {HOME_CITIES.map((city) => (
             <div
               key={city.slug}
@@ -125,7 +107,7 @@ export function NearMeKeywordHub() {
       <KeywordLinkScroller
         id="locality-keywords"
         heading="Locality pages — 2,400+ near-me links on this homepage"
-        description="Hyper-local URLs for Adyar, Kakkanad, Gandhipuram, Gachibowli, Peelamedu, and 75+ more featured neighbourhoods. Load more to browse the full matrix."
+        description="Hyper-local URLs for Adyar, Kakkanad, Gandhipuram, Gachibowli, Peelamedu, Raipur, and 75+ more featured neighbourhoods. Load more to browse the full matrix."
         links={allAreaLinks}
         initialCount={96}
         batchSize={96}

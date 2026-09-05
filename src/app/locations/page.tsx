@@ -11,23 +11,23 @@ import { getActiveCities } from "@/lib/queries";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "Service Locations | Chennai, Hyderabad, Coimbatore & Kochi",
+  title: "Service Locations | Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
   description:
-    "SafeShield Solutions serves Chennai, Hyderabad, Coimbatore, and Kochi with invisible grills, safety nets, pigeon nets, cloth hangers, and home protection installations.",
+    "SafeShield Solutions serves Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh with invisible grills, safety nets, pigeon nets, cloth hangers, and home protection installations.",
   path: "/locations",
 });
 
 export default async function LocationsIndexPage() {
   const cities = await getActiveCities();
   const photos = getInterleavedPhotos(12);
-  const cityPhotos = getHdPhotoSet(4);
+  const cityPhotos = getHdPhotoSet(5);
 
   return (
     <>
       <PageHero
         eyebrow="Service cities"
         title="Our Locations"
-        description="We provide invisible grills, safety nets, and home protection services across major cities in South India — Chennai, Hyderabad, Coimbatore, and Kochi."
+        description="We provide invisible grills, safety nets, and home protection services across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh."
         photo={getHdPhoto("safety-nets")}
         breadcrumbs={[
           { label: "Home", href: routes.home },

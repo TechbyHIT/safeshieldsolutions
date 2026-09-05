@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { CITIES } from "@/data/cities";
+import { getAreasForCity } from "@/data/areas";
 
 const CITY_SLUGS = new Set(CITIES.map((c) => c.slug));
+const AREA_SLUGS_BY_CITY = new Map(
+  CITIES.map((city) => [city.slug, new Set(getAreasForCity(city.slug).map((area) => area.slug))]),
+);
 
 const APP_ROUTE_ROOTS = new Set([
   "services",
@@ -16,7 +20,6 @@ const APP_ROUTE_ROOTS = new Set([
   "html-sitemap",
   "privacy-policy",
   "terms-of-service",
-  "sitemaps",
   "api",
   "_next",
   "images",
@@ -50,6 +53,15 @@ export function middleware(request: NextRequest) {
   }
 
   const first = parts[0];
+  if (first === "locations" && parts[1] && !CITY_SLUGS.has(parts[1])) {
+    return NextResponse.rewrite(new URL("/not-found", request.url), { status: 404 });
+  }
+  if (first === "locations" && parts[1] && parts[2]) {
+    const cityAreas = AREA_SLUGS_BY_CITY.get(parts[1]);
+    if (!cityAreas?.has(parts[2])) {
+      return NextResponse.rewrite(new URL("/not-found", request.url), { status: 404 });
+    }
+  }
   if (!first || APP_ROUTE_ROOTS.has(first)) {
     return NextResponse.next();
   }
@@ -62,5 +74,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap\\.xml|sitemap-\\d+\\.xml).*)"],
 };
