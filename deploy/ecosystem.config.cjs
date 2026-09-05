@@ -16,14 +16,28 @@
  *   pm2 set pm2-logrotate:compress true
  *   pm2 set pm2-logrotate:workerInterval 60
  */
+const fs = require("fs");
 const path = require("path");
 const root = path.join(__dirname, "..");
+
+function resolveStandaloneCwd() {
+  const standalone = path.join(root, ".next", "standalone");
+  const direct = path.join(standalone, "server.js");
+  if (fs.existsSync(direct)) return standalone;
+  if (!fs.existsSync(standalone)) return standalone;
+  for (const name of fs.readdirSync(standalone)) {
+    if (name === "node_modules" || name === ".next") continue;
+    const nested = path.join(standalone, name);
+    if (fs.existsSync(path.join(nested, "server.js"))) return nested;
+  }
+  return standalone;
+}
 
 module.exports = {
   apps: [
     {
       name: "safeshield-solutions",
-      cwd: path.join(root, ".next", "standalone"),
+      cwd: resolveStandaloneCwd(),
       script: "server.js",
       instances: 1,
       exec_mode: "fork",

@@ -21,8 +21,8 @@ fi
 echo "==> Install + build + prune"
 npm run deploy:prod
 
-if [ ! -f .next/standalone/server.js ]; then
-  echo "ERROR: .next/standalone/server.js missing — build failed"
+if [ ! -f .next/standalone/server.js ] && [ ! -f .next/standalone/safeshieldsolutions/server.js ]; then
+  echo "ERROR: standalone server.js missing — build failed"
   exit 1
 fi
 

@@ -24,6 +24,17 @@ if (!fs.existsSync(standalone)) {
   process.exit(1);
 }
 
+const directServer = path.join(standalone, "server.js");
+const nestedServer = fs
+  .readdirSync(standalone, { withFileTypes: true })
+  .filter((ent) => ent.isDirectory() && ent.name !== "node_modules" && ent.name !== ".next")
+  .map((ent) => path.join(standalone, ent.name, "server.js"))
+  .find((file) => fs.existsSync(file));
+if (!fs.existsSync(directServer) && !nestedServer) {
+  console.error("ERROR: standalone server.js missing — next build did not finish.");
+  process.exit(1);
+}
+
 console.log("Pruning build-only paths (runtime standalone kept)…\n");
 
 rmrf("node_modules");

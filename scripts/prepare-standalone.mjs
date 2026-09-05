@@ -33,6 +33,25 @@ if (!fs.existsSync(standaloneDir)) {
   process.exit(1);
 }
 
+/** Next 15 may emit `.next/standalone/server.js` or `.next/standalone/<folder>/server.js`. */
+function findStandaloneApp(dir) {
+  const direct = path.join(dir, "server.js");
+  if (fs.existsSync(direct)) return dir;
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (!ent.isDirectory() || ent.name === "node_modules" || ent.name === ".next") continue;
+    const nested = path.join(dir, ent.name);
+    if (fs.existsSync(path.join(nested, "server.js"))) return nested;
+  }
+  return null;
+}
+
+const appDir = findStandaloneApp(standaloneDir);
+if (!appDir) {
+  console.error("Missing standalone server.js — next build did not emit a runnable app.");
+  process.exit(1);
+}
+console.log(`Standalone app: ${path.relative(root, appDir)}`);
+
 function shouldCopyPublic(name) {
   if (SKIP_PUBLIC_NAMES.has(name)) return false;
   const ext = path.extname(name).toLowerCase();
@@ -76,8 +95,8 @@ function stripSourceMaps(dir) {
   return removed;
 }
 
-const standalonePublic = path.join(standaloneDir, "public");
-const standaloneStatic = path.join(standaloneDir, ".next", "static");
+const standalonePublic = path.join(appDir, "public");
+const standaloneStatic = path.join(appDir, ".next", "static");
 
 if (fs.existsSync(publicDir)) {
   if (fs.existsSync(standalonePublic)) {
@@ -101,7 +120,7 @@ function copyDirMerge(src, dest) {
 }
 
 const nextSrc = path.join(root, "node_modules", "next", "dist");
-const nextDest = path.join(standaloneDir, "node_modules", "next", "dist");
+const nextDest = path.join(appDir, "node_modules", "next", "dist");
 for (const part of ["server", "shared", "lib", "compiled"]) {
   const from = path.join(nextSrc, part);
   const to = path.join(nextDest, part);
@@ -122,5 +141,10 @@ if (fs.existsSync(nextServerJs)) {
 
 const maps = stripSourceMaps(standaloneDir);
 if (maps) console.log(`Removed ${maps} source map file(s) from standalone`);
+
+if (!fs.existsSync(path.join(appDir, "server.js"))) {
+  console.error("FATAL: standalone server.js still missing after prepare.");
+  process.exit(1);
+}
 
 console.log("Standalone bundle ready for PM2.");
