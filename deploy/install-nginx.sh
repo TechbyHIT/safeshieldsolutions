@@ -24,7 +24,26 @@ if [ ! -d "$ROOT/deploy" ]; then
   exit 1
 fi
 
-mkdir -p /var/www/certbot /etc/nginx/sites-available /etc/nginx/sites-enabled
+mkdir -p /var/www/certbot /var/www/safeshield-sitemaps /etc/nginx/sites-available /etc/nginx/sites-enabled
+
+# nginx www-data cannot read /root — copy sitemap XML to a public web dir.
+copied=0
+for src in \
+  "$ROOT/public" \
+  "$ROOT/.next/standalone/safeshieldsolutions/public" \
+  "$ROOT/.next/standalone/public"
+do
+  if [ -f "$src/sitemap.xml" ]; then
+    cp -a "$src"/sitemap*.xml /var/www/safeshield-sitemaps/
+    copied=1
+    echo "==> Copied sitemaps from $src → /var/www/safeshield-sitemaps"
+    break
+  fi
+done
+if [ "$copied" -eq 0 ]; then
+  echo "WARN: no sitemap.xml found to copy. Google cannot fetch until XML exists in /var/www/safeshield-sitemaps"
+fi
+chmod -R a+rX /var/www/safeshield-sitemaps
 
 # Drop broken symlinks that made nginx -t fail with "No such file or directory"
 rm -f "$ENABLED" /etc/nginx/sites-enabled/safeshield
@@ -38,8 +57,6 @@ else
 fi
 
 cp -f "$SRC" "$AVAILABLE"
-# Point sitemap static roots at this clone (build writes sitemap-N.xml under public/).
-sed -i "s|root /root/safeshieldsolutions;|root ${ROOT};|g" "$AVAILABLE"
 ln -sfn "$AVAILABLE" "$ENABLED"
 
 echo "==> nginx -t"
@@ -64,4 +81,5 @@ echo "Checks:"
 echo "  curl -sI http://127.0.0.1:3010/ | head"
 echo "  curl -sI -H 'Host: safeshieldsolutions.in' http://127.0.0.1/ | grep -i x-site-brand"
 echo "  curl -sIk https://safeshieldsolutions.in | grep -i x-site-brand"
-echo "Expected: X-Site-Brand: SafeShield-Solutions"
+echo "  curl -sI https://safeshieldsolutions.in/sitemap.xml | head"
+echo "Expected: X-Site-Brand: SafeShield-Solutions and sitemap HTTP 200 + application/xml"
