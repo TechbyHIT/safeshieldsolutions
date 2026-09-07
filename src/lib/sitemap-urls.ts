@@ -234,14 +234,11 @@ export function shardSitemapEntries(entries: SitemapEntry[]): SitemapEntry[][] {
 }
 
 export function renderUrlsetXml(entries: SitemapEntry[]): string {
+  // Compact rows — Google ignores changefreq/priority. Smaller files fetch before timeout.
   const urls = entries
     .map(
-      (entry) => `  <url>
-    <loc>${xmlEscape(entry.loc)}</loc>
-    <lastmod>${xmlEscape(entry.lastmod)}</lastmod>
-    <changefreq>${entry.changefreq}</changefreq>
-    <priority>${entry.priority.toFixed(2)}</priority>
-  </url>`,
+      (entry) =>
+        `<url><loc>${xmlEscape(entry.loc)}</loc><lastmod>${xmlEscape(entry.lastmod)}</lastmod></url>`,
     )
     .join("\n");
 

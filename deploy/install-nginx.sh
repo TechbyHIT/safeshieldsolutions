@@ -38,6 +38,8 @@ else
 fi
 
 cp -f "$SRC" "$AVAILABLE"
+# Point sitemap static roots at this clone (build writes sitemap-N.xml under public/).
+sed -i "s|root /root/safeshieldsolutions;|root ${ROOT};|g" "$AVAILABLE"
 ln -sfn "$AVAILABLE" "$ENABLED"
 
 echo "==> nginx -t"

@@ -46,6 +46,8 @@ prisma/*.db-journal
 # public sitemaps (generated at build; index stays /sitemap.xml, children /sitemap-N.xml)
 /public/sitemap.xml
 /public/sitemap-*.xml
+/public/sitemap.xml.gz
+/public/sitemap-*.xml.gz
 
 # typescript
 *.tsbuildinfo

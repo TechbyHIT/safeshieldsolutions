@@ -13,6 +13,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { gzipSync } from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -56,7 +57,7 @@ const legacyShardsDir = path.join(publicDir, "sitemaps");
 fs.mkdirSync(publicDir, { recursive: true });
 
 for (const name of fs.readdirSync(publicDir)) {
-  if (/^sitemap-\d+\.xml$/i.test(name)) {
+  if (/^sitemap(-\d+)?\.xml(\.gz)?$/i.test(name)) {
     fs.rmSync(path.join(publicDir, name), { force: true });
   }
 }
@@ -69,14 +70,34 @@ const phase = getSitemapPhase();
 const entries = getAllSitemapEntries();
 const shards = shardSitemapEntries(entries);
 
+function writeXmlAndGzip(filePath, xml) {
+  fs.writeFileSync(filePath, xml, "utf8");
+  fs.writeFileSync(`${filePath}.gz`, gzipSync(xml, { level: 6 }));
+}
+
 shards.forEach((shard, index) => {
   const filename = childSitemapFilename(index + 1);
-  fs.writeFileSync(path.join(publicDir, filename), renderUrlsetXml(shard), "utf8");
+  writeXmlAndGzip(path.join(publicDir, filename), renderUrlsetXml(shard));
 });
 
-fs.writeFileSync(path.join(publicDir, "sitemap.xml"), renderSitemapIndexXml(getSitemapIndexLocs()), "utf8");
+writeXmlAndGzip(
+  path.join(publicDir, "sitemap.xml"),
+  renderSitemapIndexXml(getSitemapIndexLocs()),
+);
+
+const metaPath = path.join(root, "src", "generated", "sitemap-meta.ts");
+fs.mkdirSync(path.dirname(metaPath), { recursive: true });
+fs.writeFileSync(
+  metaPath,
+  `/** Written by \`npm run sitemap:build\`. Fallback values keep typecheck working before a generate. */\nexport const SITEMAP_URL_COUNT = ${entries.length};\nexport const SITEMAP_SHARD_COUNT = ${shards.length};\n`,
+  "utf8",
+);
 
 const names = shards.map((_, i) => childSitemapFilename(i + 1)).join(", ");
+const shardBytes = fs.statSync(path.join(publicDir, childSitemapFilename(1))).size;
 console.log(
   `[sitemap:build] phase ${phase} — ${entries.length.toLocaleString()} URLs in ${shards.length} child urlset(s) (${names}) → public/sitemap.xml`,
+);
+console.log(
+  `[sitemap:build] first child ${Math.round(shardBytes / 1024).toLocaleString()} KB uncompressed (gzip alongside for nginx gzip_static)`,
 );

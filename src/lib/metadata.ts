@@ -53,7 +53,15 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
     robots: {
       index,
       follow,
-      googleBot: { index, follow },
+      googleBot: index
+        ? {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          }
+        : { index: false, follow },
     },
     openGraph: {
       title,

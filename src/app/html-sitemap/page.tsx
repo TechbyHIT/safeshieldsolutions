@@ -8,7 +8,7 @@ import { guideArticles, blogPosts } from "@/config/guides-content";
 import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
-import { getTotalUrlCount } from "@/lib/sitemap-urls";
+import { SITEMAP_URL_COUNT } from "@/generated/sitemap-meta";
 
 export const revalidate = 86400;
 
@@ -33,7 +33,7 @@ const HUB_LINKS = [
 ];
 
 export default function HtmlSitemapPage() {
-  const total = getTotalUrlCount();
+  const total = SITEMAP_URL_COUNT;
   const photos = getInterleavedPhotos(1);
 
   return (

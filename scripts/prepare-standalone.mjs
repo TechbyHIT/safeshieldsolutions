@@ -103,8 +103,16 @@ if (fs.existsSync(publicDir)) {
     fs.rmSync(standalonePublic, { recursive: true, force: true });
   }
   copyPublicFiltered(publicDir, standalonePublic);
-  console.log("Copied public/ → .next/standalone/public/ (runtime assets only)");
+  console.log("Copied public/ → standalone public/ (runtime assets only)");
 }
+
+const sitemapIndex = path.join(standalonePublic, "sitemap.xml");
+const sitemapChild = path.join(standalonePublic, "sitemap-1.xml");
+if (!fs.existsSync(sitemapIndex) || !fs.existsSync(sitemapChild)) {
+  console.error("FATAL: public/sitemap.xml shards missing — run sitemap:build before next build.");
+  process.exit(1);
+}
+console.log("Standalone public includes sitemap.xml + sitemap-1.xml");
 
 if (fs.existsSync(staticDir)) {
   fs.mkdirSync(path.dirname(standaloneStatic), { recursive: true });
