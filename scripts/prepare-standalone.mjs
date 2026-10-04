@@ -114,6 +114,13 @@ if (!fs.existsSync(sitemapIndex) || !fs.existsSync(sitemapChild)) {
 }
 console.log("Standalone public includes sitemap.xml + sitemap-1.xml");
 
+const faviconFile = path.join(standalonePublic, "favicon.png");
+if (!fs.existsSync(faviconFile)) {
+  console.error("FATAL: public/favicon.png missing from standalone public/.");
+  process.exit(1);
+}
+console.log("Standalone public includes favicon.png");
+
 if (fs.existsSync(staticDir)) {
   fs.mkdirSync(path.dirname(standaloneStatic), { recursive: true });
   fs.cpSync(staticDir, standaloneStatic, { recursive: true });

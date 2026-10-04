@@ -11,7 +11,7 @@ import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildCityBreadcrumbs, buildAreaHubLinks, buildCityServiceHubLinks } from "@/lib/internal-links";
-import { buildBreadcrumbSchema, buildFaqSchema, buildLocalBusinessSchema } from "@/lib/schema";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { buildCityHubContent } from "@/lib/city-hub-content";
 import { getCityBySlug, getActiveServices } from "@/lib/queries";
 

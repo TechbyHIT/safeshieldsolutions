@@ -43,6 +43,25 @@ done
 if [ "$copied" -eq 0 ]; then
   echo "WARN: no sitemap.xml found to copy. Google cannot fetch until XML exists in /var/www/safeshield-sitemaps"
 fi
+
+# Circle logo for /favicon.png, /favicon.ico, and /icon.png.
+icon_copied=0
+for src in \
+  "$ROOT/public/favicon.png" \
+  "$ROOT/.next/standalone/safeshieldsolutions/public/favicon.png" \
+  "$ROOT/.next/standalone/public/favicon.png" \
+  "$ROOT/src/app/icon.png"
+do
+  if [ -f "$src" ]; then
+    cp -a "$src" /var/www/safeshield-sitemaps/favicon.png
+    icon_copied=1
+    echo "==> Copied favicon from $src → /var/www/safeshield-sitemaps/favicon.png"
+    break
+  fi
+done
+if [ "$icon_copied" -eq 0 ]; then
+  echo "WARN: favicon.png missing. /favicon.png will 404 until public/favicon.png exists."
+fi
 chmod -R a+rX /var/www/safeshield-sitemaps
 
 # Drop broken symlinks that made nginx -t fail with "No such file or directory"
@@ -82,4 +101,5 @@ echo "  curl -sI http://127.0.0.1:3010/ | head"
 echo "  curl -sI -H 'Host: safeshieldsolutions.in' http://127.0.0.1/ | grep -i x-site-brand"
 echo "  curl -sIk https://safeshieldsolutions.in | grep -i x-site-brand"
 echo "  curl -sI https://safeshieldsolutions.in/sitemap.xml | head"
-echo "Expected: X-Site-Brand: SafeShield-Solutions and sitemap HTTP 200 + application/xml"
+echo "  curl -sI https://safeshieldsolutions.in/favicon.png | head"
+echo "Expected: X-Site-Brand: SafeShield-Solutions, sitemap HTTP 200 application/xml, favicon HTTP 200 image/png"
