@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
+import { RaipurEntryLinks } from "@/components/seo/RaipurEntryLinks";
 import { ProblemSelector } from "@/components/home/ProblemSelector";
 import { PopularServices } from "@/components/home/PopularServices";
 import { ExtendedServices } from "@/components/home/ExtendedServices";
@@ -36,6 +37,7 @@ export default function HomePage() {
       <JsonLd data={[buildWebsiteSchema(), buildLocalBusinessSchema(), buildFaqSchema(homeFaqs)]} />
 
       <HomeHero />
+      <RaipurEntryLinks />
 
       <ProblemSelector />
       <PopularServices />

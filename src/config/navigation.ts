@@ -27,7 +27,10 @@ export const navigation = {
     { label: "Sliding Mesh Doors", href: routes.service("sliding-mesh-doors") },
     { label: "Bird Spikes", href: routes.service("bird-spikes") },
   ],
-  cities: [{ label: "Chhattisgarh", href: routes.city("chhattisgarh") }],
+  cities: [
+    { label: "Chhattisgarh", href: "/chhattisgarh" },
+    { label: "Raipur", href: "/chhattisgarh/raipur" },
+  ],
   footer: [
     { label: "FAQ", href: routes.faq },
     { label: "HTML Sitemap", href: routes.htmlSitemap },

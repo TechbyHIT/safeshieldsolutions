@@ -4,7 +4,6 @@ import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { serviceCities } from "@/config/home-content";
 import { getHdPhotoSet } from "@/config/photo-catalog";
-import { routes } from "@/config/routes";
 
 export function CityShowcase() {
   const photos = getHdPhotoSet(5);
@@ -57,10 +56,10 @@ export function CityShowcase() {
                   ))}
                 </ul>
                 <Link
-                  href={routes.city(city.slug)}
+                  href="/chhattisgarh"
                   className="mt-6 inline-flex font-semibold text-shield-400 hover:text-shield-300"
                 >
-                  Explore {city.name} areas and services →
+                  Explore {city.name}, starting with Raipur →
                 </Link>
               </div>
             </article>

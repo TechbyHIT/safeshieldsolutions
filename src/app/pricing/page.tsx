@@ -65,6 +65,10 @@ export default function PricingPage() {
           or{" "}
           <Link href="/chhattisgarh/raipur/safety-nets" className="text-brand-700 hover:underline">
             safety nets in Raipur
+          </Link>{" "}
+          or{" "}
+          <Link href="/chhattisgarh/raipur/pigeon-safety-nets" className="text-brand-700 hover:underline">
+            pigeon nets in Raipur
           </Link>
           , or send the opening photo from the{" "}
           <Link href={routes.contact} className="text-brand-700 hover:underline">

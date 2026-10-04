@@ -20,6 +20,8 @@ import {
   buildServiceSchema,
 } from "@/lib/schema";
 import { getServiceBySlug, getActiveServices } from "@/lib/queries";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import { RAIPUR_ENTRY_LINKS } from "@/lib/seo-priority";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -60,16 +62,15 @@ export default async function ServicePage({ params }: PageProps) {
   const breadcrumbItems = buildServiceBreadcrumbs(service.name, service.slug);
   const allServices = await getActiveServices();
 
+  const raipurPath = `/chhattisgarh/raipur/${service.slug}`;
+  const statePath = `/chhattisgarh/${service.slug}`;
   const cityLinks = [
-    {
-      href: routes.areaService("chhattisgarh", "raipur", service.slug),
-      label: `${service.name} in Raipur`,
-    },
-    {
-      href: routes.cityService("chhattisgarh", service.slug),
-      label: `${service.name} in Chhattisgarh`,
-    },
-  ];
+    ...RAIPUR_ENTRY_LINKS.map((link) => ({ href: link.href, label: link.label })),
+    evaluateSeoPath(raipurPath).index && !RAIPUR_ENTRY_LINKS.some((link) => link.href === raipurPath)
+      ? { href: raipurPath, label: `${service.name} in Raipur` }
+      : null,
+    evaluateSeoPath(statePath).index ? { href: statePath, label: `${service.name} across Chhattisgarh` } : null,
+  ].filter((link): link is { href: string; label: string } => Boolean(link));
 
   return (
     <>

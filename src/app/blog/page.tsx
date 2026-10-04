@@ -79,7 +79,7 @@ export default function BlogPage() {
           {HOME_CITIES.map((city) => (
             <Link
               key={city.slug}
-              href={routes.city(city.slug)}
+              href={city.slug === "chhattisgarh" ? "/chhattisgarh" : routes.city(city.slug)}
               className="rounded-xl border border-neutral-200 p-5 hover:border-accent-500 hover:bg-neutral-100"
             >
               <h3 className="font-bold text-neutral-900">{city.name} near me</h3>

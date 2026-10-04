@@ -6,6 +6,15 @@ import { guideArticles, blogPosts } from "@/config/guides-content";
 import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES, COMPARISONS, PRICING_PAGES } from "@/data/cg-local-seo";
 import { getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import {
+  seoPriorityForPath,
+  sitemapGroupForPath,
+  sitemapSortRank,
+  SITEMAP_GROUP_FILES,
+  SITEMAP_GROUP_ORDER,
+  type SeoPriority,
+  type SitemapGroupId,
+} from "@/lib/seo-priority";
 import { site } from "@/config/site";
 import { getSitemapLastmodIso } from "@/lib/seo-freshness";
 
@@ -24,6 +33,14 @@ export interface SitemapEntry {
   lastmod: string;
   changefreq: SitemapChangeFreq;
   priority: number;
+  seoPriority: SeoPriority;
+  group: SitemapGroupId;
+  sortRank: number;
+}
+
+export interface SitemapExclusion {
+  path: string;
+  reason: string;
 }
 
 /** Thin/legal pages: noindex, follow in meta — never submit these in the sitemap. */
@@ -97,6 +114,11 @@ function liveCities() {
 
 let cachedEntries: SitemapEntry[] | null = null;
 let cachedPhase: SitemapPhase | null = null;
+let cachedExclusions: SitemapExclusion[] = [];
+
+function exclude(path: string, reason: string) {
+  cachedExclusions.push({ path, reason });
+}
 
 function pushEntry(
   entries: SitemapEntry[],
@@ -106,13 +128,48 @@ function pushEntry(
   changefreq: SitemapChangeFreq,
   lastmod: string,
 ) {
-  if (!path.startsWith("/") || path.includes("?")) return;
-  if (NOINDEX_PATH_SET.has(path)) return;
-  if (!evaluateSeoPath(path).index) return;
+  if (!path.startsWith("/") || path.includes("?") || path.includes("#")) {
+    exclude(path, "Not a clean path");
+    return;
+  }
+  if (path !== "/" && path.endsWith("/")) {
+    exclude(path, "Trailing slash");
+    return;
+  }
+  if (path !== path.toLowerCase()) {
+    exclude(path, "Uppercase URL");
+    return;
+  }
+  if (NOINDEX_PATH_SET.has(path)) {
+    exclude(path, "noindex");
+    return;
+  }
+  const gate = evaluateSeoPath(path);
+  if (!gate.index) {
+    exclude(path, gate.reasons[0] ?? "Quality gate");
+    return;
+  }
+  if (gate.canonicalPath !== path) {
+    exclude(path, `Canonical is ${gate.canonicalPath}`);
+    return;
+  }
   const loc = absoluteUrl(path);
+  if (!loc.startsWith("https://") || loc.includes("localhost")) {
+    exclude(path, "Not a production HTTPS URL");
+    return;
+  }
   if (seen.has(loc)) return;
   seen.add(loc);
-  entries.push({ loc, path, lastmod, changefreq, priority });
+  entries.push({
+    loc,
+    path,
+    lastmod,
+    changefreq,
+    priority,
+    seoPriority: seoPriorityForPath(path),
+    group: sitemapGroupForPath(path),
+    sortRank: sitemapSortRank(path),
+  });
 }
 
 function hubPriority(path: string): number {
@@ -123,6 +180,7 @@ function hubPriority(path: string): number {
 }
 
 function buildEntries(phase: SitemapPhase): SitemapEntry[] {
+  cachedExclusions = [];
   const entries: SitemapEntry[] = [];
   const seen = new Set<string>();
   const lastmod = getSitemapLastmodIso();
@@ -159,7 +217,7 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
     pushEntry(entries, seen, `/locations/${city.slug}`, 0.85, "weekly", lastmod);
   }
 
-  // Only URLs that pass the quality gate. Raipur is first. Intent copies are omitted.
+  // Only self-canonical indexable URLs. Raipur is its own sitemap. Intent copies are omitted.
   pushEntry(entries, seen, "/chhattisgarh", 0.95, "weekly", lastmod);
   pushEntry(entries, seen, "/pricing", 0.6, "monthly", lastmod);
   pushEntry(entries, seen, "/compare", 0.55, "monthly", lastmod);
@@ -216,6 +274,11 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
     pushEntry(entries, seen, path, 0.75, "weekly", lastmod);
   }
 
+  entries.sort((a, b) => {
+    const groupDelta = SITEMAP_GROUP_ORDER.indexOf(a.group) - SITEMAP_GROUP_ORDER.indexOf(b.group);
+    if (groupDelta !== 0) return groupDelta;
+    return a.sortRank - b.sortRank || a.path.localeCompare(b.path);
+  });
   return entries;
 }
 
@@ -282,13 +345,33 @@ export function getTotalUrlCount(): number {
   return getAllSitemapEntries().length;
 }
 
-/** Child urlsets live next to the index: /sitemap-1.xml, /sitemap-2.xml, … (never nested indexes). */
+export interface SitemapGroupFile {
+  id: SitemapGroupId;
+  file: string;
+  entries: SitemapEntry[];
+}
+
+/** Named child urlsets. Empty groups are omitted. District and project files are not created. */
+export function getSitemapGroups(): SitemapGroupFile[] {
+  const entries = getAllSitemapEntries();
+  return SITEMAP_GROUP_ORDER.map((id) => ({
+    id,
+    file: SITEMAP_GROUP_FILES[id],
+    entries: entries.filter((entry) => entry.group === id),
+  })).filter((group) => group.entries.length > 0);
+}
+
+export function getSitemapExclusions(): SitemapExclusion[] {
+  getAllSitemapEntries();
+  return cachedExclusions;
+}
+
 export function childSitemapFilename(index: number): string {
-  return `sitemap-${index}.xml`;
+  const groups = getSitemapGroups();
+  return groups[index - 1]?.file ?? `sitemap-${index}.xml`;
 }
 
 export function getSitemapIndexLocs(): string[] {
   const origin = canonicalOrigin();
-  const count = getSitemapShardCount();
-  return Array.from({ length: count }, (_, i) => `${origin}/${childSitemapFilename(i + 1)}`);
+  return getSitemapGroups().map((group) => `${origin}/${group.file}`);
 }

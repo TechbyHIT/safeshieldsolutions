@@ -34,6 +34,7 @@
     "areas:generate:all": "tsx scripts/generate-hyderabad-areas.ts && tsx scripts/generate-chennai-areas.ts && tsx scripts/generate-coimbatore-areas.ts && tsx scripts/generate-kochi-areas.ts && tsx scripts/generate-chhattisgarh-areas.ts",
     "pages:count": "tsx scripts/page-count.ts",
     "seo:validate": "tsx scripts/seo-validate.ts",
+    "seo:audit": "tsx scripts/seo-index-audit.ts",
     "content:audit": "tsx scripts/content-audit.ts",
     "duplicates:audit": "tsx scripts/duplicate-audit.ts",
     "links:audit": "tsx scripts/internal-link-audit.ts",

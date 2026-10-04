@@ -41,7 +41,7 @@ export default async function LocationsIndexPage() {
             return (
               <Link
                 key={city.slug}
-                href={routes.city(city.slug)}
+                href={city.slug === "chhattisgarh" ? "/chhattisgarh" : routes.city(city.slug)}
                 className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-card transition hover:border-accent-500"
               >
                 {photo && (

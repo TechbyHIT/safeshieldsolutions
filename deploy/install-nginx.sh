@@ -27,6 +27,7 @@ fi
 mkdir -p /var/www/certbot /var/www/safeshield-sitemaps /etc/nginx/sites-available /etc/nginx/sites-enabled
 
 # nginx www-data cannot read /root — copy sitemap XML to a public web dir.
+rm -f /var/www/safeshield-sitemaps/sitemap*.xml /var/www/safeshield-sitemaps/sitemap*.xml.gz
 copied=0
 for src in \
   "$ROOT/public" \
@@ -61,6 +62,14 @@ do
 done
 if [ "$icon_copied" -eq 0 ]; then
   echo "WARN: favicon.png missing. /favicon.png will 404 until public/favicon.png exists."
+fi
+# Search Console still requests sitemap-1.xml … sitemap-9.xml from the first submission.
+# If the main file is a urlset, copy it onto those names so they are not 404s with 0 pages.
+if [ -f /var/www/safeshield-sitemaps/sitemap.xml ] && grep -q "<urlset" /var/www/safeshield-sitemaps/sitemap.xml; then
+  for n in 1 2 3 4 5 6 7 8 9; do
+    cp -a /var/www/safeshield-sitemaps/sitemap.xml "/var/www/safeshield-sitemaps/sitemap-$n.xml"
+  done
+  echo "==> Copied the page list onto sitemap-1.xml … sitemap-9.xml"
 fi
 chmod -R a+rX /var/www/safeshield-sitemaps
 

@@ -27,6 +27,14 @@ function decision(index: boolean, canonicalPath: string, reasons: string[]): Seo
 export function evaluateSeoPath(path: string): SeoIndexDecision {
   const parts = path.split("/").filter(Boolean);
 
+  if (path === "/privacy-policy" || path === "/terms-of-service" || path === "/seo-coverage") {
+    return decision(false, path, ["Legal or internal page"]);
+  }
+
+  if (parts[0] === "locations" && parts[1] === "chhattisgarh" && !parts[2]) {
+    return decision(false, "/chhattisgarh", ["Duplicate of the state hub"]);
+  }
+
   if (parts[0] === "locations" && parts[1] === "chhattisgarh" && parts[2]) {
     const place = parts[2];
     const canonical = `/chhattisgarh/${place}`;

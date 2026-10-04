@@ -9,6 +9,7 @@ import { getSeoService } from "@/data/seo-services";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
+import { RAIPUR_ENTRY_LINKS } from "@/lib/seo-priority";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Safety Nets & Invisible Grills in Chhattisgarh",
@@ -37,7 +38,20 @@ export default function ChhattisgarhStatePage() {
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
       />
       <Section>
-        <h2 className="text-2xl font-bold text-neutral-900">Towns</h2>
+        <h2 className="text-2xl font-bold text-neutral-900">Raipur first</h2>
+        <ul className="mt-4 flex flex-wrap gap-3">
+          {RAIPUR_ENTRY_LINKS.filter((link) => link.href !== "/chhattisgarh").map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="inline-flex rounded-full border border-brand-200 bg-brand-50 px-4 py-2 text-sm font-semibold text-brand-800 hover:border-brand-500"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <h2 className="mt-12 text-2xl font-bold text-neutral-900">Towns</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {CG_PRIORITY_PLACES.map((place) => (
             <li key={place.slug} className="rounded-2xl border border-neutral-200 p-4">
@@ -61,6 +75,10 @@ export default function ChhattisgarhStatePage() {
         <p className="mt-8 text-sm text-neutral-600">
           <Link href="/pricing" className="font-medium text-brand-700 hover:underline">
             What affects price
+          </Link>
+          {" · "}
+          <Link href="/compare" className="font-medium text-brand-700 hover:underline">
+            Comparisons
           </Link>
         </p>
       </Section>

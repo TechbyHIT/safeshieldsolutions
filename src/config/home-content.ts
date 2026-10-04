@@ -3,14 +3,14 @@ import { routes } from "./routes";
 export const heroBullets = [
   "Premium SS304 invisible grills, SS316 marine-grade options & UV-stable safety nets",
   "Cricket box grass, zip screens, mesh doors & 36 service lines",
-  "Near-me pages for 208 Chhattisgarh areas — Raipur first, then every other town",
+  "Raipur first, then Bhilai, Durg, Bilaspur, Korba, and the other served Chhattisgarh towns",
   "Free site survey across Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur & district towns",
   "20,000+ word local guides on every area × service page",
 ];
 
 export const homeHero = {
   eyebrow:
-    "#1 for Invisible Grills & Safety Nets in Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur",
+    "Invisible grills and safety nets in Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur",
   title: "SafeShield Solutions – Premium Invisible Grills & Safety Nets",
   description:
     "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection. We use SS304 stainless steel as standard and SS316 marine-grade cables for coastal or high-humidity openings.",
@@ -321,7 +321,7 @@ export const homeFaqs = [
   {
     question: "How do I find safety nets near me?",
     answer:
-      "Open Raipur first, or pick another Chhattisgarh town. Each area page covers near-me, installation, price, and dealers. Send a photo and pin code before booking.",
+      "Open the Raipur page first, or pick another served Chhattisgarh town. Send a photo of the opening before booking.",
   },
   {
     question: "Will a safety net block airflow or the balcony view?",
@@ -341,12 +341,12 @@ export const homeFaqs = [
   {
     question: "Where can I find premium invisible grills near me?",
     answer:
-      "Open the Chhattisgarh locations page and start with Raipur, Naya Raipur, Shankar Nagar, or another town. Each area page covers installation, price, and dealers.",
+      "Start with invisible grills in Raipur, then the other Raipur service pages. Approved Raipur localities are linked from the Raipur page.",
   },
   {
     question: "Who are the best pigeon net dealers near me in Raipur?",
     answer:
-      "Start with the Raipur, Naya Raipur, Shankar Nagar, and Telibandha pages, including the dealers and near-me versions. Quotes include mesh, anchors, and fitting — compare the written scope.",
+      "Start with pigeon nets in Raipur, then the approved Raipur localities linked from that city page. The quote names mesh, anchors, and fitting.",
   },
   {
     question: "Do you offer affordable safety nets with premium materials?",
@@ -356,7 +356,7 @@ export const homeFaqs = [
   {
     question: "How many local pages does SafeShield Solutions publish?",
     answer:
-      "Chhattisgarh only: 208 areas and 36 services. Raipur locality pages are listed first in the sitemap, then every other area in the state, including installation, price, near-me, and dealer versions.",
+      "Chhattisgarh only. Raipur is the main market. Other towns and localities are published only when the page has its own copy and the service is actually offered.",
   },
   {
     question: "Can I book same-day invisible grill installation near me?",

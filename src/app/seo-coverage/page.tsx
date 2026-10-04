@@ -1,46 +1,67 @@
 import type { Metadata } from "next";
-import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
-import { CG_DISTRICTS, CG_LOCALITIES, hierarchySummary } from "@/data/cg-hierarchy";
-import { weakInternalLinks } from "@/lib/seo-graph";
+import { sitemapAuditSummary } from "@/lib/seo-crawl";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Chhattisgarh SEO coverage",
-  description: "Internal count of districts, cities, localities, and indexable pages.",
+  title: "Raipur SEO coverage",
+  description: "Internal sitemap and crawl report. Raipur is listed first.",
   path: "/seo-coverage",
   robots: { index: false, follow: false },
 });
 
 export default function SeoCoveragePage() {
-  const summary = hierarchySummary();
-  const indexableServices = summary.cities * CG_CORE_SERVICE_SLUGS.length;
-  const indexableLocalityServices = CG_LOCALITIES.filter((area) => area.indexable).length * 3;
+  const summary = sitemapAuditSummary();
+  const raipur = summary.raipur;
 
   return (
     <main className="container py-16">
-      <h1 className="text-3xl font-bold">Chhattisgarh coverage</h1>
-      <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-        <Stat label="Districts" value={summary.districts} />
-        <Stat label="Active cities" value={summary.cities} />
-        <Stat label="Localities with copy" value={summary.localities} />
-        <Stat label="Indexable localities" value={summary.indexableLocalities} />
-        <Stat label="City × service pages" value={indexableServices} />
-        <Stat label="Locality × primary service pages" value={indexableLocalityServices} />
-        <Stat label="Catalogue services on city pages" value={CG_CORE_SERVICE_SLUGS.length} />
-        <Stat label="Cities in the tree" value={CG_PRIORITY_PLACES.length} />
+      <h1 className="text-3xl font-bold">Raipur first</h1>
+      <p className="mt-2 max-w-2xl text-sm text-neutral-600">
+        Internal check only. It does not measure Google rankings or force indexing.
+      </p>
+      <h2 className="mt-8 text-xl font-bold">Raipur P0</h2>
+      <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Stat label="Raipur URLs" value={raipur.total} />
+        <Stat label="P0 pages" value={raipur.p0} />
+        <Stat label="In Raipur sitemap" value={raipur.inSitemap} />
+        <Stat label="Orphans" value={raipur.orphans.length} />
+        <Stat label="Canonical errors" value={raipur.errors.length} />
       </dl>
-      <h2 className="mt-10 text-xl font-bold">Districts</h2>
-      <ul className="mt-3 list-disc pl-5">
-        {CG_DISTRICTS.map((district) => (
-          <li key={district.slug}>{district.name}</li>
+      <ul className="mt-6 space-y-2 text-sm">
+        {raipur.findings
+          .filter((row) => row.priority === "P0")
+          .map((row) => (
+            <li key={row.url}>
+              {row.flag} · {row.url} · depth {row.depth ?? "—"} · {row.internalLinks} internal links
+            </li>
+          ))}
+      </ul>
+      <h2 className="mt-10 text-xl font-bold">Sitemap</h2>
+      <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Stat label="Total URLs" value={summary.total} />
+        <Stat label="Indexable URLs" value={summary.indexable} />
+        <Stat label="Excluded candidates" value={summary.excluded} />
+        <Stat label="Invalid URLs" value={summary.invalid} />
+      </dl>
+      <ul className="mt-4 list-disc pl-5 text-sm">
+        {summary.groups.map((group) => (
+          <li key={group.file}>
+            {group.file}: {group.count}
+          </li>
         ))}
       </ul>
-      <h2 className="mt-10 text-xl font-bold">Thin internal links</h2>
-      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-neutral-700">
-        {weakInternalLinks().slice(0, 12).map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      <h2 className="mt-10 text-xl font-bold">Orphans</h2>
+      {summary.orphans.length === 0 ? (
+        <p className="mt-3 text-sm text-neutral-600">No sitemap URL is missing an internal link.</p>
+      ) : (
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+          {summary.orphans.map((row) => (
+            <li key={row.url}>
+              {row.priority} {row.url} — link it from {row.recommendedParent}
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }

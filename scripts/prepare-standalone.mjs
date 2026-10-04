@@ -107,12 +107,12 @@ if (fs.existsSync(publicDir)) {
 }
 
 const sitemapIndex = path.join(standalonePublic, "sitemap.xml");
-const sitemapChild = path.join(standalonePublic, "sitemap-1.xml");
-if (!fs.existsSync(sitemapIndex) || !fs.existsSync(sitemapChild)) {
-  console.error("FATAL: public/sitemap.xml shards missing — run sitemap:build before next build.");
+const sitemapRaipur = path.join(standalonePublic, "sitemap-raipur.xml");
+if (!fs.existsSync(sitemapIndex) || !fs.existsSync(sitemapRaipur)) {
+  console.error("FATAL: public/sitemap.xml or sitemap-raipur.xml missing — run sitemap:build before next build.");
   process.exit(1);
 }
-console.log("Standalone public includes sitemap.xml + sitemap-1.xml");
+console.log("Standalone public includes sitemap.xml + sitemap-raipur.xml");
 
 const faviconFile = path.join(standalonePublic, "favicon.png");
 if (!fs.existsSync(faviconFile)) {

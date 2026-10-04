@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { ServiceCard } from "@/components/ui/ServiceCard";
@@ -28,6 +28,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "chhattisgarh") permanentRedirect("/chhattisgarh");
   const city = await getCityBySlug(slug);
   if (!city) notFound();
   const raipurLead = slug === "chhattisgarh";
@@ -44,6 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CityPage({ params }: PageProps) {
   const { slug } = await params;
+  if (slug === "chhattisgarh") permanentRedirect("/chhattisgarh");
   const city = await getCityBySlug(slug);
   if (!city) notFound();
 
