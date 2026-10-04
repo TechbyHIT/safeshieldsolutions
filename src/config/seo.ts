@@ -1,10 +1,14 @@
 export const seoDefaults = {
   titleTemplate: "%s | SafeShield Solutions",
   defaultTitle:
-    "Invisible Grills Near Me | Safety Nets & Zip Screens | SafeShield Solutions",
+    "Invisible Grills in Chhattisgarh | Safety Nets Raipur & Bhilai",
   defaultDescription:
-    "SafeShield Solutions — invisible grills near me, safety nets, pigeon nets, zip screens, mesh doors & cricket box grass in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh. Free site survey, SS304 materials, 5-year warranty.",
+    "Invisible grills, safety nets and pigeon nets in Chhattisgarh. Raipur is listed first — then Bhilai, Durg, Bilaspur and every district town. Free site survey, SS304.",
   defaultKeywords: [
+    "invisible grills Chhattisgarh",
+    "safety nets Raipur",
+    "invisible grills Raipur",
+    "safety nets Bhilai",
     "invisible grills near me",
     "safety nets near me",
     "pigeon nets near me",
@@ -14,11 +18,12 @@ export const seoDefaults = {
     "invisible grill installation",
     "safety net dealers",
     "invisible grill price",
-    "Chennai",
-    "Hyderabad",
-    "Coimbatore",
-    "Kochi",
     "Chhattisgarh",
+    "Raipur",
+    "Naya Raipur",
+    "Bhilai",
+    "Durg",
+    "Bilaspur",
   ],
   ogImage: "/images/photos/balcony-invisible-grills/168.webp",
   twitterHandle: "@safeshieldsolutions",

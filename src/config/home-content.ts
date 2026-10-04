@@ -3,14 +3,14 @@ import { routes } from "./routes";
 export const heroBullets = [
   "Premium SS304 invisible grills, SS316 marine-grade options & UV-stable safety nets",
   "Cricket box grass, zip screens, mesh doors & 36 service lines",
-  "Near-me pages for 2,199 neighbourhoods — installation, price, dealers, best",
-  "Free site survey in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
+  "Near-me pages for 208 Chhattisgarh areas — Raipur first, then every other town",
+  "Free site survey across Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur & district towns",
   "20,000+ word local guides on every area × service page",
 ];
 
 export const homeHero = {
   eyebrow:
-    "#1 for Invisible Grills & Safety Nets in Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
+    "#1 for Invisible Grills & Safety Nets in Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur",
   title: "SafeShield Solutions – Premium Invisible Grills & Safety Nets",
   description:
     "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection. We use SS304 stainless steel as standard and SS316 marine-grade cables for coastal or high-humidity openings.",
@@ -96,7 +96,7 @@ export const popularServices = [
     tag: "Insect-free ventilation",
     title: "Mosquito Nets",
     description:
-      "Frameless, sliding, and openable mosquito net systems for windows and balcony doors. Keeps insects out while preserving airflow across Chennai, Hyderabad, Coimbatore, and Kochi.",
+      "Frameless, sliding, and openable mosquito net systems for windows and balcony doors across Raipur and the rest of Chhattisgarh.",
   },
   {
     slug: "cricket-nets",
@@ -248,7 +248,7 @@ export const materialGrades = [
   {
     grade: "SS316",
     title: "SS316 quality — marine-grade for coastal homes",
-    note: "Higher molybdenum content for Chennai, Kochi, and other salt-air or pool-facing openings. Recommended where corrosion risk is higher.",
+    note: "Higher molybdenum content for salt-air or pool-facing openings. Recommended where corrosion risk is higher.",
   },
 ] as const;
 
@@ -306,7 +306,7 @@ export const homeFaqs = [
   {
     question: "Do you use SS304 or SS316 steel?",
     answer:
-      "Both. SS304 is our standard rust-resistant grade for most apartments and inland homes. SS316 is marine-grade steel with extra corrosion resistance for Chennai, Kochi, sea-facing, and pool-adjacent openings. The survey recommends the grade after we see the exposure.",
+      "Both. SS304 is the standard rust-resistant grade for most apartments. SS316 is marine-grade steel for sea-facing and pool-adjacent openings. The survey recommends the grade after the exposure is checked.",
   },
   {
     question: "Which safety solution is best for a balcony?",
@@ -321,7 +321,7 @@ export const homeFaqs = [
   {
     question: "How do I find safety nets near me?",
     answer:
-      "Open our Locations page, choose Chennai, Hyderabad, Coimbatore, Kochi, or Chhattisgarh, then select your neighbourhood. Each area page covers near-me, installation, price, dealers, premium, and best intent searches with 20,000+ words of local guidance. Send a photo and pin code before booking.",
+      "Open Raipur first, or pick another Chhattisgarh town. Each area page covers near-me, installation, price, and dealers. Send a photo and pin code before booking.",
   },
   {
     question: "Will a safety net block airflow or the balcony view?",
@@ -341,12 +341,12 @@ export const homeFaqs = [
   {
     question: "Where can I find premium invisible grills near me?",
     answer:
-      "Browse city near-me hubs or search your locality on the homepage keyword sections. Premium SS304 and SS316 invisible grill pages explain cable spacing, channel finish, society compliance, and warranty for high-rises in Gachibowli, Peelamedu, Kakkanad, Adyar, and 1,900+ other areas.",
+      "Open the Chhattisgarh locations page and start with Raipur, Naya Raipur, Shankar Nagar, or another town. Each area page covers installation, price, and dealers.",
   },
   {
-    question: "Who are the best pigeon net dealers near me in Coimbatore or Kochi?",
+    question: "Who are the best pigeon net dealers near me in Raipur?",
     answer:
-      "Use locality pages like Gandhipuram, Saravanampatti, Edappally, or Vyttila with the dealers or near-me suffix. We operate as manufacturer-installer so quotes include factory-spec mesh, anchors, and fitting — compare written scope, not headline rates alone.",
+      "Start with the Raipur, Naya Raipur, Shankar Nagar, and Telibandha pages, including the dealers and near-me versions. Quotes include mesh, anchors, and fitting — compare the written scope.",
   },
   {
     question: "Do you offer affordable safety nets with premium materials?",
@@ -356,7 +356,7 @@ export const homeFaqs = [
   {
     question: "How many local pages does SafeShield Solutions publish?",
     answer:
-      "Over 700,000 indexable URLs across 2,199 neighbourhoods and 36 core services, with high-intent variants like installation, price, near-me, dealers, best, and premium on every locality page.",
+      "Chhattisgarh only: 208 areas and 36 services. Raipur locality pages are listed first in the sitemap, then every other area in the state, including installation, price, near-me, and dealer versions.",
   },
   {
     question: "Can I book same-day invisible grill installation near me?",
@@ -367,38 +367,10 @@ export const homeFaqs = [
 
 export const serviceCities = [
   {
-    slug: "chennai",
-    name: "Chennai",
-    summary:
-      "Balcony nets, pigeon protection, invisible grills, and cloth hangers planned for Chennai homes and coastal exposure.",
-    highlights: ["Balcony Nets", "Mosquito Nets", "Invisible Grills"],
-  },
-  {
-    slug: "hyderabad",
-    name: "Hyderabad",
-    summary:
-      "Measured balcony, bird-control, child-safety, invisible grill, and mosquito net fitting across Hyderabad service areas.",
-    highlights: ["Invisible Grills", "Safety Nets", "Pigeon Nets"],
-  },
-  {
-    slug: "coimbatore",
-    name: "Coimbatore",
-    summary:
-      "Invisible grills and safety nets for Peelamedu IT corridor, Saibaba Colony, RS Puram, Singanallur, and Pollachi belt homes.",
-    highlights: ["Invisible Grills", "Sports Nets", "Bird Nets"],
-  },
-  {
-    slug: "kochi",
-    name: "Kochi",
-    summary:
-      "Coastal-grade SS304 grills and UV nets for Kakkanad, Edappally, Vyttila, Fort Kochi, and Aluva apartments.",
-    highlights: ["Safety Nets", "Pigeon Nets", "Cloth Hangers"],
-  },
-  {
     slug: "chhattisgarh",
     name: "Chhattisgarh",
     summary:
-      "Invisible grills and safety nets for Raipur, Bhilai, Durg, Bilaspur, Korba, district towns, and other Chhattisgarh service areas.",
-    highlights: ["Invisible Grills", "Safety Nets", "Pigeon Nets"],
+      "Raipur is listed first — Naya Raipur, Shankar Nagar, Telibandha, and VIP Road — then Bhilai, Durg, Bilaspur, Korba, and every other Chhattisgarh area.",
+    highlights: ["Raipur", "Invisible Grills", "Safety Nets"],
   },
 ];

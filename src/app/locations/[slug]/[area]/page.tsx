@@ -13,6 +13,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 import { buildAreaHubBreadcrumbs } from "@/lib/internal-links";
 import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { getCityBySlug, getAreaBySlugs } from "@/lib/queries";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -30,10 +31,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const city = await getCityBySlug(slug);
   const areaData = await getAreaBySlugs(slug, area);
   if (!city || !areaData) notFound();
+  const path = routes.area(slug, area);
+  const gate = evaluateSeoPath(path);
   return buildPageMetadata({
     title: `Invisible Grills & Safety Nets in ${areaData.name}, ${city.name}`,
-    description: `Local hub for invisible grills, safety nets, zip screens, and cloth hangers in ${areaData.name}, ${city.name}. Free site survey and neighbourhood service pages.`,
-    path: routes.area(slug, area),
+    description: `Invisible grills, safety nets, and pigeon nets in ${areaData.name}, ${city.name}. Free site survey and a written quote.`,
+    path,
+    canonicalPath: gate.canonicalPath,
+    robots: { index: gate.index, follow: true },
     keywords: [areaData.name, city.name, "invisible grills", "safety nets"],
   });
 }

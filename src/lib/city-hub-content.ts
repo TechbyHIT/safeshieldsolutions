@@ -2,6 +2,7 @@ import { HOME_CITY_AREAS } from "@/config/home-seo-links";
 import { CITIES } from "@/data/cities";
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
 import { routes } from "@/config/routes";
+import { raipurHubFaqs, raipurHubSections } from "@/config/raipur-seo";
 
 export interface CityHubSection {
   id: string;
@@ -24,6 +25,7 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
   const otherCities = CITIES.filter((c) => c.slug !== citySlug).map((c) => c.name).join(", ");
 
   const sections: CityHubSection[] = [
+    ...(citySlug === "chhattisgarh" ? raipurHubSections() : []),
     {
       id: "near-me-hub",
       heading: `Premium invisible grills, safety nets & zip screens near me in ${cityName}`,
@@ -52,6 +54,7 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
   ];
 
   const faqs: CityHubFaq[] = [
+    ...(citySlug === "chhattisgarh" ? raipurHubFaqs() : []),
     {
       question: `How many localities do you cover in ${cityName}?`,
       answer: `We cover all listed ${cityName} neighbourhoods on this page, each with thousands of service and intent URLs. Use the search box to find your area, then open installation, price, or near-me variants for your service.`,
@@ -70,7 +73,9 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
     },
     {
       question: `Do you serve other cities besides ${cityName}?`,
-      answer: `Yes. We also serve ${otherCities} with the same page scale and quality standards.`,
+      answer: otherCities
+        ? `Yes. We also serve ${otherCities} with the same page scale and quality standards.`
+        : `This site covers Chhattisgarh. Raipur is listed first, then every other listed town in the state.`,
     },
   ];
 

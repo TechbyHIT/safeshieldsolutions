@@ -125,11 +125,13 @@ export async function getAreaBySlugs(
 }
 
 export async function getActiveCities() {
-  return CITIES.map((c) => ({
-    slug: c.slug,
-    name: c.name,
-    description: c.description,
-  }));
+  return [...CITIES]
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .map((c) => ({
+      slug: c.slug,
+      name: c.name,
+      description: c.description,
+    }));
 }
 
 export async function getRelatedAreaServicePages(

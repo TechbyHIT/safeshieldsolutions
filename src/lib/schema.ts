@@ -32,11 +32,6 @@ export function buildOrganizationSchema() {
       longitude: business.geo.longitude,
     },
     sameAs: Object.values(business.social),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: business.trustSignals.rating,
-      reviewCount: business.trustSignals.reviewCount,
-    },
   };
 }
 

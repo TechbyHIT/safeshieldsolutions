@@ -264,6 +264,53 @@ const CHHATTISGARH_ZONE_SLUG_MAP: Record<string, string> = {
   pandatarai: "kawardha-west",
 };
 
+/** Raipur city first, then Raipur urban localities, before the rest of the state. */
+export const RAIPUR_FIRST_SLUGS = [
+  "raipur",
+  "naya-raipur",
+  "atal-nagar",
+  "shankar-nagar",
+  "telibandha",
+  "tatibandh",
+  "devendra-nagar",
+  "samta-colony",
+  "vip-road",
+  "avanti-vihar",
+  "civil-lines-raipur",
+  "pandri",
+  "gudhiyari",
+  "fafadih",
+  "amanaka",
+  "mowa",
+  "kachna",
+  "saddu",
+  "kota-raipur",
+  "sejbahar",
+  "labhandi",
+  "raipura",
+  "hirapur",
+  "tikrapara",
+  "dangania",
+  "pachpedi-naka",
+  "byron-bazar",
+  "birgaon",
+  "mandir-hasaud",
+  "siltara",
+  "abhanpur",
+  "arang",
+  "tilda-newra",
+  "gobra-nawapara",
+] as const;
+
+const RAIPUR_FIRST_RANK = new Map<string, number>(
+  RAIPUR_FIRST_SLUGS.map((slug, index) => [slug, index]),
+);
+
+/** 0 = Raipur city. Lower is listed sooner. 10_000 = rest of Chhattisgarh. */
+export function raipurListingRank(areaSlug: string): number {
+  return RAIPUR_FIRST_RANK.get(areaSlug) ?? 10_000;
+}
+
 export function getChhattisgarhZoneId(areaSlug: string): string {
   if (CHHATTISGARH_ZONE_SLUG_MAP[areaSlug]) return CHHATTISGARH_ZONE_SLUG_MAP[areaSlug]!;
   const slug = areaSlug.toLowerCase();

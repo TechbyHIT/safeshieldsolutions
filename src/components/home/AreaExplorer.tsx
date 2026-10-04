@@ -23,14 +23,14 @@ export function AreaExplorer() {
       <div className="container">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
-            2,000+ neighbourhoods
+            208 Chhattisgarh areas
           </p>
           <h2 className="mt-2 text-3xl font-bold text-neutral-900">
-            Premium invisible grills & safety nets near me — 2,199 neighbourhoods
+            Invisible grills and safety nets — Raipur first
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-            Best installation, price, dealers, and near-me pages for every locality — Chennai,
-            Hyderabad, Coimbatore, Kochi, and Chhattisgarh. Click any area for 20,000+ words of local SEO content.
+            Raipur is listed first. Every other Chhattisgarh area is included too — installation,
+            price, dealers, and near-me pages.
           </p>
         </div>
         <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">

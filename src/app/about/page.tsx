@@ -10,7 +10,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 export const metadata = buildPageMetadata({
   title: "Why Choose Us | Trusted Safety Installation Experts",
   description:
-    "12+ years experience, 8500+ projects, SS304 invisible grills and safety nets. Free site survey, transparent pricing, 5-year warranty in Hyderabad & Chennai.",
+    "Invisible grills and safety nets for Chhattisgarh. Raipur is listed first. Free site survey and a 5-year warranty.",
   path: "/about",
 });
 
@@ -24,8 +24,8 @@ const whyPoints = [
     body: "Cable grade, mesh type, anchors, included labour, and warranty terms are confirmed before work starts.",
   },
   {
-    title: "Local teams in two cities",
-    body: "Hyderabad and Chennai installation teams for faster response and area-specific expertise.",
+    title: "Chhattisgarh coverage",
+    body: "Raipur is listed first. Every other listed town in Chhattisgarh has its own pages.",
   },
   {
     title: "After-sales support",

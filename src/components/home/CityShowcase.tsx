@@ -19,8 +19,8 @@ export function CityShowcase() {
           Best safety nets & invisible grills near me in your city
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-          Premium near-me installation hubs for Chennai, Hyderabad, Coimbatore, Kochi, and
-          Chhattisgarh — each city links to locality pages with dealers, price, and free survey booking.
+          Raipur is listed first. Every other Chhattisgarh area is on this site too — installation,
+          price, dealers, and a free survey on each locality page.
         </p>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

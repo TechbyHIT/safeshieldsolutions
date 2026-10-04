@@ -25,7 +25,7 @@ export default async function ServicesIndexPage() {
       <PageHero
         eyebrow="Installation services"
         title="Our Services"
-        description="Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection solutions across Hyderabad and Chennai. Every service page includes real project photos from completed installations."
+        description="Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection across Chhattisgarh, with Raipur listed first."
         photo={photos[0]}
         breadcrumbs={[
           { label: "Home", href: routes.home },

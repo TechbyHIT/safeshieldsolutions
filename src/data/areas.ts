@@ -1,43 +1,26 @@
 import type { CityArea } from "@/data/cities";
-import { CHENNAI_AREAS, getChennaiAreaBySlug } from "@/data/chennai-areas";
-import { COIMBATORE_AREAS, getCoimbatoreAreaBySlug } from "@/data/coimbatore-areas";
-import { HYDERABAD_AREAS, getHyderabadAreaBySlug } from "@/data/hyderabad-areas";
-import { KOCHI_AREAS, getKochiAreaBySlug } from "@/data/kochi-areas";
 import { CHHATTISGARH_AREAS, getChhattisgarhAreaBySlug } from "@/data/chhattisgarh-areas";
+import { raipurListingRank } from "@/config/chhattisgarh-zones";
 
+/** Raipur city and Raipur localities first, then the rest of Chhattisgarh. */
 export function getAreasForCity(citySlug: string): CityArea[] {
-  if (citySlug === "chennai") return CHENNAI_AREAS;
-  if (citySlug === "hyderabad") return HYDERABAD_AREAS;
-  if (citySlug === "coimbatore") return COIMBATORE_AREAS;
-  if (citySlug === "kochi") return KOCHI_AREAS;
-  if (citySlug === "chhattisgarh") return CHHATTISGARH_AREAS;
-  return [];
+  if (citySlug !== "chhattisgarh") return [];
+  return [...CHHATTISGARH_AREAS].sort((a, b) => {
+    const rank = raipurListingRank(a.slug) - raipurListingRank(b.slug);
+    return rank !== 0 ? rank : a.sortOrder - b.sortOrder;
+  });
 }
 
 export function getAreaByCitySlugs(
   citySlug: string,
   areaSlug: string,
 ): CityArea | undefined {
-  if (citySlug === "chennai") return getChennaiAreaBySlug(areaSlug);
-  if (citySlug === "hyderabad") return getHyderabadAreaBySlug(areaSlug);
-  if (citySlug === "coimbatore") return getCoimbatoreAreaBySlug(areaSlug);
-  if (citySlug === "kochi") return getKochiAreaBySlug(areaSlug);
-  if (citySlug === "chhattisgarh") return getChhattisgarhAreaBySlug(areaSlug);
-  return undefined;
+  if (citySlug !== "chhattisgarh") return undefined;
+  return getChhattisgarhAreaBySlug(areaSlug);
 }
 
 export function getTotalAreaCount(): number {
-  return (
-    CHENNAI_AREAS.length +
-    HYDERABAD_AREAS.length +
-    COIMBATORE_AREAS.length +
-    KOCHI_AREAS.length +
-    CHHATTISGARH_AREAS.length
-  );
+  return CHHATTISGARH_AREAS.length;
 }
 
-export { CHENNAI_AREAS, CHENNAI_AREA_COUNT } from "@/data/chennai-areas";
-export { HYDERABAD_AREAS, HYDERABAD_AREA_COUNT } from "@/data/hyderabad-areas";
-export { COIMBATORE_AREAS, COIMBATORE_AREA_COUNT } from "@/data/coimbatore-areas";
-export { KOCHI_AREAS, KOCHI_AREA_COUNT } from "@/data/kochi-areas";
 export { CHHATTISGARH_AREAS, CHHATTISGARH_AREA_COUNT } from "@/data/chhattisgarh-areas";

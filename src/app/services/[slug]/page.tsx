@@ -13,7 +13,6 @@ import { buildServiceContent } from "@/lib/content";
 import { buildServiceMetadata } from "@/lib/metadata";
 import {
   buildServiceBreadcrumbs,
-  buildCityServiceHubLinks,
 } from "@/lib/internal-links";
 import {
   buildBreadcrumbSchema,
@@ -62,11 +61,15 @@ export default async function ServicePage({ params }: PageProps) {
   const allServices = await getActiveServices();
 
   const cityLinks = [
-    { city: "Hyderabad", slug: "hyderabad" },
-    { city: "Chennai", slug: "chennai" },
-  ].flatMap(({ city, slug: citySlug }) =>
-    buildCityServiceHubLinks(citySlug, [{ slug: service.slug, name: `${service.name} in ${city}` }]),
-  );
+    {
+      href: routes.areaService("chhattisgarh", "raipur", service.slug),
+      label: `${service.name} in Raipur`,
+    },
+    {
+      href: routes.cityService("chhattisgarh", service.slug),
+      label: `${service.name} in Chhattisgarh`,
+    },
+  ];
 
   return (
     <>
@@ -102,7 +105,7 @@ export default async function ServicePage({ params }: PageProps) {
           </h2>
           <p className="mt-3 max-w-2xl text-neutral-600">
             Review completed installations — cable spacing, edge fixing, mesh quality,
-            and finish details from our Hyderabad and Chennai teams.
+            and finish details from completed installations.
           </p>
           <div className="mt-8">
             <PhotoGallery photos={galleryPhotos} columns={3} />

@@ -18,47 +18,19 @@ export interface CityConfig {
 
 export const CITIES: CityConfig[] = [
   {
-    slug: "chennai",
-    name: "Chennai",
-    state: "Tamil Nadu",
-    description:
-      "Professional invisible grills, safety nets, cloth hangers, and bird control across every Chennai locality.",
-    sortOrder: 1,
-  },
-  {
-    slug: "hyderabad",
-    name: "Hyderabad",
-    state: "Telangana",
-    description:
-      "Professional invisible grills, safety nets, cloth hangers, and bird control across Hyderabad and Secunderabad.",
-    sortOrder: 2,
-  },
-  {
-    slug: "coimbatore",
-    name: "Coimbatore",
-    state: "Tamil Nadu",
-    description:
-      "Professional invisible grills, safety nets, cloth hangers, and bird control across every Coimbatore locality.",
-    sortOrder: 3,
-  },
-  {
-    slug: "kochi",
-    name: "Kochi",
-    state: "Kerala",
-    description:
-      "Professional invisible grills, safety nets, cloth hangers, and bird control across Kochi and Ernakulam.",
-    sortOrder: 4,
-  },
-  {
     slug: "chhattisgarh",
     name: "Chhattisgarh",
     state: "Chhattisgarh",
     description:
-      "Professional invisible grills, safety nets, cloth hangers, and bird control across Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur, Korba, and district towns statewide.",
-    sortOrder: 5,
+      "Professional invisible grills, safety nets, cloth hangers, and bird control across Chhattisgarh — Raipur first, then Bhilai, Durg, Bilaspur, Korba, and every listed district town.",
+    sortOrder: 1,
   },
 ];
 
 export function getCityConfig(slug: string): CityConfig | undefined {
   return CITIES.find((c) => c.slug === slug);
+}
+
+export function getCitiesByPriority(): CityConfig[] {
+  return [...CITIES].sort((a, b) => a.sortOrder - b.sortOrder);
 }

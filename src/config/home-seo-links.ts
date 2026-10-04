@@ -50,13 +50,7 @@ export const HOME_TOP_SERVICES: HomeServiceLink[] = [
   { slug: "sliding-mesh-doors", name: "Sliding Mesh Doors" },
 ];
 
-export const HOME_CITIES = [
-  { slug: "chennai", name: "Chennai" },
-  { slug: "hyderabad", name: "Hyderabad" },
-  { slug: "coimbatore", name: "Coimbatore" },
-  { slug: "kochi", name: "Kochi" },
-  { slug: "chhattisgarh", name: "Chhattisgarh" },
-] as const;
+export const HOME_CITIES = [{ slug: "chhattisgarh", name: "Chhattisgarh" }] as const;
 
 /** Featured localities per city — deep-linked on homepage for crawl + near-me SEO */
 export const HOME_CITY_AREAS: Record<string, HomeAreaLink[]> = {
@@ -232,22 +226,26 @@ export const HOME_PRIMARY_INTENTS = HOME_SEARCH_INTENTS.filter((i) =>
 export const homeSeoParagraphs = [
   {
     id: "near-me",
-    heading: "Premium invisible grills & safety nets near me — Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
-    body: `Searching "invisible grills near me", "safety nets near me", or "pigeon nets near me" should lead to a local team that surveys your opening, specifies SS304 or UV-stable materials, and installs with warranty — not a generic dealer list. SafeShield Solutions publishes dedicated pages across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh — including Raipur, Bhilai, Durg, and Bilaspur — each covering installation, price, dealers, contractors, and premium options. Whether you are in Peelamedu IT corridor, Kakkanad Infopark, Gachibowli high-rises, Adyar sea-facing flats, or Raipur apartments, the same quality standard applies: measured scope, itemised quotes, and society-friendly finishes.`,
+    heading: "Premium invisible grills & safety nets near me — Chhattisgarh first",
+    body: `Searching "invisible grills near me" or "safety nets near me" in Chhattisgarh should open a local survey, an SS304 or UV-stable spec, and a written quote. Coverage is Chhattisgarh only: Raipur first, then Naya Raipur, Shankar Nagar, Bhilai, Durg, Bilaspur, Korba, and every other listed town. Each area has installation, price, dealers, and premium pages.`,
   },
   {
     id: "premium",
     heading: "Best premium SS304 invisible grills & bird nets — local installers, not middlemen",
-    body: `Premium searches — "best invisible grill company near me", "premium pigeon net installation", "top safety net dealers" — deserve transparent comparison. Our city and locality pages explain cable spacing, knotless net GSM, anchor types, harness compliance for high-rises, and what warranty registration includes. Coimbatore textile-belt humidity, Kochi coastal salt air, Chennai monsoon exposure, and Hyderabad dust each affect material choice; every area page references zone-specific guidance so you rank and choose with confidence.`,
+    body: `Premium searches — "best invisible grill company in Raipur", "safety nets Bhilai", "pigeon nets Bilaspur" — get a clear spec. Chhattisgarh pages explain cable spacing, knotless net GSM, anchors, high-rise access, and warranty. Raipur is listed first. Bhilai, Durg, Bilaspur, and the other towns follow in the same sitemap.`,
   },
   {
     id: "scale",
-    heading: "700,000+ local SEO pages — every locality, high-intent variants",
-    body: `Each neighbourhood links to 2,996 URL variants per area: core services plus installation, price, dealers, near-me, best, premium, affordable, contractors, and company intent suffixes. That scale supports long-tail rankings for hyper-local queries while keeping content substantive — not thin doorway pages. Browse city hubs at our locations index, search 600+ Coimbatore or 500+ Kochi localities, or jump from the homepage keyword sections below.`,
+    heading: "300,000+ Chhattisgarh pages — every area, service, and search intent",
+    body: `Every Chhattisgarh area is in the sitemap: each area × each service × each search intent (quote, near-me, price, dealers, and the rest). Raipur URLs are first, so the first sitemap file Google fetches is Raipur. Then the rest of the state follows.`,
   },
 ];
 
 export const homeKeywordTags = [
+  "invisible grills Chhattisgarh",
+  "safety nets Raipur",
+  "invisible grills Raipur",
+  "safety nets Bhilai",
   "invisible grills near me",
   "safety nets near me",
   "pigeon nets near me",

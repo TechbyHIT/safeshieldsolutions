@@ -50,6 +50,7 @@ import { slugify } from "@/lib/slug";
 import { buildAreaSearchIntentsSection } from "@/lib/seo-keywords";
 import { buildAreaLongformExpansion } from "@/lib/area-longform-content";
 import { buildCityServiceLongform } from "@/lib/city-service-longform";
+import { raipurAreaFaqs, raipurAreaSections } from "@/config/raipur-seo";
 
 export function buildServiceContent(ctx: ServiceContentContext): PageContent {
   const detail = getServiceDetail(ctx.serviceSlug);
@@ -102,7 +103,7 @@ export function buildServiceContent(ctx: ServiceContentContext): PageContent {
       {
         question: "Which areas do you serve?",
         answer:
-          "We serve Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh including all major residential and commercial localities. Contact us or browse our locations index to confirm service availability in your neighbourhood.",
+          "We serve every listed area in Chhattisgarh, with Raipur first. Open the locations index and choose your town.",
       },
       ...detail.extraFaqs,
     ],
@@ -178,7 +179,7 @@ export function buildCityServiceContent(
       {
         id: "price-dealers-city",
         heading: `${serviceName} price & dealers in ${city}`,
-        body: `"${serviceLower} price in ${city}" and "dealers near me" queries should compare itemised scope: anchors, edge treatment, transport, GST, and warranty. We operate as manufacturer-installer across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh — ${city} residents get direct fitting without middleman markup.`,
+        body: `"${serviceLower} price in ${city}" and "dealers near me" should compare anchors, edge treatment, transport, GST, and warranty. ${city} pages are part of the Chhattisgarh list, with Raipur listed first.`,
         level: 2,
       },
       {
@@ -220,7 +221,7 @@ export function buildCityServiceContent(
       },
       {
         question: "Is site survey free?",
-        answer: "Yes. We offer a free site survey and measurement for all residential enquiries in Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh.",
+        answer: "Yes. Site survey and measurement are free for residential enquiries across Chhattisgarh, including Raipur.",
       },
       ...longform.faqs,
     ],
@@ -385,6 +386,7 @@ export function buildAreaServiceContent(
     maintenance: detail.maintenance,
     priceGuide,
     sections: [
+      ...raipurAreaSections(area, areaSlug, serviceName, serviceLower),
       {
         id: "coverage",
         heading: `${serviceName} coverage in ${area}`,
@@ -436,6 +438,7 @@ export function buildAreaServiceContent(
       ...longform.sections,
     ],
     faqs: [
+      ...raipurAreaFaqs(area, areaSlug, serviceLower),
       {
         question: `What is the cost of ${serviceLower} in ${area}?`,
         answer: `Pricing in ${locality} depends on dimensions, material spec, floor access, and number of openings. After a free site visit in ${area}, we provide an itemised quote. Bulk discounts apply for full-apartment or multi-tower projects in gated communities.`,

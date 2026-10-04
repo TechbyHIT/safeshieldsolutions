@@ -23,9 +23,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = buildPageMetadata({
   title:
-    "Invisible Grills Near Me | Safety Nets, Pigeon Nets & Premium Installation — Chennai, Hyderabad, Coimbatore, Kochi, Chhattisgarh",
+    "Invisible Grills in Chhattisgarh | Safety Nets Raipur, Bhilai, Bilaspur",
   description:
-    "Best premium invisible grills, safety nets, pigeon nets, mosquito nets & cloth hangers near me. 700k+ local SEO pages, 447 real project photos, free site survey across Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh.",
+    "Invisible grills, safety nets and pigeon nets in Chhattisgarh. Raipur pages are listed first, then every other Chhattisgarh area. Free site survey, SS304.",
   path: "/",
   keywords: [...homeKeywordTags],
 });

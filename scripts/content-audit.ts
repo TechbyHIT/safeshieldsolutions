@@ -2,8 +2,7 @@
  * Audit generated area-service content quality (word count, score, keywords).
  * Run: npm run content:audit
  */
-import { CHENNAI_AREAS } from "../src/data/chennai-areas";
-import { HYDERABAD_AREAS } from "../src/data/hyderabad-areas";
+import { CHHATTISGARH_AREAS } from "../src/data/chhattisgarh-areas";
 import { AREA_PAGE_SERVICES, SEO_SERVICES } from "../src/data/seo-services";
 import {
   buildAreaServiceContent,
@@ -14,20 +13,17 @@ import { countWords } from "../src/lib/slug";
 import { buildAreaServiceKeywords } from "../src/lib/seo-keywords";
 import { publishing } from "../src/config/publishing";
 import { countAreaPagesPerCity } from "../src/lib/area-page-slugs";
-import { CHENNAI_AREA_COUNT, HYDERABAD_AREA_COUNT } from "../src/data/areas";
+import { CHHATTISGARH_AREA_COUNT } from "../src/data/areas";
 
 const minWords = publishing.minWordCount.AREA_SERVICE;
 const minScore = publishing.minContentScore;
 
 const sampleAreas = [
-  { city: "chennai", area: "adyar", cityName: "Chennai" },
-  { city: "chennai", area: "velachery", cityName: "Chennai" },
-  { city: "chennai", area: "anna-nagar", cityName: "Chennai" },
-  { city: "chennai", area: "t-nagar", cityName: "Chennai" },
-  { city: "chennai", area: "omr", cityName: "Chennai" },
-  { city: "hyderabad", area: "gachibowli", cityName: "Hyderabad" },
-  { city: "hyderabad", area: "kukatpally", cityName: "Hyderabad" },
-  { city: "hyderabad", area: "banjara-hills", cityName: "Hyderabad" },
+  { city: "chhattisgarh", area: "raipur", cityName: "Chhattisgarh" },
+  { city: "chhattisgarh", area: "naya-raipur", cityName: "Chhattisgarh" },
+  { city: "chhattisgarh", area: "shankar-nagar", cityName: "Chhattisgarh" },
+  { city: "chhattisgarh", area: "bhilai", cityName: "Chhattisgarh" },
+  { city: "chhattisgarh", area: "bilaspur", cityName: "Chhattisgarh" },
 ];
 const sampleServices = AREA_PAGE_SERVICES.slice(0, 4);
 
@@ -37,10 +33,7 @@ function auditOne(
   areaSlug: string,
   serviceSlug: string,
 ) {
-  const area =
-    citySlug === "chennai"
-      ? CHENNAI_AREAS.find((a) => a.slug === areaSlug)
-      : HYDERABAD_AREAS.find((a) => a.slug === areaSlug);
+  const area = CHHATTISGARH_AREAS.find((a) => a.slug === areaSlug);
   const seo = SEO_SERVICES.find((s) => s.slug === serviceSlug);
   if (!area || !seo) return null;
 
@@ -106,11 +99,9 @@ async function main() {
     }
   }
 
-  const chennaiTotal = countAreaPagesPerCity(CHENNAI_AREA_COUNT);
-  const hyderabadTotal = countAreaPagesPerCity(HYDERABAD_AREA_COUNT);
+  const cgTotal = countAreaPagesPerCity(CHHATTISGARH_AREA_COUNT, "chhattisgarh");
   console.log(`\nSampled ${total} pages.`);
-  console.log(`Chennai URLs: ${chennaiTotal.toLocaleString()}`);
-  console.log(`Hyderabad URLs: ${hyderabadTotal.toLocaleString()}`);
+  console.log(`Chhattisgarh area URLs: ${cgTotal.toLocaleString()}`);
   console.log(`Sample failures: words=${failWords} score=${failScore}`);
 
   if (failWords > 0 || failScore > 0) {

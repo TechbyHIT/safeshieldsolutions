@@ -11,7 +11,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 export const metadata = buildPageMetadata({
   title: "Contact Us | Free Site Survey & Quote",
   description:
-    "Contact SafeShield Solutions for free invisible grill and safety net site survey in Hyderabad and Chennai. Send your opening photo for a clear estimate.",
+    "Contact SafeShield Solutions for a free invisible grill and safety net site survey in Raipur and across Chhattisgarh. Send your opening photo for a clear estimate.",
   path: "/contact",
 });
 

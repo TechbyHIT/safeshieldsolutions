@@ -11,9 +11,9 @@ import { getActiveCities } from "@/lib/queries";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "Service Locations | Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh",
+  title: "Chhattisgarh Service Areas | Raipur Listed First",
   description:
-    "SafeShield Solutions serves Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh with invisible grills, safety nets, pigeon nets, cloth hangers, and home protection installations.",
+    "All Chhattisgarh areas: Raipur first, then Naya Raipur, Bhilai, Durg, Bilaspur, Korba, and every other listed town.",
   path: "/locations",
 });
 
@@ -27,7 +27,7 @@ export default async function LocationsIndexPage() {
       <PageHero
         eyebrow="Service cities"
         title="Our Locations"
-        description="We provide invisible grills, safety nets, and home protection services across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh."
+        description="Chhattisgarh only. Raipur is listed first, then every other area in the state."
         photo={getHdPhoto("safety-nets")}
         breadcrumbs={[
           { label: "Home", href: routes.home },

@@ -99,66 +99,18 @@ export interface CityAreaHighlight {
   areas: MegaMenuLink[];
 }
 
-/** Top areas per city for Areas mega-menu (links to invisible-grills in each area). */
+/** Top areas for the Areas menu. Raipur leads; other Chhattisgarh towns follow. */
 export const cityAreaHighlights: CityAreaHighlight[] = [
-  {
-    citySlug: "chennai",
-    cityName: "Chennai",
-    areas: [
-      { label: "Adyar", href: routes.areaService("chennai", "adyar", "invisible-grills") },
-      { label: "Velachery", href: routes.areaService("chennai", "velachery", "invisible-grills") },
-      { label: "Anna Nagar", href: routes.areaService("chennai", "anna-nagar", "invisible-grills") },
-      { label: "T. Nagar", href: routes.areaService("chennai", "t-nagar", "invisible-grills") },
-      { label: "OMR", href: routes.areaService("chennai", "omr", "invisible-grills") },
-      { label: "Tambaram", href: routes.areaService("chennai", "tambaram", "invisible-grills") },
-    ],
-  },
-  {
-    citySlug: "hyderabad",
-    cityName: "Hyderabad",
-    areas: [
-      { label: "Gachibowli", href: routes.areaService("hyderabad", "gachibowli", "invisible-grills") },
-      { label: "Kukatpally", href: routes.areaService("hyderabad", "kukatpally", "invisible-grills") },
-      { label: "Madhapur", href: routes.areaService("hyderabad", "madhapur", "invisible-grills") },
-      { label: "Banjara Hills", href: routes.areaService("hyderabad", "banjara-hills", "invisible-grills") },
-      { label: "Secunderabad", href: routes.areaService("hyderabad", "secunderabad", "invisible-grills") },
-      { label: "Miyapur", href: routes.areaService("hyderabad", "miyapur", "invisible-grills") },
-    ],
-  },
-  {
-    citySlug: "coimbatore",
-    cityName: "Coimbatore",
-    areas: [
-      { label: "Gandhipuram", href: routes.areaService("coimbatore", "gandhipuram", "invisible-grills") },
-      { label: "Peelamedu", href: routes.areaService("coimbatore", "peelamedu", "invisible-grills") },
-      { label: "Saibaba Colony", href: routes.areaService("coimbatore", "saibaba-colony", "invisible-grills") },
-      { label: "RS Puram", href: routes.areaService("coimbatore", "rs-puram", "invisible-grills") },
-      { label: "Singanallur", href: routes.areaService("coimbatore", "singanallur", "invisible-grills") },
-      { label: "Saravanampatti", href: routes.areaService("coimbatore", "saravanampatti", "invisible-grills") },
-    ],
-  },
-  {
-    citySlug: "kochi",
-    cityName: "Kochi",
-    areas: [
-      { label: "Kakkanad", href: routes.areaService("kochi", "kakkanad", "invisible-grills") },
-      { label: "Edappally", href: routes.areaService("kochi", "edappally", "invisible-grills") },
-      { label: "Aluva", href: routes.areaService("kochi", "aluva", "invisible-grills") },
-      { label: "Vyttila", href: routes.areaService("kochi", "vyttila", "invisible-grills") },
-      { label: "Fort Kochi", href: routes.areaService("kochi", "fort-kochi", "invisible-grills") },
-      { label: "Palarivattom", href: routes.areaService("kochi", "palarivattom", "invisible-grills") },
-    ],
-  },
   {
     citySlug: "chhattisgarh",
     cityName: "Chhattisgarh",
     areas: [
       { label: "Raipur", href: routes.areaService("chhattisgarh", "raipur", "invisible-grills") },
+      { label: "Naya Raipur", href: routes.areaService("chhattisgarh", "naya-raipur", "invisible-grills") },
+      { label: "Shankar Nagar", href: routes.areaService("chhattisgarh", "shankar-nagar", "invisible-grills") },
       { label: "Bhilai", href: routes.areaService("chhattisgarh", "bhilai", "invisible-grills") },
       { label: "Durg", href: routes.areaService("chhattisgarh", "durg", "invisible-grills") },
       { label: "Bilaspur", href: routes.areaService("chhattisgarh", "bilaspur", "invisible-grills") },
-      { label: "Korba", href: routes.areaService("chhattisgarh", "korba", "invisible-grills") },
-      { label: "Rajnandgaon", href: routes.areaService("chhattisgarh", "rajnandgaon", "invisible-grills") },
     ],
   },
 ];

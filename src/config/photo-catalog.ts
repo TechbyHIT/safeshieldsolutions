@@ -119,7 +119,7 @@ function buildPhoto(folder: string, filename: string, index: number): ProjectPho
   const label = folderLabels[folder] ?? folder;
   return {
     src: `/images/photos/${folder}/${filename}`,
-    alt: `${label} installation project photo ${index + 1} – completed work in Chennai, Hyderabad, Coimbatore or Kochi`,
+    alt: `${label} installation project photo ${index + 1} – completed work for Chhattisgarh, Raipur listed first`,
     title: `${label} – Project ${index + 1}`,
     folder,
   };

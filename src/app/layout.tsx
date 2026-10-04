@@ -17,6 +17,10 @@ const inter = Inter({
 /** Site-wide defaults only. Do not set robots/canonical here — they leak onto noindex pages. */
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: [{ url: "/favicon.png", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {

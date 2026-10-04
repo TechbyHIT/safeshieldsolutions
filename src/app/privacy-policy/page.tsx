@@ -35,8 +35,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             We do not sell personal data. Information is used solely for service delivery, follow-up
-            on installation enquiries, and warranty support in Chennai, Hyderabad, Coimbatore, Kochi,
-            and Chhattisgarh service areas.
+            on installation enquiries, and warranty support for Chhattisgarh service areas, with Raipur listed first.
           </p>
           <p>
             For data requests or deletion, contact us through the phone number listed on our contact

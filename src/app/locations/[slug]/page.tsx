@@ -11,7 +11,7 @@ import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildCityBreadcrumbs, buildAreaHubLinks, buildCityServiceHubLinks } from "@/lib/internal-links";
-import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
+import { buildBreadcrumbSchema, buildFaqSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { buildCityHubContent } from "@/lib/city-hub-content";
 import { getCityBySlug, getActiveServices } from "@/lib/queries";
 
@@ -30,9 +30,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const city = await getCityBySlug(slug);
   if (!city) notFound();
+  const raipurLead = slug === "chhattisgarh";
   return buildPageMetadata({
-    title: `Invisible Grills & Safety Nets in ${city.name}`,
-    description: `Professional invisible grills, safety nets, mosquito nets and home protection in ${city.name}. Free site survey, SS304 materials, 5-year warranty.`,
+    title: raipurLead
+      ? "Invisible Grills in Raipur | Chhattisgarh Safety Nets"
+      : `Invisible Grills & Safety Nets in ${city.name}`,
+    description: raipurLead
+      ? "Invisible grills, safety nets and pigeon nets in Raipur. Free survey, itemised quote, SS304. Other Chhattisgarh towns are listed after Raipur."
+      : `Professional invisible grills, safety nets, mosquito nets and home protection in ${city.name}. Free site survey, SS304 materials, 5-year warranty.`,
     path: routes.city(slug),
   });
 }

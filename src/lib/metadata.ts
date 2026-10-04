@@ -9,12 +9,16 @@ import { truncate, titleCase } from "@/lib/slug";
 import {
   buildAreaServiceKeywords,
 } from "@/lib/seo-keywords";
+import { isCgPriorityPlace } from "@/data/cg-local-seo";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { getHeroPhoto, getServiceOgImage } from "@/config/photo-catalog";
 
 export interface MetadataInput {
   title: string;
   description: string;
   path: string;
+  /** When set, this is the single indexable URL for the intent. */
+  canonicalPath?: string;
   keywords?: string[];
   ogImage?: string;
   indexability?: PageIndexabilityInput;
@@ -36,7 +40,7 @@ export function buildCanonicalUrl(path: string): string {
 export function buildPageMetadata(input: MetadataInput): Metadata {
   const title = truncate(input.title, seoDefaults.maxTitleLength);
   const description = truncate(input.description, seoDefaults.maxDescriptionLength);
-  const canonical = buildCanonicalUrl(input.path);
+  const canonical = buildCanonicalUrl(input.canonicalPath ?? input.path);
   const ogImage = input.ogImage ?? getHeroPhoto().src;
   const follow = input.robots?.follow ?? true;
   const indexableFromRules =
@@ -89,11 +93,11 @@ export function buildServiceMetadata(
   return buildPageMetadata({
     title: `${serviceName} Near Me | Installation, Price & Dealers`,
     description: truncate(
-      `${serviceDescription} ${serviceName} near me — free site survey, installation, price per sq ft, dealers & premium options. SafeShield Solutions across Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh.`,
+      `${serviceDescription} ${serviceName} in Chhattisgarh — Raipur first, then every other area. Free site survey, installation, and price.`,
       seoDefaults.maxDescriptionLength,
     ),
     path: `/services/${serviceSlug}`,
-    keywords: [serviceName, "installation", "Hyderabad", "Chennai"],
+    keywords: [serviceName, "installation", "Chhattisgarh", "Raipur"],
     ogImage: getServiceOgImage(serviceSlug),
   });
 }
@@ -166,6 +170,7 @@ export function buildCityServiceMetadata(
     path: `/${citySlug}/${pageSlug}`,
     keywords: [serviceName, cityName, `${serviceName} ${cityName}`, "installation", cityName],
     ogImage: getServiceOgImage(serviceSlug),
+    ...seoRobotsForPath(`/${citySlug}/${pageSlug}`),
   });
 }
 
@@ -183,10 +188,18 @@ export function buildAreaServiceMetadata(
     intentLabel && intentLabel !== "general" ? ` ${intentLabel.replace(/-/g, " ")}` : "";
   const serviceSlug = canonicalServiceSlug ?? pageSlug;
   const titlePart = highIntentTitlePart(intentLabel);
+  const placeLabel =
+    citySlug === "chhattisgarh" && isCgPriorityPlace(areaSlug)
+      ? `${areaName}, Chhattisgarh`
+      : `${areaName}, ${cityName}`;
+  const title =
+    !intentLabel || intentLabel === "general"
+      ? `${serviceName} in ${placeLabel}`
+      : `${serviceName}${intent} in ${placeLabel} | ${titlePart}`;
   return buildPageMetadata({
-    title: `${serviceName}${intent} in ${areaName}, ${cityName} | ${titlePart}`,
+    title,
     description: truncate(
-      `${highIntentDescriptionLead(serviceName.toLowerCase(), `${areaName}, ${cityName}`, intentLabel)} Dealers, installation, premium options — SafeShield Solutions.`,
+      `${highIntentDescriptionLead(serviceName.toLowerCase(), placeLabel, intentLabel)} Written quote after measurement.`,
       seoDefaults.maxDescriptionLength,
     ),
     path: `/${citySlug}/${areaSlug}/${pageSlug}`,
@@ -197,5 +210,17 @@ export function buildAreaServiceMetadata(
       cityName,
     }),
     ogImage: getServiceOgImage(serviceSlug),
+    ...seoRobotsForPath(`/${citySlug}/${areaSlug}/${pageSlug}`),
   });
+}
+
+function seoRobotsForPath(path: string): {
+  canonicalPath: string;
+  robots: { index: boolean; follow: boolean };
+} {
+  const gate = evaluateSeoPath(path);
+  return {
+    canonicalPath: gate.canonicalPath,
+    robots: { index: gate.index, follow: true },
+  };
 }

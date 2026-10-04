@@ -8,7 +8,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 export const metadata = buildPageMetadata({
   title: "Project Gallery | Real Installation Photos",
   description:
-    `Browse ${totalPhotoCount} real photos of completed invisible grill, safety net, mosquito net, cloth hanger, cricket net and bird spike installations in Hyderabad and Chennai.`,
+    `Browse ${totalPhotoCount} photos of invisible grill, safety net, mosquito net, cloth hanger, cricket net, and bird spike installations.`,
   path: "/gallery",
 });
 
@@ -21,7 +21,7 @@ export default function GalleryPage() {
       <PageHero
         eyebrow="Completed work"
         title="Project Gallery — Real Installation Photos"
-        description={`Browse ${totalPhotoCount} real project photos from our Hyderabad and Chennai teams. Review cable spacing, edge fixing, balcony corners, mesh quality, and finish details before choosing your safety solution.`}
+        description={`Browse ${totalPhotoCount} project photos. Review cable spacing, edge fixing, balcony corners, mesh quality, and finish details.`}
         photo={heroPhoto}
         breadcrumbs={[
           { label: "Home", href: routes.home },

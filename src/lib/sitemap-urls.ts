@@ -1,11 +1,11 @@
 import { CITIES } from "@/data/cities";
-import { getAreasForCity } from "@/data/areas";
 import { SEO_SERVICES } from "@/data/seo-services";
 import { serviceMegaMenu } from "@/config/mega-menu";
 import { HOME_TOP_SERVICES } from "@/config/home-seo-links";
 import { guideArticles, blogPosts } from "@/config/guides-content";
-import { intentSuffixesForCity } from "@/lib/area-page-slugs-types";
-import { getAllAreaPageUrlSlugs } from "@/lib/area-page-slugs";
+import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES, COMPARISONS, PRICING_PAGES } from "@/data/cg-local-seo";
+import { getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { site } from "@/config/site";
 import { getSitemapLastmodIso } from "@/lib/seo-freshness";
 
@@ -92,7 +92,7 @@ function publishedServices() {
 }
 
 function liveCities() {
-  return CITIES;
+  return [...CITIES].sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 let cachedEntries: SitemapEntry[] | null = null;
@@ -108,6 +108,7 @@ function pushEntry(
 ) {
   if (!path.startsWith("/") || path.includes("?")) return;
   if (NOINDEX_PATH_SET.has(path)) return;
+  if (!evaluateSeoPath(path).index) return;
   const loc = absoluteUrl(path);
   if (seen.has(loc)) return;
   seen.add(loc);
@@ -158,59 +159,61 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
     pushEntry(entries, seen, `/locations/${city.slug}`, 0.85, "weekly", lastmod);
   }
 
-  if (phase < 2) return entries;
-
-  for (const city of cities) {
-    for (const area of getAreasForCity(city.slug)) {
-      pushEntry(entries, seen, `/locations/${city.slug}/${area.slug}`, 0.7, "monthly", lastmod);
-    }
+  // Only URLs that pass the quality gate. Raipur is first. Intent copies are omitted.
+  pushEntry(entries, seen, "/chhattisgarh", 0.95, "weekly", lastmod);
+  pushEntry(entries, seen, "/pricing", 0.6, "monthly", lastmod);
+  pushEntry(entries, seen, "/compare", 0.55, "monthly", lastmod);
+  for (const page of PRICING_PAGES) {
+    pushEntry(entries, seen, `/pricing/${page.slug}`, 0.5, "monthly", lastmod);
+  }
+  for (const item of COMPARISONS) {
+    pushEntry(entries, seen, `/compare/${item.slug}`, 0.5, "monthly", lastmod);
   }
 
-  for (const city of cities) {
-    for (const service of services) {
-      const priority = menuSet.has(service.slug) ? 0.85 : 0.55;
-      pushEntry(entries, seen, `/${city.slug}/${service.slug}`, priority, "weekly", lastmod);
-    }
-  }
-
-  if (phase < 3) return entries;
-
-  for (const city of cities) {
-    const suffixes = intentSuffixesForCity(city.slug);
-    for (const service of services) {
-      for (const suffix of suffixes) {
-        if (!suffix) continue;
-        const priority = menuSet.has(service.slug) ? 0.55 : 0.4;
-        pushEntry(
-          entries,
-          seen,
-          `/${city.slug}/${service.slug}${suffix}`,
-          priority,
-          "monthly",
-          lastmod,
-        );
+  for (const place of CG_PRIORITY_PLACES) {
+    for (const locality of getIndexableLocalitiesForCity(place.slug)) {
+      const hub = `/chhattisgarh/${place.slug}/areas/${locality.slug}`;
+      if (evaluateSeoPath(hub).index) {
+        pushEntry(entries, seen, hub, 0.6, "monthly", lastmod);
+      }
+      for (const serviceSlug of LOCALITY_SERVICE_SLUGS) {
+        const path = `${hub}/${serviceSlug}`;
+        if (!evaluateSeoPath(path).index) continue;
+        pushEntry(entries, seen, path, 0.55, "monthly", lastmod);
       }
     }
   }
 
-  if (phase < 4) return entries;
-
-  for (const city of cities) {
-    const areas = getAreasForCity(city.slug);
-    const areaPageSlugs =
-      city.slug === "chhattisgarh" ? getAllAreaPageUrlSlugs("chhattisgarh") : menuSlugs;
-    for (const area of areas) {
-      for (const slug of areaPageSlugs) {
-        pushEntry(
-          entries,
-          seen,
-          `/${city.slug}/${area.slug}/${slug}`,
-          city.slug === "chhattisgarh" ? 0.5 : 0.6,
-          "monthly",
-          lastmod,
-        );
-      }
+  for (const place of CG_PRIORITY_PLACES) {
+    const placePath = `/chhattisgarh/${place.slug}`;
+    if (evaluateSeoPath(placePath).index) {
+      pushEntry(
+        entries,
+        seen,
+        placePath,
+        place.slug === "raipur" ? 0.9 : 0.8,
+        "weekly",
+        lastmod,
+      );
     }
+    for (const serviceSlug of CG_CORE_SERVICE_SLUGS) {
+      const path = `/chhattisgarh/${place.slug}/${serviceSlug}`;
+      if (!evaluateSeoPath(path).index) continue;
+      pushEntry(
+        entries,
+        seen,
+        path,
+        place.slug === "raipur" ? 0.85 : 0.65,
+        "monthly",
+        lastmod,
+      );
+    }
+  }
+
+  for (const serviceSlug of CG_CORE_SERVICE_SLUGS) {
+    const path = `/chhattisgarh/${serviceSlug}`;
+    if (!evaluateSeoPath(path).index) continue;
+    pushEntry(entries, seen, path, 0.75, "weekly", lastmod);
   }
 
   return entries;

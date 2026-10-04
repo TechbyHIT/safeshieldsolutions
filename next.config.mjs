@@ -97,12 +97,36 @@ const nextConfig = {
     ];
   },
   async redirects() {
+    const aliases = [
+      ["/safety-nets", "/services/safety-nets"],
+      ["/invisible-grills", "/services/invisible-grills"],
+      ["/pigeon-nets", "/services/pigeon-safety-nets"],
+      ["/pigeon-safety-nets", "/services/pigeon-safety-nets"],
+      ["/balcony-safety-nets", "/services/balcony-safety-nets"],
+      ["/child-safety-nets", "/services/child-safety-nets"],
+      ["/pet-safety-nets", "/services/pet-safety-nets"],
+      ["/terrace-safety-nets", "/services/terrace-safety-nets"],
+      ["/balcony-invisible-grills", "/services/balcony-invisible-grills"],
+      ["/window-invisible-grills", "/services/window-invisible-grills"],
+      ["/sports-nets", "/services/sports-nets"],
+      ["/industrial-safety-nets", "/services/industrial-safety-nets"],
+    ];
     return [
       {
         source: "/sitemaps/sitemap-:id.xml",
         destination: "/sitemap-:id.xml",
         permanent: true,
       },
+      {
+        source: "/chhattisgarh/:city/area/:area/:service",
+        destination: "/chhattisgarh/:city/areas/:area/:service",
+        permanent: true,
+      },
+      ...aliases.map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
     ];
   },
 };

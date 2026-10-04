@@ -63,7 +63,7 @@ export default async function GuideArticlePage({ params }: PageProps) {
       <Section>
         <p className="prose-content max-w-3xl">
           This guide covers buying, installation, and local intent searches for{" "}
-          {guide.serviceSlug.replace(/-/g, " ")} across Chennai, Hyderabad, Coimbatore, Kochi, and Chhattisgarh.
+          {guide.serviceSlug.replace(/-/g, " ")} across Chhattisgarh, with Raipur listed first.
           Use the locality links below for neighbourhood-specific quotes and dealer pages.
         </p>
         <p className="mt-6">

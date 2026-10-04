@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { PageContentRenderer } from "@/components/content/PageContentRenderer";
@@ -12,9 +12,13 @@ import {
   buildAreaServiceContent,
 } from "@/lib/content";
 import {
-  buildCityServiceMetadata,
   buildAreaServiceMetadata,
+  buildCityServiceMetadata,
+  buildPageMetadata,
 } from "@/lib/metadata";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import { ChhattisgarhPlacePage } from "@/components/seo/ChhattisgarhPlacePage";
+import { LocalServicePage } from "@/components/seo/LocalServicePage";
 import {
   buildCityServiceBreadcrumbs,
   buildAreaServiceBreadcrumbs,
@@ -29,6 +33,7 @@ import { PageInternalLinks } from "@/components/content/PageInternalLinks";
 import { buildExploreMoreSection } from "@/lib/build-explore-more";
 import { resolveAreaPageSlug } from "@/lib/area-page-slugs";
 import { getSeoService } from "@/data/seo-services";
+import { getCgPlace, SERVICE_SLUG_ALIASES } from "@/data/cg-local-seo";
 import { titleCase } from "@/lib/slug";
 import { noBuildStaticParams } from "@/config/build-static";
 import {
@@ -62,7 +67,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (segments.length === 1) {
     const pageSlug = segments[0]!;
+    const asPlace = await getAreaBySlugs(city, pageSlug);
     const resolved = resolveAreaPageSlug(pageSlug, city);
+    if (asPlace && !resolved) {
+      const gate = evaluateSeoPath(`/${city}/${pageSlug}`);
+      return buildPageMetadata({
+        title: `Invisible Grills & Safety Nets in ${asPlace.name}, Chhattisgarh`,
+        description: `Safety nets, pigeon nets, and invisible grills in ${asPlace.name}, Chhattisgarh. Free site survey and a written quote.`,
+        path: `/${city}/${pageSlug}`,
+        canonicalPath: gate.canonicalPath,
+        robots: { index: gate.index, follow: true },
+        keywords: [asPlace.name, "Chhattisgarh", "invisible grills", "safety nets"],
+      });
+    }
     const serviceSlug = resolved?.serviceSlug ?? pageSlug;
     const serviceData = await getServiceBySlug(serviceSlug);
     if (!serviceData || (!resolved && !getSeoService(pageSlug))) notFound();
@@ -104,7 +121,17 @@ export default async function CitySegmentPage({ params }: PageProps) {
 
   if (segments.length === 1) {
     const pageSlug = segments[0]!;
+    const asPlace = await getAreaBySlugs(city, pageSlug);
     const resolved = resolveAreaPageSlug(pageSlug, city);
+    if (asPlace && !resolved) {
+      return (
+        <ChhattisgarhPlacePage
+          placeSlug={pageSlug}
+          placeName={asPlace.name}
+          stateName={cityData.name}
+        />
+      );
+    }
     const serviceSlug = resolved?.serviceSlug ?? pageSlug;
     const serviceData = await getServiceBySlug(serviceSlug);
     if (!serviceData || (!resolved && !getSeoService(pageSlug))) notFound();
@@ -194,12 +221,24 @@ export default async function CitySegmentPage({ params }: PageProps) {
 
   const areaSlug = segments[0]!;
   const pageSlug = segments[1]!;
+  const alias = SERVICE_SLUG_ALIASES[pageSlug];
+  if (alias) permanentRedirect(`/${city}/${areaSlug}/${alias}`);
   const areaData = await getAreaBySlugs(city, areaSlug);
   const resolved = resolveAreaPageSlug(pageSlug, city);
   if (!areaData || !resolved) notFound();
 
   const serviceData = await getServiceBySlug(resolved.serviceSlug);
   if (!serviceData) notFound();
+  const placeProfile = city === "chhattisgarh" ? getCgPlace(areaSlug) : undefined;
+  const catalogue = getSeoService(resolved.serviceSlug);
+  if (
+    placeProfile &&
+    catalogue &&
+    resolved.intentLabel === "general" &&
+    evaluateSeoPath(`/${city}/${areaSlug}/${pageSlug}`).index
+  ) {
+    return <LocalServicePage place={placeProfile} service={catalogue} />;
+  }
 
   const content = buildAreaServiceContent(
     {
@@ -265,6 +304,9 @@ export default async function CitySegmentPage({ params }: PageProps) {
           breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
         />
         <Section>
+          {placeProfile && (
+            <p className="mb-8 max-w-3xl text-neutral-700">{placeProfile.localContext}</p>
+          )}
           <div className="grid gap-10 lg:grid-cols-2">
             <PageContentRenderer content={content} h1={h1} hideH1 />
           <ServicePhotoSidebar

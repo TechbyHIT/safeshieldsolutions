@@ -1,7 +1,7 @@
 export const business = {
   name: "SafeShield Solutions",
   legalName: "SafeShield Solutions",
-  tagline: "Premium invisible grills, safety nets & home protection across South India",
+  tagline: "Premium invisible grills, safety nets & home protection across Chhattisgarh",
   description:
     "Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, zip screens, mesh doors, cricket box grass, and bird protection solutions for apartments, villas, and commercial properties.",
   phone: "+91-8977235565",
@@ -19,7 +19,7 @@ export const business = {
     latitude: 17.4849,
     longitude: 78.5418,
   },
-  serviceAreas: ["Chennai", "Hyderabad", "Coimbatore", "Kochi", "Chhattisgarh"],
+  serviceAreas: ["Chhattisgarh"],
   workingHours: {
     weekdays: "9:00 AM – 7:00 PM",
     saturday: "9:00 AM – 6:00 PM",

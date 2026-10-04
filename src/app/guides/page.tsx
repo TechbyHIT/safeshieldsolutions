@@ -12,7 +12,7 @@ export const revalidate = 86400;
 export const metadata = buildPageMetadata({
   title: "Installation Guides | Invisible Grills, Safety Nets & Pigeon Nets Near Me",
   description:
-    "Premium installation guides for invisible grills, safety nets, pigeon nets, mosquito nets, cloth hangers, and bird spikes — near-me tips for Chennai, Hyderabad, Coimbatore, Kochi & Chhattisgarh.",
+    "Premium installation guides for invisible grills, safety nets, pigeon nets, and cloth hangers in Chhattisgarh, starting with Raipur.",
   path: "/guides",
   keywords: [
     "invisible grills guide",

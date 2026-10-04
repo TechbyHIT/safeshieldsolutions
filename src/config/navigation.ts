@@ -27,13 +27,7 @@ export const navigation = {
     { label: "Sliding Mesh Doors", href: routes.service("sliding-mesh-doors") },
     { label: "Bird Spikes", href: routes.service("bird-spikes") },
   ],
-  cities: [
-    { label: "Chennai", href: routes.city("chennai") },
-    { label: "Hyderabad", href: routes.city("hyderabad") },
-    { label: "Coimbatore", href: routes.city("coimbatore") },
-    { label: "Kochi", href: routes.city("kochi") },
-    { label: "Chhattisgarh", href: routes.city("chhattisgarh") },
-  ],
+  cities: [{ label: "Chhattisgarh", href: routes.city("chhattisgarh") }],
   footer: [
     { label: "FAQ", href: routes.faq },
     { label: "HTML Sitemap", href: routes.htmlSitemap },
