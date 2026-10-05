@@ -8,8 +8,9 @@ import { getDistrictForCity, getIndexableLocalitiesForCity } from "@/data/cg-hie
 import { CG_PRIORITY_PLACES, getCgPlace, type CgPlaceProfile } from "@/data/cg-local-seo";
 import { getSeoService, type SeoService } from "@/data/seo-services";
 import { cityServiceSlugsForPlace, nearMeSlug } from "@/lib/local-seo-catalog";
+import { composeServicePage, type LocalIntent } from "@/lib/compose-service-page";
 
-export type LocalIntent = "general" | "near-me";
+export type { LocalIntent };
 
 export interface LocalLandingCopy {
   path: string;
@@ -29,6 +30,10 @@ export interface LocalLandingCopy {
   nearbyPlaces: { href: string; label: string }[];
   localityLinks: { href: string; label: string }[];
   cta: string;
+  sections: { id: string; heading: string; paragraphs: string[]; bullets?: string[] }[];
+  sources: { title: string; url: string; publisher: string; usedFor: string }[];
+  checklist: string[];
+  contentAngle: string;
 }
 
 const RELATED_FOR_SERVICE: Record<string, string[]> = {
@@ -282,114 +287,42 @@ export function buildLocalLandingCopy(
   service: SeoService,
   intent: LocalIntent,
 ): LocalLandingCopy {
+  const composed = composeServicePage(place, service, intent);
   const detail = getServiceDetail(service.slug);
   const district = getDistrictForCity(place.slug);
   const housing = housingFor(place);
-  const path =
-    intent === "near-me"
-      ? `/chhattisgarh/${place.slug}/${nearMeSlug(service.slug)}`
-      : `/chhattisgarh/${place.slug}/${service.slug}`;
   const applications = applicationsFor(service, place, housing);
   const problems = problemsFor(service, place, housing);
-  const serviceLower = service.name.toLowerCase();
-  const districtLabel = district?.name ?? "Chhattisgarh";
-  const explanation = explanationFor(service, place, housing);
-
-  const title =
-    intent === "near-me"
-      ? `${service.name} Near Me in ${place.name} | SafeShield Solutions`
-      : `${service.name} Installation in ${place.name} | SafeShield Solutions`;
-
-  const h1 =
-    intent === "near-me"
-      ? `${service.name} Near Me in ${place.name}, Chhattisgarh`
-      : `${service.name} Installation in ${place.name}`;
-
-  const description =
-    intent === "near-me"
-      ? `Professional ${serviceLower} installation near ${place.name}, ${districtLabel} district. ${applications[0] ?? housing.types[0]}. Site survey, written quote, same crew as the ${place.name} service page.`
-      : `${service.name} installation in ${place.name}, ${districtLabel} district. ${place.localContext} Measured fitting for ${applications[0]?.toLowerCase() ?? "homes and commercial openings"}.`;
-
-  const intro =
-    intent === "near-me"
-      ? `${service.name} near ${place.name} is the same measured ${serviceLower} job as the main ${place.name} page, written for people searching locally. ${place.localContext} ${housing.access}.`
-      : `${service.name} installation in ${place.name} is specified after the opening is measured. ${place.localContext} Typical buildings: ${housing.types[0]}.`;
-
-  const install = `${place.name} ${serviceLower} jobs follow one sequence: measure the opening or ledge, choose the material, prepare the fixing, install, check the finish, then hand over. ${housing.access}. ${housing.climate}. ${detail.installSteps.map((step) => step.title).join("; ")}.`;
-
-  const nearbyNames = place.nearby
-    .map((slug) => CG_PRIORITY_PLACES.find((item) => item.slug === slug)?.name)
-    .filter((name): name is string => Boolean(name));
   const localities = getIndexableLocalitiesForCity(place.slug);
 
-  const serviceArea =
-    place.slug === "raipur"
-      ? `Raipur work covers the city colonies, VIP Road, Telibandha, Pandri, and Naya Raipur sectors. Nearby served towns include ${nearbyNames.join(", ") || "Bhilai and Durg"}. Travel, access, and the number of openings still go into the written quote. This is a service area, not a second registered office.`
-      : nearbyNames.length > 0
-        ? `${place.name} is served with the surrounding towns of ${nearbyNames.join(", ")}. Localities with their own pages are listed below. Travel, access, and the number of openings still go into the written quote.`
-        : `${place.name} is a listed Chhattisgarh service area. Calls use the same SafeShield number. This is not a separate branch office.`;
-
-  const faqs = [
-    {
-      question: `Do you install ${serviceLower} in ${place.name}?`,
-      answer: `Yes. ${place.name} is a served town in ${districtLabel} district. The quote follows a site measurement. ${place.localContext}`,
-    },
-    {
-      question: `What is ${serviceLower} used for in ${place.name}?`,
-      answer: applications.slice(0, 3).join(". ") + ".",
-    },
-    {
-      question: `How is ${serviceLower} installed in ${place.name}?`,
-      answer: install,
-    },
-    {
-      question:
-        intent === "near-me"
-          ? `Is the near-me page a different team from other ${place.name} pages?`
-          : `Is there a ${place.name} office?`,
-      answer:
-        intent === "near-me"
-          ? `No. Near-me, installation, and the main ${place.name} service page are the same crew and the same materials. This URL exists so local searches land on a page that names ${place.name} and the surrounding service area.`
-          : `${place.name} is a service area, not a claimed extra office. Address details on invoices are the business address. Work is done on site in ${place.name}.`,
-    },
-  ];
-
-  if (place.slug === "raipur") {
-    faqs.push({
-      question: `Which Raipur localities do you cover for ${serviceLower}?`,
-      answer:
-        localities.length > 0
-          ? `Named locality pages include ${localities
-              .slice(0, 6)
-              .map((area) => area.name)
-              .join(", ")}. Other Raipur openings are still surveyed on request.`
-          : "Raipur city and Naya Raipur openings are surveyed on request.",
-    });
-  }
-
-  const cta = `Call or WhatsApp a photo of the ${place.name} opening for a ${serviceLower} survey. The written quote needs a site measurement.`;
-
   return {
-    path,
-    title,
-    h1,
-    description,
-    intro,
-    explanation,
+    path: composed.path,
+    title: composed.title,
+    h1: composed.h1,
+    description: composed.description,
+    intro: composed.intro,
+    explanation: composed.explanation,
     propertyTypes: housing.types,
     problems,
     applications,
     benefits: benefitsFor(service, place),
-    install,
-    serviceArea,
-    faqs,
+    install: composed.sections
+      .flatMap((section) => section.paragraphs)
+      .slice(0, 2)
+      .join(" "),
+    serviceArea: `${place.localContext} ${district?.name ?? "Chhattisgarh"} district. Specification stays on the technical sections above. ${detail.installSteps[0]?.title ?? "Measurement"} comes before any quote.`,
+    faqs: composed.faqs,
     relatedServices: relatedLinks(place, service.slug),
-    nearbyPlaces: nearbyServiceLinks(place, service.slug, intent),
-    localityLinks: localities.slice(0, 8).map((area) => ({
+    nearbyPlaces: [],
+    localityLinks: localities.slice(0, 6).map((area) => ({
       href: `/chhattisgarh/${place.slug}/areas/${area.slug}`,
       label: area.name,
     })),
-    cta,
+    cta: `Send the opening size, the floor, and a photo of the fixing edge in ${place.name}. The written quote follows a measurement.`,
+    sections: composed.sections,
+    sources: composed.sources,
+    checklist: composed.checklist,
+    contentAngle: composed.contentAngle,
   };
 }
 

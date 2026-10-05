@@ -83,10 +83,10 @@ describe("unique local copy", () => {
     expect(raipur.intro).not.toBe(bhilai.intro);
     expect(raipur.explanation).not.toBe(bhilai.explanation);
     expect(raipur.description).not.toBe(bhilai.description);
-    expect(raipur.title).toBe("Invisible Grills Installation in Raipur | SafeShield Solutions");
-    expect(raipur.h1).toBe("Invisible Grills Installation in Raipur");
+    expect(raipur.contentAngle).not.toBe(bhilai.contentAngle);
+    expect(raipur.title.toLowerCase()).not.toContain("near me");
     const durg = buildLocalLandingCopy(getCgPlace("durg")!, service, "general");
-    expect(durg.explanation).not.toBe(raipur.explanation);
-    expect(durg.explanation).not.toBe(bhilai.explanation);
+    expect(durg.contentAngle).not.toBe(raipur.contentAngle);
+    expect(durg.contentAngle).not.toBe(bhilai.contentAngle);
   });
 });

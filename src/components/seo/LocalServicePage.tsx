@@ -61,67 +61,23 @@ export function LocalServicePage({
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1.5fr_0.7fr]">
           <div className="space-y-10">
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">
-                {service.name} in {place.name}
-              </h2>
-              <p className="mt-3 text-neutral-700">{copy.intro}</p>
-              <p className="mt-3 text-neutral-700">{copy.explanation}</p>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Property types in {place.name}</h2>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
-                {copy.propertyTypes.map((item) => (
-                  <li key={item}>{item}</li>
+            {copy.sections.map((section) => (
+              <section key={section.id}>
+                <h2 className="text-2xl font-bold text-neutral-900">{section.heading}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)} className="mt-3 text-neutral-700">
+                    {paragraph}
+                  </p>
                 ))}
-              </ul>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Local problems this job solves</h2>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
-                {copy.problems.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Where it is used in {place.name}</h2>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
-                {copy.applications.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Why this specification</h2>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
-                {copy.benefits.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Installation</h2>
-              <p className="mt-3 text-neutral-700">{copy.install}</p>
-            </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Service area</h2>
-              <p className="mt-3 text-neutral-700">{copy.serviceArea}</p>
-            </section>
-            {copy.localityLinks.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold text-neutral-900">Localities in {place.name}</h2>
-                <ul className="mt-3 flex flex-wrap gap-3">
-                  {copy.localityLinks.map((item) => (
-                    <li key={item.href}>
-                      <Link href={item.href} className="text-brand-700 hover:underline">
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
+                    {section.bullets.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
               </section>
-            )}
+            ))}
             <section>
               <h2 className="text-2xl font-bold text-neutral-900">Questions</h2>
               <dl className="mt-4 space-y-4">
@@ -133,8 +89,24 @@ export function LocalServicePage({
                 ))}
               </dl>
             </section>
+            {copy.sources.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-neutral-900">Sources</h2>
+                <ul className="mt-3 space-y-2 text-sm text-neutral-700">
+                  {copy.sources.map((source) => (
+                    <li key={source.url}>
+                      <a href={source.url} className="text-brand-700 hover:underline">
+                        {source.title}
+                      </a>
+                      {" — "}
+                      {source.publisher}. {source.usedFor}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Related services in {place.name}</h2>
+              <h2 className="text-2xl font-bold text-neutral-900">Related services</h2>
               <ul className="mt-3 space-y-1">
                 {copy.relatedServices.map((item) => (
                   <li key={item.href}>
@@ -145,20 +117,6 @@ export function LocalServicePage({
                 ))}
               </ul>
             </section>
-            {copy.nearbyPlaces.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold text-neutral-900">Nearby towns</h2>
-                <ul className="mt-3 space-y-1">
-                  {copy.nearbyPlaces.map((item) => (
-                    <li key={item.href}>
-                      <Link href={item.href} className="text-brand-700 hover:underline">
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
           </div>
           <aside className="h-fit rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
             <h2 className="text-lg font-bold">Get a measured quote</h2>
