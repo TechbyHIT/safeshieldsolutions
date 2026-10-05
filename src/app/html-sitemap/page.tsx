@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { PageHero } from "@/components/layout/PageHero";
-import { CITIES } from "@/data/cities";
-import { getAreasForCity } from "@/data/areas";
 import { SEO_SERVICES } from "@/data/seo-services";
+import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
+import { CG_DISTRICTS } from "@/data/cg-hierarchy";
 import { guideArticles, blogPosts } from "@/config/guides-content";
 import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
@@ -73,38 +73,37 @@ export default function HtmlSitemapPage() {
         ))}
       </ul>
 
-      <h2 className="mt-12 text-xl font-bold text-neutral-900">Cities & sample localities</h2>
-      <div className="mt-4 grid gap-8 md:grid-cols-2">
-        {CITIES.map((city) => {
-          const areas = getAreasForCity(city.slug).slice(0, 12);
-          return (
-            <article key={city.slug}>
-              <h3 className="font-semibold text-neutral-900">
-                <Link href={routes.city(city.slug)} className="text-brand-800 hover:underline">
-                  {city.name}
-                </Link>
-              </h3>
-              <ul className="mt-2 space-y-1">
-                {areas.map((area) => (
-                  <li key={area.slug}>
-                    <Link
-                      href={routes.area(city.slug, area.slug)}
-                      className="text-sm text-brand-700 hover:underline"
-                    >
-                      {area.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-2 text-sm">
-                <Link href={routes.city(city.slug)} className="font-medium text-neutral-700 hover:underline">
-                  All {city.name} areas →
-                </Link>
-              </p>
-            </article>
-          );
-        })}
-      </div>
+      <h2 className="mt-12 text-xl font-bold text-neutral-900">Chhattisgarh towns</h2>
+      <ul className="mt-4 columns-1 gap-x-8 sm:columns-2 lg:columns-3">
+        {CG_PRIORITY_PLACES.map((place) => (
+          <li key={place.slug} className="break-inside-avoid py-1">
+            <Link href={`/chhattisgarh/${place.slug}`} className="text-sm text-brand-700 hover:underline">
+              {place.name}
+            </Link>
+            {" · "}
+            <Link
+              href={`/chhattisgarh/${place.slug}/bird-spikes-near-me`}
+              className="text-sm text-brand-700 hover:underline"
+            >
+              Bird spikes
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <h2 className="mt-12 text-xl font-bold text-neutral-900">Districts</h2>
+      <ul className="mt-4 columns-1 gap-x-8 sm:columns-2 lg:columns-3">
+        {CG_DISTRICTS.map((district) => (
+          <li key={district.slug} className="break-inside-avoid py-1">
+            <Link
+              href={`/chhattisgarh/districts/${district.slug}`}
+              className="text-sm text-brand-700 hover:underline"
+            >
+              {district.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <h2 className="mt-12 text-xl font-bold text-neutral-900">Guides</h2>
       <ul className="mt-4 space-y-2">

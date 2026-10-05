@@ -8,27 +8,16 @@ import { routes } from "@/config/routes";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import type { SeoService } from "@/data/seo-services";
 import type { CgPlaceProfile } from "@/data/cg-local-seo";
-import { buildBreadcrumbSchema, buildFaqSchema, buildServiceSchema } from "@/lib/schema";
-import { faqsForServicePlace, linksForTownService, shortAnswers } from "@/lib/seo-graph";
-
-const APPLICATIONS = [
-  "Apartments",
-  "Independent houses",
-  "Balconies",
-  "Windows",
-  "Terraces",
-  "High-rise openings",
-];
-
-const INSTALL_STEPS = [
-  "Site measurement",
-  "Material selection",
-  "Fixing preparation",
-  "Installation",
-  "Tensioning or edge finishing",
-  "Inspection",
-  "Handover",
-];
+import {
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildLocalBusinessSchema,
+  buildServiceSchema,
+} from "@/lib/schema";
+import {
+  buildLocalLandingCopy,
+  type LocalIntent,
+} from "@/lib/local-landing-content";
 
 function whatsappHref(placeName: string, serviceName: string) {
   const text = `Hi, I need a quote for ${serviceName.toLowerCase()} in ${placeName}, Chhattisgarh.`;
@@ -38,34 +27,34 @@ function whatsappHref(placeName: string, serviceName: string) {
 export function LocalServicePage({
   place,
   service,
+  intent = "general",
 }: {
   place: CgPlaceProfile;
   service: SeoService;
+  intent?: LocalIntent;
 }) {
-  const faqs = faqsForServicePlace(service.name, place.name, place.localContext, service.slug.includes("grill"));
-  const answers = shortAnswers(service.name, place.name);
-  const contextual = linksForTownService(place.slug, service.slug);
-  const path = `/chhattisgarh/${place.slug}/${service.slug}`;
+  const copy = buildLocalLandingCopy(place, service, intent);
   const breadcrumbs = [
     { name: "Home", url: routes.home },
     { name: "Chhattisgarh", url: "/chhattisgarh" },
     { name: place.name, url: `/chhattisgarh/${place.slug}` },
-    { name: service.name, url: path },
+    { name: service.name, url: copy.path },
   ];
 
   return (
     <>
       <JsonLd
         data={[
-          buildServiceSchema(service.name, service.description, path),
+          buildServiceSchema(service.name, service.description, copy.path),
           buildBreadcrumbSchema(breadcrumbs),
-          buildFaqSchema(faqs),
+          buildFaqSchema(copy.faqs),
+          buildLocalBusinessSchema(place.name),
         ]}
       />
       <PageHero
         eyebrow={`${place.name}, Chhattisgarh`}
-        title={`${service.name} in ${place.name}, Chhattisgarh`}
-        description={`${service.description} ${place.localContext}`}
+        title={copy.h1}
+        description={copy.description}
         photo={getPrimaryServicePhoto(service.slug)}
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
       />
@@ -73,65 +62,70 @@ export function LocalServicePage({
         <div className="grid gap-10 lg:grid-cols-[1.5fr_0.7fr]">
           <div className="space-y-10">
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Short answers</h2>
-              <dl className="mt-3 space-y-3">
-                {answers.map((item) => (
-                  <div key={item.q}>
-                    <dt className="font-semibold text-neutral-900">{item.q}</dt>
-                    <dd className="text-neutral-700">{item.a}</dd>
-                  </div>
-                ))}
-              </dl>
+              <h2 className="text-2xl font-bold text-neutral-900">
+                {service.name} in {place.name}
+              </h2>
+              <p className="mt-3 text-neutral-700">{copy.intro}</p>
+              <p className="mt-3 text-neutral-700">{copy.explanation}</p>
             </section>
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Where it is used</h2>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {APPLICATIONS.map((item) => (
-                  <li key={item} className="rounded-full border border-neutral-200 px-3 py-1 text-sm">
-                    {item}
-                  </li>
+              <h2 className="text-2xl font-bold text-neutral-900">Property types in {place.name}</h2>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
+                {copy.propertyTypes.map((item) => (
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
-              <p className="mt-3 text-neutral-700">
-                A grill or net is an added layer. It does not replace a sound railing, a window
-                restrictor, or supervision.
-              </p>
             </section>
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Materials</h2>
-              <p className="mt-3 text-neutral-700">
-                Invisible grills are quoted in SS304 stainless cable, with SS316 when corrosion
-                exposure is higher. Safety nets use nylon or HDPE mesh. Cable diameter, mesh size,
-                and anchors are written into the quote after measurement. They are not guessed from
-                the town name.
-              </p>
+              <h2 className="text-2xl font-bold text-neutral-900">Local problems this job solves</h2>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
+                {copy.problems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+            <section>
+              <h2 className="text-2xl font-bold text-neutral-900">Where it is used in {place.name}</h2>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
+                {copy.applications.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+            <section>
+              <h2 className="text-2xl font-bold text-neutral-900">Why this specification</h2>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-neutral-700">
+                {copy.benefits.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </section>
             <section>
               <h2 className="text-2xl font-bold text-neutral-900">Installation</h2>
-              <ol className="mt-3 list-decimal space-y-1 pl-5 text-neutral-700">
-                {INSTALL_STEPS.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
+              <p className="mt-3 text-neutral-700">{copy.install}</p>
             </section>
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">What changes the price</h2>
-              <p className="mt-3 text-neutral-700">
-                Size, number of openings, material grade, access, fixing surface, and travel to{" "}
-                {place.name}. No rate per square foot is published here.{" "}
-                <Link href="/pricing" className="text-brand-700 hover:underline">
-                  Pricing factors
-                </Link>
-              </p>
+              <h2 className="text-2xl font-bold text-neutral-900">Service area</h2>
+              <p className="mt-3 text-neutral-700">{copy.serviceArea}</p>
             </section>
-            <section>
-              <h2 className="text-2xl font-bold text-neutral-900">{place.name}</h2>
-              <p className="mt-3 text-neutral-700">{place.localContext}</p>
-            </section>
+            {copy.localityLinks.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-neutral-900">Localities in {place.name}</h2>
+                <ul className="mt-3 flex flex-wrap gap-3">
+                  {copy.localityLinks.map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className="text-brand-700 hover:underline">
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <section>
               <h2 className="text-2xl font-bold text-neutral-900">Questions</h2>
               <dl className="mt-4 space-y-4">
-                {faqs.map((faq) => (
+                {copy.faqs.map((faq) => (
                   <div key={faq.question}>
                     <dt className="font-semibold text-neutral-900">{faq.question}</dt>
                     <dd className="mt-1 text-neutral-700">{faq.answer}</dd>
@@ -140,9 +134,9 @@ export function LocalServicePage({
               </dl>
             </section>
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Related pages</h2>
+              <h2 className="text-2xl font-bold text-neutral-900">Related services in {place.name}</h2>
               <ul className="mt-3 space-y-1">
-                {contextual.map((item) => (
+                {copy.relatedServices.map((item) => (
                   <li key={item.href}>
                     <Link href={item.href} className="text-brand-700 hover:underline">
                       {item.label}
@@ -151,12 +145,24 @@ export function LocalServicePage({
                 ))}
               </ul>
             </section>
+            {copy.nearbyPlaces.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-neutral-900">Nearby towns</h2>
+                <ul className="mt-3 space-y-1">
+                  {copy.nearbyPlaces.map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className="text-brand-700 hover:underline">
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
           <aside className="h-fit rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
             <h2 className="text-lg font-bold">Get a measured quote</h2>
-            <p className="mt-2 text-sm text-neutral-600">
-              Call, WhatsApp a photo, or send the opening size. The final figure needs a site check.
-            </p>
+            <p className="mt-2 text-sm text-neutral-600">{copy.cta}</p>
             <div className="mt-4 flex flex-col gap-3">
               <a
                 href={`tel:${business.phone.replace(/\s/g, "")}`}

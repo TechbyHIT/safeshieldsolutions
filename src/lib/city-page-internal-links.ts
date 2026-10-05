@@ -1,24 +1,17 @@
-import { AREA_PAGE_SERVICES } from "@/data/seo-services";
-import { HOME_CITY_AREAS } from "@/config/home-seo-links";
-import { routes } from "@/config/routes";
-import { intentSuffixesForCity } from "@/lib/area-page-slugs-types";
-import { contentSeed } from "@/lib/content-seed";
+import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
+import { cityServiceSlugsForPlace } from "@/lib/local-seo-catalog";
+import { getSeoService } from "@/data/seo-services";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 
 export interface InternalLinkGroup {
   heading: string;
   links: { href: string; label: string }[];
 }
 
-const CITY_INTENT_ALLOW = [
-  "",
-  "-near-me",
-  "-installation",
-  "-price",
-  "-dealers",
-  "-best",
-  "-premium",
-  "-affordable",
-] as const;
+function keep(href: string): boolean {
+  const gate = evaluateSeoPath(href);
+  return gate.index && gate.canonicalPath === href;
+}
 
 /** Internal links for city×service pages (not area-specific). */
 export function buildCityPageInternalLinks(input: {
@@ -28,46 +21,25 @@ export function buildCityPageInternalLinks(input: {
   serviceName: string;
   pageSlug: string;
 }): InternalLinkGroup[] {
-  const cityIntents = intentSuffixesForCity(input.citySlug).filter((s) =>
-    CITY_INTENT_ALLOW.includes(s as (typeof CITY_INTENT_ALLOW)[number]),
-  );
-  const seed = contentSeed(input.citySlug, input.serviceSlug);
-  const areas = HOME_CITY_AREAS[input.citySlug] ?? [];
-  const areaLinks: { href: string; label: string }[] = [];
+  const townLinks = CG_PRIORITY_PLACES.slice(0, 8).map((place) => ({
+    href: `/chhattisgarh/${place.slug}/${input.serviceSlug}`,
+    label: `${input.serviceName} in ${place.name}`,
+  })).filter((item) => keep(item.href));
 
-  for (let i = 0; i < Math.min(20, areas.length); i++) {
-    const area = areas[(seed + i * 7) % areas.length];
-    if (!area) break;
-    areaLinks.push({
-      href: routes.areaService(input.citySlug, area.slug, input.pageSlug),
-      label: `${input.serviceName} in ${area.name}, ${input.cityName}`,
-    });
-  }
-
-  const intentLinks = cityIntents.filter((s) => s).map((suffix) => ({
-    href: routes.cityService(input.citySlug, `${input.serviceSlug}${suffix}`),
-    label: `${input.serviceName}${suffix.replace(/-/g, " ")} in ${input.cityName}`,
-  }));
-
-  const otherServices = AREA_PAGE_SERVICES.filter((s) => s.slug !== input.serviceSlug)
-    .slice(0, 12)
-    .map((s) => ({
-      href: routes.cityService(input.citySlug, `${s.slug}-near-me`),
-      label: `${s.name} near me in ${input.cityName}`,
-    }));
+  const related = cityServiceSlugsForPlace("raipur")
+    .filter((slug) => slug !== input.serviceSlug)
+    .slice(0, 8)
+    .map((slug) => {
+      const service = getSeoService(slug);
+      return {
+        href: `/chhattisgarh/raipur/${slug}`,
+        label: `${service?.name ?? slug} in Raipur`,
+      };
+    })
+    .filter((item) => keep(item.href));
 
   return [
-    { heading: `Popular ${input.cityName} localities for ${input.serviceName}`, links: areaLinks },
-    { heading: `More ${input.serviceName} searches in ${input.cityName}`, links: intentLinks },
-    { heading: `Other premium services near me in ${input.cityName}`, links: otherServices },
-    {
-      heading: "Browse all cities",
-      links: [
-        { href: routes.city(input.citySlug), label: `All areas in ${input.cityName}` },
-        { href: routes.locations, label: "All service cities" },
-        { href: routes.guides, label: "Installation guides" },
-        { href: routes.blog, label: "Local project blog" },
-      ],
-    },
+    { heading: `${input.serviceName} in served towns`, links: townLinks },
+    { heading: "Other services in Raipur", links: related },
   ];
 }

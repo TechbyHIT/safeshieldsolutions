@@ -227,7 +227,7 @@ export const homeSeoParagraphs = [
   {
     id: "near-me",
     heading: "Premium invisible grills & safety nets near me — Chhattisgarh first",
-    body: `Searching "invisible grills near me" or "safety nets near me" in Chhattisgarh should open a local survey, an SS304 or UV-stable spec, and a written quote. Coverage is Chhattisgarh only: Raipur first, then Naya Raipur, Shankar Nagar, Bhilai, Durg, Bilaspur, Korba, and every other listed town. Each area has installation, price, dealers, and premium pages.`,
+    body: `Searching "invisible grills near me" or "bird spikes near me" in Chhattisgarh should open a local survey and a written quote. Coverage is Chhattisgarh only: Raipur first, then Bhilai, Durg, Bilaspur, Korba, and the other served towns.`,
   },
   {
     id: "premium",
@@ -236,8 +236,8 @@ export const homeSeoParagraphs = [
   },
   {
     id: "scale",
-    heading: "300,000+ Chhattisgarh pages — every area, service, and search intent",
-    body: `Every Chhattisgarh area is in the sitemap: each area × each service × each search intent (quote, near-me, price, dealers, and the rest). Raipur URLs are first, so the first sitemap file Google fetches is Raipur. Then the rest of the state follows.`,
+    heading: "Chhattisgarh service pages — served towns, not doorway copies",
+    body: `The sitemap lists served Chhattisgarh towns and real catalogue services. Raipur is first. Near-me pages exist only where they have their own local copy. Price, dealers, and other intent copies consolidate to the town service page.`,
   },
 ];
 

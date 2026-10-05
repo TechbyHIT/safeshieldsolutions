@@ -2,17 +2,14 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/ui/Section";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getIndexableLocalitiesForCity } from "@/data/cg-hierarchy";
+import { getDistrictForCity, getIndexableLocalitiesForCity } from "@/data/cg-hierarchy";
 import { business } from "@/config/business";
 import { routes } from "@/config/routes";
-import {
-  CG_CORE_SERVICE_SLUGS,
-  CG_PRIORITY_PLACES,
-  getCgPlace,
-} from "@/data/cg-local-seo";
+import { CG_PRIORITY_PLACES, getCgPlace } from "@/data/cg-local-seo";
 import { getSeoService } from "@/data/seo-services";
-import { buildBreadcrumbSchema } from "@/lib/schema";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
+import { cityServiceSlugsForPlace } from "@/lib/local-seo-catalog";
 
 interface ChhattisgarhPlacePageProps {
   placeSlug: string;
@@ -29,19 +26,23 @@ export function ChhattisgarhPlacePage({
   const nearby = (profile?.nearby ?? [])
     .map((slug) => CG_PRIORITY_PLACES.find((place) => place.slug === slug))
     .filter((place): place is (typeof CG_PRIORITY_PLACES)[number] => Boolean(place));
-  const services = CG_CORE_SERVICE_SLUGS.map((slug) => getSeoService(slug)).filter(
-    (service): service is NonNullable<typeof service> => Boolean(service),
-  );
+  const services = cityServiceSlugsForPlace(placeSlug)
+    .map((slug) => getSeoService(slug))
+    .filter((service): service is NonNullable<typeof service> => Boolean(service));
+  const district = getDistrictForCity(placeSlug);
   const localities = getIndexableLocalitiesForCity(placeSlug);
   const breadcrumbs = [
     { name: "Home", url: routes.home },
     { name: "Chhattisgarh", url: "/chhattisgarh" },
+    ...(district
+      ? [{ name: `${district.name} district`, url: `/chhattisgarh/districts/${district.slug}` }]
+      : []),
     { name: placeName, url: `/chhattisgarh/${placeSlug}` },
   ];
 
   return (
     <>
-      <JsonLd data={buildBreadcrumbSchema(breadcrumbs)} />
+      <JsonLd data={[buildBreadcrumbSchema(breadcrumbs), buildLocalBusinessSchema(placeName)]} />
       <PageHero
         eyebrow={`${stateName} · ${placeName}`}
         title={`Invisible grills and safety nets in ${placeName}`}
@@ -58,8 +59,9 @@ export function ChhattisgarhPlacePage({
             <div>
               <h2 className="text-2xl font-bold text-neutral-900">Where these are used</h2>
               <p className="mt-3 text-neutral-700">
-                Apartments, independent houses, balconies, windows, and terraces in {placeName}. A
-                net or grill is an added layer. It does not replace a sound railing or supervision.
+                {placeSlug === "raipur"
+                  ? "Raipur work covers older plotted houses in Civil Lines, Shankar Nagar, Pandri, and Devendra Nagar; mid-rise apartments on VIP Road and Telibandha; and newer sector flats in Naya Raipur. A net or grill is an added layer. It does not replace a sound railing or supervision."
+                  : `${profile?.localContext ?? `${placeName} is a listed Chhattisgarh service area.`} Jobs are typically balconies, windows, terraces, and ledges on houses and small apartment buildings. A net or grill is an added layer. It does not replace a sound railing or supervision.`}
               </p>
             </div>
             <div>
@@ -84,11 +86,22 @@ export function ChhattisgarhPlacePage({
                 {services.map((service) => (
                   <li key={service.slug}>
                     <Link
-                      href={routes.areaService("chhattisgarh", placeSlug, service.slug)}
+                      href={`/chhattisgarh/${placeSlug}/${service.slug}`}
                       className="text-brand-700 hover:underline"
                     >
                       {service.name} in {placeName}
                     </Link>
+                    {service.slug === "bird-spikes" && (
+                      <>
+                        {" · "}
+                        <Link
+                          href={`/chhattisgarh/${placeSlug}/bird-spikes-near-me`}
+                          className="text-brand-700 hover:underline"
+                        >
+                          Near me
+                        </Link>
+                      </>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -28,7 +28,8 @@ const nextConfig = {
       "./node_modules/next/dist/shared/**/*",
     ],
   },
-  // Programmatic routes use empty generateStaticParams — do not pre-render 730k URLs.
+  // Programmatic routes prerender a Raipur-first subset (src/lib/ssg-priority.ts).
+  // Remaining valid URLs render on demand with ISR — not 404, not noindex.
   staticPageGenerationTimeout: 60,
   logging: {
     fetches: { fullUrl: false },
@@ -91,6 +92,14 @@ const nextConfig = {
             value: "public, max-age=3600, s-maxage=86400",
           },
         ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap-:id.xml",
+        destination: "/api/sitemaps/:id",
       },
     ];
   },

@@ -7,7 +7,7 @@ import { PhotoGallery, ProjectPhotoImage } from "@/components/ui/PhotoGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/layout/PageHero";
 import { getHeroPhoto, getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
-import { noBuildStaticParams } from "@/config/build-static";
+import { generateServiceSlugStaticParams } from "@/lib/ssg-priority";
 import { routes } from "@/config/routes";
 import { buildServiceContent } from "@/lib/content";
 import { buildServiceMetadata } from "@/lib/metadata";
@@ -31,7 +31,7 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return noBuildStaticParams();
+  return generateServiceSlugStaticParams();
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

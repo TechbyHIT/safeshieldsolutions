@@ -10,6 +10,9 @@ import { buildPageMetadata } from "@/lib/metadata";
 import { routes } from "@/config/routes";
 import { getHeroPhoto } from "@/config/photo-catalog";
 
+export const revalidate = 86400;
+export const dynamicParams = true;
+
 interface PageProps {
   params: Promise<{ service: string }>;
 }

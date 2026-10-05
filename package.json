@@ -35,6 +35,7 @@
     "pages:count": "tsx scripts/page-count.ts",
     "seo:validate": "tsx scripts/seo-validate.ts",
     "seo:audit": "tsx scripts/seo-index-audit.ts",
+    "seo:pages": "tsx scripts/seo-page-validate.ts",
     "content:audit": "tsx scripts/content-audit.ts",
     "duplicates:audit": "tsx scripts/duplicate-audit.ts",
     "links:audit": "tsx scripts/internal-link-audit.ts",

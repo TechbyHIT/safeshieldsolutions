@@ -55,7 +55,6 @@ console.log("  /chhattisgarh/raipur/pigeon-nets → /chhattisgarh/raipur/pigeon-
 console.log("  /locations/chhattisgarh → /chhattisgarh");
 
 console.log("\nNOT CREATED");
-console.log("  sitemap-districts.xml — districts have no indexable URLs");
 console.log("  sitemap-projects.xml — no verified project case studies");
 
 if (errors.length) {

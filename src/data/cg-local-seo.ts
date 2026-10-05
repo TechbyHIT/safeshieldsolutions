@@ -139,12 +139,16 @@ export const CG_CORE_SERVICE_SLUGS = [
   "pet-safety-nets",
   "terrace-safety-nets",
   "duct-area-safety-nets",
-  "industrial-safety-nets",
   "sports-nets",
   "bird-protection-nets",
+  "bird-spikes",
   "invisible-grills",
   "balcony-invisible-grills",
   "window-invisible-grills",
+  "mosquito-nets",
+  "cloth-hangers",
+  "zip-screens",
+  "mesh-doors",
 ] as const;
 
 /** Short URLs that must not compete with the existing service page. */

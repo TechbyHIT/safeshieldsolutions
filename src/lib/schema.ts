@@ -35,7 +35,7 @@ export function buildOrganizationSchema() {
   };
 }
 
-export function buildLocalBusinessSchema(cityName?: string) {
+export function buildLocalBusinessSchema(areaServedName?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
@@ -47,7 +47,7 @@ export function buildLocalBusinessSchema(cityName?: string) {
     address: {
       "@type": "PostalAddress",
       streetAddress: business.address.street,
-      addressLocality: cityName ?? business.address.city,
+      addressLocality: business.address.city,
       addressRegion: business.address.state,
       postalCode: business.address.pincode,
       addressCountry: business.address.country,
@@ -57,6 +57,10 @@ export function buildLocalBusinessSchema(cityName?: string) {
       latitude: business.geo.latitude,
       longitude: business.geo.longitude,
     },
+    areaServed: [
+      { "@type": "State", name: "Chhattisgarh" },
+      ...(areaServedName ? [{ "@type": "City", name: areaServedName }] : []),
+    ],
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -71,10 +75,6 @@ export function buildLocalBusinessSchema(cityName?: string) {
         closes: "18:00",
       },
     ],
-    areaServed: business.serviceAreas.map((area) => ({
-      "@type": "City",
-      name: area,
-    })),
   };
 }
 

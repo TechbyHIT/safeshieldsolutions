@@ -11,11 +11,12 @@ export type SeoPriority = "P0" | "P1" | "P2" | "P3";
 
 export const P1_CITY_SLUGS = ["bhilai", "durg", "bilaspur", "korba"] as const;
 
-/** The three Raipur commercial URLs. pigeon-nets redirects here and is not a second page. */
+/** Raipur commercial URLs listed first. pigeon-nets redirects and is not a second page. */
 export const RAIPUR_CORE_SERVICE_SLUGS = [
   "invisible-grills",
   "safety-nets",
   "pigeon-safety-nets",
+  "bird-spikes",
 ] as const;
 
 export const RAIPUR_ENTRY_LINKS = [
@@ -24,12 +25,14 @@ export const RAIPUR_ENTRY_LINKS = [
   { href: "/chhattisgarh/raipur/invisible-grills", label: "Invisible grills in Raipur" },
   { href: "/chhattisgarh/raipur/safety-nets", label: "Safety nets in Raipur" },
   { href: "/chhattisgarh/raipur/pigeon-safety-nets", label: "Pigeon nets in Raipur" },
+  { href: "/chhattisgarh/raipur/bird-spikes-near-me", label: "Bird spikes in Raipur" },
 ] as const;
 
 export const SITEMAP_GROUP_ORDER = [
   "chhattisgarh",
   "raipur",
   "cities",
+  "districts",
   "city-services",
   "areas",
   "services",
@@ -42,6 +45,7 @@ export const SITEMAP_GROUP_FILES: Record<SitemapGroupId, string> = {
   chhattisgarh: "sitemap-chhattisgarh.xml",
   raipur: "sitemap-raipur.xml",
   cities: "sitemap-cities.xml",
+  districts: "sitemap-districts.xml",
   "city-services": "sitemap-city-services.xml",
   areas: "sitemap-areas.xml",
   services: "sitemap-services.xml",
@@ -57,15 +61,25 @@ function cityRank(slug: string): number {
   return index < 0 ? 80 : index;
 }
 
+function serviceBaseSlug(slug: string): string {
+  return slug.endsWith("-near-me") ? slug.slice(0, -8) : slug;
+}
+
+function isNearMeSlug(slug: string): boolean {
+  return slug.endsWith("-near-me");
+}
+
 function serviceRank(slug: string): number {
-  const core = RAIPUR_CORE_SERVICE_SLUGS.indexOf(slug as (typeof RAIPUR_CORE_SERVICE_SLUGS)[number]);
-  if (core >= 0) return core;
-  const rest = CG_CORE_SERVICE_SLUGS.indexOf(slug as (typeof CG_CORE_SERVICE_SLUGS)[number]);
-  return rest < 0 ? 40 : 10 + rest;
+  const base = serviceBaseSlug(slug);
+  const core = RAIPUR_CORE_SERVICE_SLUGS.indexOf(base as (typeof RAIPUR_CORE_SERVICE_SLUGS)[number]);
+  const rest = CG_CORE_SERVICE_SLUGS.indexOf(base as (typeof CG_CORE_SERVICE_SLUGS)[number]);
+  const baseRank = core >= 0 ? core : rest >= 0 ? 10 + rest : 40;
+  return baseRank * 2 + (isNearMeSlug(slug) ? 1 : 0);
 }
 
 export function sitemapGroupForPath(path: string): SitemapGroupId {
   if (path === "/chhattisgarh") return "chhattisgarh";
+  if (path.startsWith("/chhattisgarh/districts/")) return "districts";
   if (path === "/chhattisgarh/raipur" || path.startsWith("/chhattisgarh/raipur/")) return "raipur";
   const parts = path.split("/").filter(Boolean);
   if (parts[0] === "chhattisgarh" && parts[2] === "areas") return "areas";
@@ -82,11 +96,12 @@ export function sitemapGroupForPath(path: string): SitemapGroupId {
 export function seoPriorityForPath(path: string): SeoPriority {
   if (path === "/chhattisgarh/raipur") return "P0";
   const raipurService = /^\/chhattisgarh\/raipur\/([^/]+)$/.exec(path);
-  if (raipurService?.[1] && CORE_SET.has(raipurService[1])) return "P0";
+  if (raipurService?.[1] && CORE_SET.has(serviceBaseSlug(raipurService[1]))) return "P0";
   if (path.startsWith("/chhattisgarh/raipur/areas/")) return "P3";
   if (path.startsWith("/chhattisgarh/raipur/")) return "P2";
 
   if (path.includes("/areas/")) return "P3";
+  if (path.startsWith("/chhattisgarh/districts/")) return "P2";
 
   const town = /^\/chhattisgarh\/([^/]+)$/.exec(path);
   if (town?.[1] && isCgPriorityPlace(town[1])) {
@@ -95,7 +110,7 @@ export function seoPriorityForPath(path: string): SeoPriority {
 
   const townService = /^\/chhattisgarh\/([^/]+)\/([^/]+)$/.exec(path);
   if (townService?.[1] && isCgPriorityPlace(townService[1])) {
-    if (P1_SET.has(townService[1]) && CORE_SET.has(townService[2] ?? "")) return "P1";
+    if (P1_SET.has(townService[1]) && CORE_SET.has(serviceBaseSlug(townService[2] ?? ""))) return "P1";
     return "P2";
   }
 

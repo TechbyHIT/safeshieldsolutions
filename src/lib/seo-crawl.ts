@@ -1,10 +1,11 @@
 import { navigation } from "@/config/navigation";
 import { guideArticles, blogPosts } from "@/config/guides-content";
 import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES, COMPARISONS, PRICING_PAGES } from "@/data/cg-local-seo";
-import { getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
+import { CG_DISTRICTS, getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
 import { SEO_SERVICES } from "@/data/seo-services";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { linksForTownService } from "@/lib/seo-graph";
+import { cityServiceSlugsForPlace } from "@/lib/local-seo-catalog";
 import {
   pageTypeForPath,
   RAIPUR_ENTRY_LINKS,
@@ -52,6 +53,10 @@ export function buildCrawlGraph(): Map<string, Set<string>> {
 
   for (const place of CG_PRIORITY_PLACES) {
     addLink(graph, "/chhattisgarh", `/chhattisgarh/${place.slug}`);
+    addLink(graph, "/chhattisgarh", `/chhattisgarh/${place.slug}/bird-spikes-near-me`);
+  }
+  for (const district of CG_DISTRICTS) {
+    addLink(graph, "/chhattisgarh", `/chhattisgarh/districts/${district.slug}`);
   }
   for (const slug of CG_CORE_SERVICE_SLUGS) {
     addLink(graph, "/chhattisgarh", `/services/${slug}`);
@@ -65,8 +70,9 @@ export function buildCrawlGraph(): Map<string, Set<string>> {
   for (const place of CG_PRIORITY_PLACES) {
     const placePath = `/chhattisgarh/${place.slug}`;
     addLink(graph, placePath, "/chhattisgarh");
-    for (const slug of CG_CORE_SERVICE_SLUGS) {
+    for (const slug of cityServiceSlugsForPlace(place.slug)) {
       addLink(graph, placePath, `/chhattisgarh/${place.slug}/${slug}`);
+      addLink(graph, placePath, `/chhattisgarh/${place.slug}/${slug}-near-me`);
     }
     for (const slug of place.nearby) addLink(graph, placePath, `/chhattisgarh/${slug}`);
     for (const area of getIndexableLocalitiesForCity(place.slug)) {
@@ -78,11 +84,13 @@ export function buildCrawlGraph(): Map<string, Set<string>> {
         addLink(graph, hub, `${hub}/${serviceSlug}`);
       }
     }
-    for (const serviceSlug of ["invisible-grills", "safety-nets", "pigeon-safety-nets"]) {
+    for (const serviceSlug of ["invisible-grills", "safety-nets", "pigeon-safety-nets", "bird-spikes"]) {
       const servicePath = `/chhattisgarh/${place.slug}/${serviceSlug}`;
       for (const link of linksForTownService(place.slug, serviceSlug)) {
         addLink(graph, servicePath, link.href);
       }
+      addLink(graph, servicePath, `/chhattisgarh/${place.slug}/${serviceSlug}-near-me`);
+      addLink(graph, `/chhattisgarh/${place.slug}/${serviceSlug}-near-me`, servicePath);
     }
   }
 

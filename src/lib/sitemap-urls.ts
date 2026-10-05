@@ -4,8 +4,9 @@ import { serviceMegaMenu } from "@/config/mega-menu";
 import { HOME_TOP_SERVICES } from "@/config/home-seo-links";
 import { guideArticles, blogPosts } from "@/config/guides-content";
 import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES, COMPARISONS, PRICING_PAGES } from "@/data/cg-local-seo";
-import { getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
+import { CG_DISTRICTS, getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } from "@/data/cg-hierarchy";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import { cityServiceSlugsForPlace, nearMeSlug } from "@/lib/local-seo-catalog";
 import {
   seoPriorityForPath,
   sitemapGroupForPath,
@@ -217,8 +218,11 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
     pushEntry(entries, seen, `/locations/${city.slug}`, 0.85, "weekly", lastmod);
   }
 
-  // Only self-canonical indexable URLs. Raipur is its own sitemap. Intent copies are omitted.
+  // Self-canonical indexable URLs only. Doorway intents stay out. Raipur is its own sitemap.
   pushEntry(entries, seen, "/chhattisgarh", 0.95, "weekly", lastmod);
+  for (const district of CG_DISTRICTS) {
+    pushEntry(entries, seen, `/chhattisgarh/districts/${district.slug}`, 0.7, "monthly", lastmod);
+  }
   pushEntry(entries, seen, "/pricing", 0.6, "monthly", lastmod);
   pushEntry(entries, seen, "/compare", 0.55, "monthly", lastmod);
   for (const page of PRICING_PAGES) {
@@ -254,17 +258,29 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
         lastmod,
       );
     }
-    for (const serviceSlug of CG_CORE_SERVICE_SLUGS) {
+    for (const serviceSlug of cityServiceSlugsForPlace(place.slug)) {
       const path = `/chhattisgarh/${place.slug}/${serviceSlug}`;
-      if (!evaluateSeoPath(path).index) continue;
-      pushEntry(
-        entries,
-        seen,
-        path,
-        place.slug === "raipur" ? 0.85 : 0.65,
-        "monthly",
-        lastmod,
-      );
+      const nearMe = `/chhattisgarh/${place.slug}/${nearMeSlug(serviceSlug)}`;
+      if (evaluateSeoPath(path).index) {
+        pushEntry(
+          entries,
+          seen,
+          path,
+          place.slug === "raipur" ? 0.85 : 0.65,
+          "monthly",
+          lastmod,
+        );
+      }
+      if (evaluateSeoPath(nearMe).index) {
+        pushEntry(
+          entries,
+          seen,
+          nearMe,
+          place.slug === "raipur" ? 0.84 : 0.64,
+          "monthly",
+          lastmod,
+        );
+      }
     }
   }
 
@@ -351,7 +367,7 @@ export interface SitemapGroupFile {
   entries: SitemapEntry[];
 }
 
-/** Named child urlsets. Empty groups are omitted. District and project files are not created. */
+/** Named child urlsets. Empty groups are omitted. Project files are not created. */
 export function getSitemapGroups(): SitemapGroupFile[] {
   const entries = getAllSitemapEntries();
   return SITEMAP_GROUP_ORDER.map((id) => ({

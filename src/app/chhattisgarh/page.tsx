@@ -5,17 +5,19 @@ import { Section } from "@/components/ui/Section";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { routes } from "@/config/routes";
 import { CG_CORE_SERVICE_SLUGS, CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
+import { CG_CITY_DISTRICT, CG_DISTRICTS } from "@/data/cg-hierarchy";
 import { getSeoService } from "@/data/seo-services";
 import { buildPageMetadata } from "@/lib/metadata";
-import { buildBreadcrumbSchema } from "@/lib/schema";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { RAIPUR_ENTRY_LINKS } from "@/lib/seo-priority";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Safety Nets & Invisible Grills in Chhattisgarh",
+  title: "Safety Nets, Invisible Grills & Bird Spikes in Chhattisgarh",
   description:
-    "Safety nets, pigeon nets, and invisible grills in Chhattisgarh. Raipur is listed first, then Bhilai, Durg, Bilaspur, and the other served towns.",
+    "Safety nets, pigeon nets, bird spikes, and invisible grills in Chhattisgarh. Raipur is listed first, then Bhilai, Durg, Bilaspur, and the other served towns.",
   path: "/chhattisgarh",
+  robots: { index: true, follow: true },
 });
 
 export default function ChhattisgarhStatePage() {
@@ -29,10 +31,10 @@ export default function ChhattisgarhStatePage() {
 
   return (
     <>
-      <JsonLd data={buildBreadcrumbSchema(breadcrumbs)} />
+      <JsonLd data={[buildBreadcrumbSchema(breadcrumbs), buildLocalBusinessSchema("Chhattisgarh")]} />
       <PageHero
         eyebrow="Chhattisgarh"
-        title="Safety nets and invisible grills in Chhattisgarh"
+        title="Safety nets, bird spikes, and invisible grills in Chhattisgarh"
         description="Raipur is listed first. Bhilai, Durg, Bilaspur, Korba, and the other towns below are the places with their own service pages. Quotes follow a site measurement."
         photo={getPrimaryServicePhoto("safety-nets")}
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
@@ -51,23 +53,68 @@ export default function ChhattisgarhStatePage() {
             </li>
           ))}
         </ul>
-        <h2 className="mt-12 text-2xl font-bold text-neutral-900">Towns</h2>
+        <h2 className="mt-12 text-2xl font-bold text-neutral-900">Districts</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {CG_PRIORITY_PLACES.map((place) => (
-            <li key={place.slug} className="rounded-2xl border border-neutral-200 p-4">
-              <Link href={`/chhattisgarh/${place.slug}`} className="font-semibold text-brand-800 hover:underline">
-                {place.name}
+          {CG_DISTRICTS.map((district) => (
+            <li key={district.slug} className="rounded-2xl border border-neutral-200 p-4">
+              <Link
+                href={`/chhattisgarh/districts/${district.slug}`}
+                className="font-semibold text-brand-800 hover:underline"
+              >
+                {district.name}
               </Link>
-              <p className="mt-2 text-sm text-neutral-600">{place.localContext}</p>
+              <p className="mt-2 text-sm text-neutral-600">{district.summary}</p>
             </li>
           ))}
+        </ul>
+        <h2 className="mt-12 text-2xl font-bold text-neutral-900">Towns</h2>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {CG_PRIORITY_PLACES.map((place) => {
+            const districtSlug = CG_CITY_DISTRICT[place.slug];
+            const district = CG_DISTRICTS.find((item) => item.slug === districtSlug);
+            return (
+              <li key={place.slug} className="rounded-2xl border border-neutral-200 p-4">
+                <Link href={`/chhattisgarh/${place.slug}`} className="font-semibold text-brand-800 hover:underline">
+                  {place.name}
+                </Link>
+                {district && (
+                  <p className="mt-1 text-xs uppercase tracking-wide text-neutral-500">
+                    {district.name} district
+                  </p>
+                )}
+                <p className="mt-2 text-sm text-neutral-600">{place.localContext}</p>
+                <p className="mt-3 text-sm">
+                  <Link
+                    href={`/chhattisgarh/${place.slug}/bird-spikes-near-me`}
+                    className="text-brand-700 hover:underline"
+                  >
+                    Bird spikes
+                  </Link>
+                  {" · "}
+                  <Link
+                    href={`/chhattisgarh/${place.slug}/safety-nets`}
+                    className="text-brand-700 hover:underline"
+                  >
+                    Safety nets
+                  </Link>
+                  {" · "}
+                  <Link
+                    href={`/chhattisgarh/${place.slug}/invisible-grills`}
+                    className="text-brand-700 hover:underline"
+                  >
+                    Invisible grills
+                  </Link>
+                </p>
+              </li>
+            );
+          })}
         </ul>
         <h2 className="mt-12 text-2xl font-bold text-neutral-900">Services</h2>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {services.map((service) => (
             <li key={service.slug}>
-              <Link href={routes.service(service.slug)} className="text-brand-700 hover:underline">
-                {service.name}
+              <Link href={`/chhattisgarh/${service.slug}`} className="text-brand-700 hover:underline">
+                {service.name} in Chhattisgarh
               </Link>
             </li>
           ))}

@@ -45,4 +45,9 @@ echo "==> Health check"
 sleep 2
 curl -sI http://127.0.0.1:3010/ | head -n 5 || true
 echo
-echo "Done. Open http://safeshieldsolutions.in"
+curl -sI http://127.0.0.1:3010/sitemap.xml | head -n 8 || true
+echo
+echo "Done. Open https://safeshieldsolutions.in"
+echo "Sitemap must be HTTP 200:"
+echo "  curl -sI https://safeshieldsolutions.in/sitemap.xml | head"
+echo "Then resubmit https://safeshieldsolutions.in/sitemap.xml in Search Console."

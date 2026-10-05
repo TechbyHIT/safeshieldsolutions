@@ -41,6 +41,7 @@ export function serviceRelevance(serviceSlug: string): ServiceRelevance {
     serviceSlug === "invisible-grills" ||
     serviceSlug === "safety-nets" ||
     serviceSlug === "pigeon-safety-nets" ||
+    serviceSlug === "bird-spikes" ||
     serviceSlug === "balcony-invisible-grills" ||
     serviceSlug === "balcony-safety-nets"
   ) {
@@ -134,7 +135,7 @@ export function linksForTownService(townSlug: string, serviceSlug: string): Cont
     { href: pricingHref, label: "What changes the quote", reason: "pricing" },
   ];
 
-  for (const slug of ["invisible-grills", "safety-nets", "pigeon-safety-nets", "balcony-safety-nets"]) {
+  for (const slug of ["invisible-grills", "safety-nets", "pigeon-safety-nets", "balcony-safety-nets", "bird-spikes"]) {
     if (slug === serviceSlug || serviceRelevance(slug) === "low") continue;
     const item = getSeoService(slug);
     if (!item) continue;
@@ -154,6 +155,13 @@ export function linksForTownService(townSlug: string, serviceSlug: string): Cont
       label: `${service.name} in ${place.name}`,
       reason: "nearby",
     });
+    if (serviceSlug === "bird-spikes" || serviceSlug === "invisible-grills" || serviceSlug === "safety-nets") {
+      links.push({
+        href: `/chhattisgarh/${slug}/${serviceSlug}-near-me`,
+        label: `${service.name} near ${place.name}`,
+        reason: "nearby",
+      });
+    }
   }
 
   for (const area of getIndexableLocalitiesForCity(town.slug).slice(0, 4)) {

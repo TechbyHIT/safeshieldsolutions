@@ -284,6 +284,54 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       },
     ],
   },
+  "bird-spikes": {
+    overview:
+      "Bird spikes are a humane deterrent fitted to ledges, parapets, AC hoods, signage, solar frames, and balcony edges so pigeons and other birds cannot perch or nest. The strip is measured to the ledge, fixed into a sound surface, and left visible enough that birds land elsewhere rather than on the protected line.",
+    issuesSolved: [
+      "Pigeon roosting on balcony walls, window sills, and AC units",
+      "Droppings on parked vehicles, shopfronts, and entrance canopies",
+      "Nesting in outdoor units, solar frames, and water-tank platforms",
+      "Repeated cleaning of the same ledge after birds return",
+    ],
+    whereWorksBest: [
+      "Apartment parapets and utility ledges",
+      "Shop and office signage, canopies, and beam lines",
+      "Temple, railway, and market building edges where birds gather",
+      "Solar panel frames and outdoor AC condensing units",
+    ],
+    materials: [
+      "UV-stable polycarbonate or stainless spike strips sized to the ledge",
+      "Corrosion-resistant base and outdoor-grade adhesive or screw fixings",
+      "Strip length cut to the measured run, including corners and returns",
+    ],
+    priceFactors: [
+      "Total running length of ledge or parapet",
+      "Height and access for safe fitting",
+      "Surface type: concrete, metal, tile, or painted MS",
+      "Whether spikes are combined with a net on the same opening",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Clear leaves and debris from the strip after storms. Do not bend spikes. If a section loosens, refix that run rather than covering it with a heavier product unless the survey says a net is the better next step.",
+    extraSections: [
+      {
+        heading: "Spikes are not a net",
+        body: "Spikes stop birds landing on a narrow edge. They do not close a balcony, duct, or terrace. Where birds fly through an opening, a bird net or pigeon safety net is the matching product. Many Raipur and Bhilai jobs use spikes on the parapet and a net on the sitting balcony.",
+      },
+    ],
+    extraFaqs: [
+      {
+        question: "Are bird spikes harmful to birds?",
+        answer:
+          "The spikes are a landing deterrent. Birds choose another perch. They are not electrified and are not a poison system.",
+      },
+      {
+        question: "Can spikes be used on an AC outdoor unit?",
+        answer:
+          "Yes, when the casing and brackets can take a measured strip without blocking airflow. The survey checks clearance around the fan and drain.",
+      },
+    ],
+  },
   "cricket-nets": {
     overview:
       "Cricket practice nets contain balls, protect nearby property, and create safer training spaces on terraces, in schools, and at coaching centres. Net height, mesh strength, and pole fixing are planned for your practice type.",
@@ -570,7 +618,7 @@ export function getServiceDetail(slug: string): ServiceDetail {
       materials: [
         "SS304 stainless steel and UV-stabilised nets",
         "Corrosion-resistant anchors and hardware",
-        "Specifications chosen for Hyderabad and Chennai climate",
+        "Specifications chosen for Chhattisgarh heat, dust, and monsoon exposure",
       ],
       priceFactors: [
         "Measured opening size and shape",

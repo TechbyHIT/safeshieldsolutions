@@ -10,6 +10,7 @@ import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
 export interface CgDistrict {
   slug: string;
   name: string;
+  summary: string;
 }
 
 export interface CgLocality {
@@ -25,19 +26,84 @@ export interface CgLocality {
 }
 
 export const CG_DISTRICTS: CgDistrict[] = [
-  { slug: "raipur", name: "Raipur" },
-  { slug: "durg", name: "Durg" },
-  { slug: "rajnandgaon", name: "Rajnandgaon" },
-  { slug: "dhamtari", name: "Dhamtari" },
-  { slug: "mahasamund", name: "Mahasamund" },
-  { slug: "balodabazar-bhatapara", name: "Balodabazar-Bhatapara" },
-  { slug: "bilaspur", name: "Bilaspur" },
-  { slug: "janjgir-champa", name: "Janjgir-Champa" },
-  { slug: "korba", name: "Korba" },
-  { slug: "raigarh", name: "Raigarh" },
-  { slug: "bastar", name: "Bastar" },
-  { slug: "surguja", name: "Surguja" },
-  { slug: "kabirdham", name: "Kabirdham" },
+  {
+    slug: "raipur",
+    name: "Raipur",
+    summary:
+      "Raipur district covers the state capital, Naya Raipur sector housing, and the ring of towns on the Raipur belt. Apartment balconies, independent houses, and commercial ledges are the usual openings.",
+  },
+  {
+    slug: "durg",
+    name: "Durg",
+    summary:
+      "Durg district includes Durg town and the Bhilai steel township. Housing is a mix of planned sectors, colony houses, and newer apartments along the twin-city corridor.",
+  },
+  {
+    slug: "rajnandgaon",
+    name: "Rajnandgaon",
+    summary:
+      "Rajnandgaon district sits west of Durg. Work here is mostly town-centre houses, shop-top homes, and a smaller apartment stock than Raipur.",
+  },
+  {
+    slug: "dhamtari",
+    name: "Dhamtari",
+    summary:
+      "Dhamtari district lies south of Raipur toward the Mahanadi basin. Openings are typically house balconies, windows, and market-street ledges rather than high-rise podiums.",
+  },
+  {
+    slug: "mahasamund",
+    name: "Mahasamund",
+    summary:
+      "Mahasamund district is east of Raipur. Homes are plotted streets and low-rise flats; bird control on ledges and nets on sitting balconies are the usual requests.",
+  },
+  {
+    slug: "balodabazar-bhatapara",
+    name: "Balodabazar-Bhatapara",
+    summary:
+      "This district sits on the Raipur–Bilaspur route. Bhatapara and Baloda Bazar have municipal housing, shopfronts, and independent houses along the railway and highway.",
+  },
+  {
+    slug: "bilaspur",
+    name: "Bilaspur",
+    summary:
+      "Bilaspur district is a railway and court city. Apartments and independent houses around Sarkanda, Torwa, and the station side generate balcony, net, and bird-control jobs.",
+  },
+  {
+    slug: "janjgir-champa",
+    name: "Janjgir-Champa",
+    summary:
+      "Janjgir-Champa sits between Bilaspur and the eastern industrial belt. Town housing in Janjgir and Champa is mostly plotted houses and low-rise flats.",
+  },
+  {
+    slug: "korba",
+    name: "Korba",
+    summary:
+      "Korba district is an industrial power and mining belt. Township and plant-adjacent houses need corrosion-aware materials on balconies, ducts, and ledges.",
+  },
+  {
+    slug: "raigarh",
+    name: "Raigarh",
+    summary:
+      "Raigarh district in eastern Chhattisgarh has town housing and plant-adjacent colonies. Openings are similar to other industrial district towns: balconies, windows, and parapets.",
+  },
+  {
+    slug: "bastar",
+    name: "Bastar",
+    summary:
+      "Bastar district is served from Jagdalpur. Housing is independent homes and a smaller apartment stock than the Raipur belt.",
+  },
+  {
+    slug: "surguja",
+    name: "Surguja",
+    summary:
+      "Surguja district is served from Ambikapur in northern Chhattisgarh. Work is district-town houses, shopfronts, and low-rise flats.",
+  },
+  {
+    slug: "kabirdham",
+    name: "Kabirdham",
+    summary:
+      "Kabirdham district is served from Kawardha in western Chhattisgarh. Openings are town houses, shop ledges, and a limited apartment stock.",
+  },
 ];
 
 export const CG_CITY_DISTRICT: Record<string, string> = {
@@ -64,6 +130,7 @@ export const LOCALITY_SERVICE_SLUGS = [
   "invisible-grills",
   "safety-nets",
   "pigeon-safety-nets",
+  "bird-spikes",
 ] as const;
 
 export const CG_LOCALITIES: CgLocality[] = [
@@ -153,7 +220,7 @@ export const CG_LOCALITIES: CgLocality[] = [
     indexable: true,
     nearby: ["telibandha", "vip-road"],
     localContent:
-      "Pandri is a busy central Raipur locality with market streets and residences behind them. Openings are a mix of shop-top homes and apartment balconies.",
+      "Pandri is a busy central Raipur locality with market streets and residences behind them. Openings are a mix of shop-top homes and apartment balconies, so access from the street side and society timing matter as much as the opening size.",
   },
   {
     slug: "devendra-nagar",
@@ -219,7 +286,7 @@ export const CG_LOCALITIES: CgLocality[] = [
     indexable: true,
     nearby: ["sarkanda"],
     localContent:
-      "Torwa is a residential locality in Bilaspur. Openings are typically house balconies and windows on plotted streets, not large podium towers.",
+      "Torwa is a residential locality in Bilaspur. Openings are typically house balconies and windows on plotted streets, not large podium towers. Fixing is usually into existing concrete or older railing lines on independent houses.",
   },
 ];
 

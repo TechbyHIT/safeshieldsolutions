@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { CITIES } from "@/data/cities";
 import { getAreasForCity } from "@/data/areas";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 
 const CITY_SLUGS = new Set(CITIES.map((c) => c.slug));
 const AREA_SLUGS_BY_CITY = new Map(
@@ -47,6 +48,17 @@ export function middleware(request: NextRequest) {
     const proto = request.headers.get("x-forwarded-proto") ?? "http";
     url.host = host.slice(4);
     url.protocol = `${proto}:`;
+    return NextResponse.redirect(url, 301);
+  }
+
+  if (url.search && !pathname.startsWith("/api/")) {
+    url.search = "";
+    return NextResponse.redirect(url, 301);
+  }
+
+  const gate = evaluateSeoPath(pathname);
+  if (!gate.index && gate.canonicalPath !== pathname && gate.canonicalPath.startsWith("/")) {
+    url.pathname = gate.canonicalPath;
     return NextResponse.redirect(url, 301);
   }
 

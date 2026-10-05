@@ -16,15 +16,11 @@ cp .env.example .env      # set NEXT_PUBLIC_SITE_URL=https://safeshieldsolutions
 npm ci
 ```
 
-## Build (minimal static HTML at build time)
+## Build
 
-Programmatic routes use **`dynamicParams: true`** + ISR (`revalidate: 86400`). At build time almost nothing is pre-rendered; pages generate on first request.
+Raipur and other high-priority pages are pre-rendered. Remaining valid URLs generate on first request (ISR, `revalidate: 86400`) and stay indexable.
 
 ```bash
-# Default: no programmatic pages pre-rendered (ISR on first request)
-export NEXT_BUILD_STATIC_SERVICES=0
-export NEXT_BUILD_STATIC_CITY_SAMPLES=0
-
 npm run deploy:prod    # npm ci + build + standalone + prune
 ```
 
@@ -103,7 +99,9 @@ Do **not** mark this server block `default_server` on a multi-site VPS.
 
 ```bash
 curl -I http://127.0.0.1:3010/
-curl -I http://127.0.0.1:3010/sitemap.xml
+curl -sI http://127.0.0.1:3010/sitemap.xml | head
+curl -sI https://safeshieldsolutions.in/sitemap.xml | head
+# Expect HTTP 200 and Content-Type: application/xml
 npm run pages:count
 ```
 

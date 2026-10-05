@@ -9,6 +9,7 @@ import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-cata
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+import { generateGuideSlugStaticParams } from "@/lib/ssg-priority";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -18,7 +19,7 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return [];
+  return generateGuideSlugStaticParams();
 }
 
 export async function generateMetadata({ params }: PageProps) {

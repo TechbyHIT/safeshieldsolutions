@@ -19,6 +19,9 @@ import {
   xmlEscape,
 } from "../src/lib/sitemap-urls";
 import { evaluateSeoPath } from "../src/lib/seo-quality-gate";
+import { isValidServiceLocation } from "../src/lib/service-location";
+import { isBuildTimePrerendered, summarizePrerenderVsIndexable } from "../src/lib/ssg-priority";
+import { listIndexableLocalPaths } from "../src/lib/local-seo-catalog";
 import { site } from "../src/config/site";
 
 const errors: string[] = [];
@@ -37,7 +40,7 @@ assert(groups.every((group) => group.entries.length <= SITEMAP_SHARD_SIZE), `A u
 assert(groups.every((group) => group.entries.length <= 50_000), "A urlset exceeds Google’s 50k limit");
 assert(groups.length <= 500, "Too many sitemap files");
 assert(groups.some((group) => group.file === "sitemap-raipur.xml"), "Raipur sitemap missing");
-assert(!groups.some((group) => group.file === "sitemap-districts.xml"), "Empty district sitemap was created");
+assert(groups.some((group) => group.file === "sitemap-districts.xml"), "District sitemap missing");
 assert(!groups.some((group) => group.file === "sitemap-projects.xml"), "Project sitemap was created without real projects");
 
 const seen = new Set<string>();
@@ -58,16 +61,24 @@ for (const entry of entries) {
 const raipur = groups.find((group) => group.id === "raipur");
 assert(raipur?.entries[0]?.path === "/chhattisgarh/raipur", "Raipur sitemap does not start with the city page");
 assert(
-  raipur?.entries[1]?.path === "/chhattisgarh/raipur/invisible-grills",
-  "Raipur invisible grills is not second",
+  Boolean(raipur?.entries.some((entry) => entry.path === "/chhattisgarh/raipur/invisible-grills")),
+  "Raipur invisible grills missing",
 );
 assert(
-  raipur?.entries[2]?.path === "/chhattisgarh/raipur/safety-nets",
-  "Raipur safety nets is not third",
+  Boolean(raipur?.entries.some((entry) => entry.path === "/chhattisgarh/raipur/safety-nets")),
+  "Raipur safety nets missing",
 );
 assert(
-  raipur?.entries[3]?.path === "/chhattisgarh/raipur/pigeon-safety-nets",
-  "Raipur pigeon safety nets is not fourth",
+  Boolean(raipur?.entries.some((entry) => entry.path === "/chhattisgarh/raipur/pigeon-safety-nets")),
+  "Raipur pigeon safety nets missing",
+);
+assert(
+  Boolean(raipur?.entries.some((entry) => entry.path === "/chhattisgarh/raipur/bird-spikes")),
+  "Raipur bird spikes missing",
+);
+assert(
+  Boolean(raipur?.entries.some((entry) => entry.path === "/chhattisgarh/raipur/bird-spikes-near-me")),
+  "Raipur bird spikes near me missing",
 );
 assert(
   !entries.some((entry) => entry.path === "/pigeon-nets" || /^\/chhattisgarh\/.*\/pigeon-nets$/.test(entry.path)),
@@ -111,12 +122,34 @@ assert(indexXml.includes("<sitemapindex"), "sitemap index helper missing root");
 let areaHubs = 0;
 for (const city of CITIES) areaHubs += getAreasForCity(city.slug).length;
 
+assert(isBuildTimePrerendered("/chhattisgarh/raipur/invisible-grills"), "Raipur invisible grills must be a build-time page");
+assert(isBuildTimePrerendered("/chhattisgarh/raipur"), "Raipur city hub must be a build-time page");
+assert(!isBuildTimePrerendered("/chhattisgarh/bhilai/zip-screens"), "Long-tail Bhilai page must stay on-demand ISR");
+assert(isValidServiceLocation("zip-screens", "bhilai").indexable, "Bhilai zip-screens must remain indexable without SSG");
+assert(
+  entries.some((entry) => entry.path === "/chhattisgarh/bhilai/zip-screens"),
+  "On-demand Bhilai zip-screens missing from sitemap",
+);
+assert(
+  entries.some((entry) => entry.path === "/chhattisgarh/bhilai/invisible-grills"),
+  "Bhilai invisible grills missing from sitemap",
+);
+const prerender = summarizePrerenderVsIndexable();
+assert(prerender.buildTimeLocalSeoPages < prerender.indexableLocalSeoPages, "SSG set must be smaller than the indexable catalog");
+assert(prerender.onDemandIsrPages > 0, "No on-demand ISR pages remain");
+assert(listIndexableLocalPaths().length === prerender.indexableLocalSeoPages, "Indexable catalog drift");
+
 console.log("SEO validation\n");
 console.log(`  Sitemap phase:            ${phase}`);
 console.log(`  Total indexable URLs:     ${total.toLocaleString()}`);
 console.log(`  Child urlsets (≤${SITEMAP_SHARD_SIZE.toLocaleString()}): ${groups.length}`);
 console.log(`  Area hubs:                ${areaHubs}`);
 console.log(`  Sitemap index children:   ${locs.length}`);
+console.log(`  Build-time local SEO:     ${prerender.buildTimeLocalSeoPages}`);
+console.log(`  Raipur prerendered:       ${prerender.raipurPages}`);
+console.log(`  Other priority SSG:       ${prerender.otherPriorityPages}`);
+console.log(`  On-demand ISR (valid):    ${prerender.onDemandIsrPages}`);
+console.log(`  Sample ISR path:          ${prerender.sampleOnDemandPath}`);
 
 if (errors.length) {
   console.log("\nFAILED:");

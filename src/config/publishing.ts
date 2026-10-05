@@ -24,7 +24,7 @@ export const publishing = {
 
     CITY_SERVICE: 900,
 
-    AREA_SERVICE: 20000,
+    AREA_SERVICE: 800,
 
     GUIDE: 1200,
 
