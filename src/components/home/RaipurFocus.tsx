@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
 import {
   RAIPUR_LOCALITY_LINKS,
@@ -47,16 +48,23 @@ export function RaipurFocus() {
 
       <h3 className="mt-10 text-xl font-bold text-neutral-900">Raipur localities</h3>
       <ul className="mt-4 flex flex-wrap gap-2">
-        {RAIPUR_LOCALITY_LINKS.map((area) => (
-          <li key={area.slug}>
-            <Link
-              href={routes.area("chhattisgarh", area.slug)}
-              className="rounded-full border border-neutral-200 px-3 py-1.5 text-sm text-brand-800 hover:border-brand-500"
-            >
-              {area.name}
-            </Link>
-          </li>
-        ))}
+        {RAIPUR_LOCALITY_LINKS.map((area) => {
+          const href =
+            area.slug === "raipur"
+              ? "/chhattisgarh/raipur"
+              : `/chhattisgarh/raipur/areas/${area.slug}`;
+          if (!isIndexableInternalPath(href)) return null;
+          return (
+            <li key={area.slug}>
+              <Link
+                href={href}
+                className="rounded-full border border-neutral-200 px-3 py-1.5 text-sm text-brand-800 hover:border-brand-500"
+              >
+                {area.name}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
 
       <dl className="mt-10 max-w-3xl space-y-4">

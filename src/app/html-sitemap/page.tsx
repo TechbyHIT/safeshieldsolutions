@@ -29,7 +29,6 @@ const HUB_LINKS = [
   { href: routes.gallery, label: "Gallery" },
   { href: routes.about, label: "About" },
   { href: routes.contact, label: "Contact" },
-  { href: routes.sitemap, label: "XML sitemap index" },
 ];
 
 export default function HtmlSitemapPage() {

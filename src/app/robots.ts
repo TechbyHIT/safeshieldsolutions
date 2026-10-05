@@ -8,8 +8,8 @@ export default function robots() {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/chhattisgarh", "/_next/", "/images/"],
-        disallow: ["/api/", "/*?*", "/seo-coverage"],
+        allow: ["/", "/chhattisgarh"],
+        disallow: ["/api/", "/_next/", "/seo-coverage", "/*?*"],
       },
     ],
     sitemap: `${origin}/sitemap.xml`,

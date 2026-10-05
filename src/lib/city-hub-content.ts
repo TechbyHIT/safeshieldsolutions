@@ -1,8 +1,8 @@
 import { HOME_CITY_AREAS } from "@/config/home-seo-links";
 import { CITIES } from "@/data/cities";
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
-import { routes } from "@/config/routes";
 import { raipurHubFaqs, raipurHubSections } from "@/config/raipur-seo";
+import { filterIndexableLinks } from "@/lib/indexable-href";
 
 export interface CityHubSection {
   id: string;
@@ -94,23 +94,21 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
     "bird-spikes",
   ];
 
-  const serviceLinks = prioritySlugs
-    .map((slug) => AREA_PAGE_SERVICES.find((s) => s.slug === slug))
-    .filter(Boolean)
-    .flatMap((svc) => [
-      {
-        href: routes.cityService(citySlug, `${svc!.slug}-near-me`),
-        label: `${svc!.name} near me in ${cityName}`,
-      },
-      {
-        href: routes.cityService(citySlug, `${svc!.slug}-installation`),
-        label: `${svc!.name} installation in ${cityName}`,
-      },
-      {
-        href: routes.cityService(citySlug, `${svc!.slug}-price`),
-        label: `${svc!.name} price in ${cityName}`,
-      },
-    ]);
+  const serviceLinks = filterIndexableLinks(
+    prioritySlugs
+      .map((slug) => AREA_PAGE_SERVICES.find((s) => s.slug === slug))
+      .filter(Boolean)
+      .flatMap((svc) => [
+        {
+          href: `/chhattisgarh/raipur/${svc!.slug}`,
+          label: `${svc!.name} in Raipur`,
+        },
+        {
+          href: `/chhattisgarh/raipur/${svc!.slug}-near-me`,
+          label: `${svc!.name} near me in Raipur`,
+        },
+      ]),
+  );
 
   return { sections, faqs, serviceLinks };
 }

@@ -1,4 +1,5 @@
 import { routes } from "./routes";
+import { filterIndexableLinks } from "@/lib/indexable-href";
 
 export interface HomeServiceLink {
   slug: string;
@@ -20,14 +21,6 @@ export interface HomeIntentLink {
 export const HOME_SEARCH_INTENTS: HomeIntentLink[] = [
   { suffix: "", label: "General", keyword: "near me" },
   { suffix: "-near-me", label: "Near Me", keyword: "near me" },
-  { suffix: "-installation", label: "Installation", keyword: "installation" },
-  { suffix: "-price", label: "Price", keyword: "price" },
-  { suffix: "-dealers", label: "Dealers", keyword: "dealers" },
-  { suffix: "-best", label: "Best", keyword: "best" },
-  { suffix: "-premium", label: "Premium", keyword: "premium" },
-  { suffix: "-affordable", label: "Affordable", keyword: "affordable" },
-  { suffix: "-contractors", label: "Contractors", keyword: "contractors" },
-  { suffix: "-company", label: "Company", keyword: "company" },
 ];
 
 export const HOME_TOP_SERVICES: HomeServiceLink[] = [
@@ -143,14 +136,11 @@ export const HOME_CITY_AREAS: Record<string, HomeAreaLink[]> = {
   ],
   chhattisgarh: [
     { slug: "raipur", name: "Raipur" },
-    { slug: "naya-raipur", name: "Naya Raipur" },
-    { slug: "shankar-nagar", name: "Shankar Nagar" },
     { slug: "bhilai", name: "Bhilai" },
     { slug: "durg", name: "Durg" },
     { slug: "bilaspur", name: "Bilaspur" },
     { slug: "korba", name: "Korba" },
     { slug: "rajnandgaon", name: "Rajnandgaon" },
-    { slug: "dongargarh", name: "Dongargarh" },
     { slug: "raigarh", name: "Raigarh" },
     { slug: "jagdalpur", name: "Jagdalpur" },
     { slug: "ambikapur", name: "Ambikapur" },
@@ -159,10 +149,7 @@ export const HOME_CITY_AREAS: Record<string, HomeAreaLink[]> = {
     { slug: "bhatapara", name: "Bhatapara" },
     { slug: "janjgir", name: "Janjgir" },
     { slug: "champa", name: "Champa" },
-    { slug: "kanker", name: "Kanker" },
     { slug: "kawardha", name: "Kawardha" },
-    { slug: "bemetara", name: "Bemetara" },
-    { slug: "balod", name: "Balod" },
     { slug: "baloda-bazar", name: "Baloda Bazar" },
   ],
 };
@@ -196,7 +183,7 @@ export function buildAreaKeywordLinks(
       }
     }
   }
-  return links;
+  return filterIndexableLinks(links);
 }
 
 export function buildCityKeywordLinks(
@@ -205,22 +192,24 @@ export function buildCityKeywordLinks(
   services: HomeServiceLink[],
   intents: HomeIntentLink[],
 ): KeywordLinkItem[] {
-  return services.flatMap((service) =>
-    intents.map((intent) => {
-      const pageSlug = `${service.slug}${intent.suffix}`;
-      return {
-        href: routes.cityService(citySlug, pageSlug),
-        label: `${intent.label === "General" ? "Best" : intent.label} ${service.name} in ${cityName}`,
-        citySlug,
-        serviceSlug: service.slug,
-      };
-    }),
+  return filterIndexableLinks(
+    services.flatMap((service) =>
+      intents.map((intent) => {
+        const pageSlug = `${service.slug}${intent.suffix}`;
+        return {
+          href: routes.cityService(citySlug, pageSlug),
+          label: `${intent.label === "General" ? "Best" : intent.label} ${service.name} in ${cityName}`,
+          citySlug,
+          serviceSlug: service.slug,
+        };
+      }),
+    ),
   );
 }
 
 /** Primary near-me intents shown first in UI */
 export const HOME_PRIMARY_INTENTS = HOME_SEARCH_INTENTS.filter((i) =>
-  ["", "-near-me", "-installation", "-price", "-dealers", "-best", "-premium"].includes(i.suffix),
+  ["", "-near-me"].includes(i.suffix),
 );
 
 export const homeSeoParagraphs = [

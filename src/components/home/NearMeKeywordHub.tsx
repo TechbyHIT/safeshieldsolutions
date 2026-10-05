@@ -76,7 +76,7 @@ export function NearMeKeywordHub() {
                 {HOME_TOP_SERVICES.slice(0, 6).map((svc) => (
                   <li key={svc.slug}>
                     <Link
-                      href={routes.cityService(city.slug, `${svc.slug}-near-me`)}
+                      href={`/chhattisgarh/raipur/${svc.slug}`}
                       className="text-sm text-brand-700 hover:underline"
                     >
                       {svc.name} near me in {city.name}
@@ -106,8 +106,8 @@ export function NearMeKeywordHub() {
 
       <KeywordLinkScroller
         id="locality-keywords"
-        heading="Locality pages — 2,400+ near-me links on this homepage"
-        description="Hyper-local URLs for Adyar, Kakkanad, Gandhipuram, Gachibowli, Peelamedu, Raipur, and 75+ more featured neighbourhoods. Load more to browse the full matrix."
+        heading="Served Chhattisgarh town pages"
+        description="Raipur first, then Bhilai, Durg, Bilaspur, Korba, and the other listed towns. Every link is a live indexable page."
         links={allAreaLinks}
         initialCount={96}
         batchSize={96}

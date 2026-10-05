@@ -29,8 +29,8 @@ export function AreaExplorer() {
             Invisible grills and safety nets — Raipur first
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-            Raipur is listed first. Every other Chhattisgarh area is included too — installation,
-            price, dealers, and near-me pages.
+            Raipur is listed first. Every other served Chhattisgarh town has its own
+            indexable page — not a doorway copy.
           </p>
         </div>
         <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">

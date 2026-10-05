@@ -68,10 +68,10 @@ export default async function BlogPostPage({ params }: PageProps) {
         </p>
         <p className="mt-6">
           <Link
-            href={routes.areaService(post.citySlug, post.areaSlug, post.serviceSlug)}
+            href={`/chhattisgarh/raipur/${post.serviceSlug}`}
             className="font-semibold text-brand-700 hover:underline"
           >
-            Full {post.areaSlug.replace(/-/g, " ")} service page →
+            {post.serviceSlug.replace(/-/g, " ")} in Raipur →
           </Link>
         </p>
         <h2 className="mt-12 text-xl font-bold text-neutral-900">Related intent pages</h2>

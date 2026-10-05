@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { extendedServices } from "@/config/home-content";
 import { HOME_CITIES } from "@/config/home-seo-links";
 import { getHeroPhoto, getPrimaryServicePhoto } from "@/config/photo-catalog";
+import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
 
 export function ExtendedServices() {
@@ -47,16 +48,20 @@ export function ExtendedServices() {
                   </p>
                 </Link>
                 <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {HOME_CITIES.slice(0, 2).map((city) => (
+                  {HOME_CITIES.slice(0, 2).map((city) => {
+                    const href = `/chhattisgarh/raipur/${service.slug}`;
+                    const safeHref = isIndexableInternalPath(href) ? href : routes.service(service.slug);
+                    return (
                     <li key={city.slug}>
                       <Link
-                        href={routes.cityService(city.slug, `${service.slug}-near-me`)}
+                        href={safeHref}
                         className="text-xs font-medium text-brand-700 hover:underline"
                       >
-                        Near me · {city.name}
+                        {service.title} in Raipur
                       </Link>
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
               </div>
             </article>

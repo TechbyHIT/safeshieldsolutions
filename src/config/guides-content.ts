@@ -5,6 +5,7 @@ import {
   HOME_TOP_SERVICES,
   HOME_PRIMARY_INTENTS,
 } from "./home-seo-links";
+import { filterIndexableLinks } from "@/lib/indexable-href";
 
 export interface GuideArticle {
   slug: string;
@@ -236,10 +237,9 @@ export const blogPosts: BlogPost[] = [
 export function guideAreaLinks(article: GuideArticle, limit = 16) {
   const links: { href: string; label: string }[] = [];
   for (const city of HOME_CITIES) {
-    const areas = HOME_CITY_AREAS[city.slug]?.slice(0, 4) ?? [];
+    const areas = HOME_CITY_AREAS[city.slug]?.slice(0, 8) ?? [];
     for (const area of areas) {
-      for (const intent of HOME_PRIMARY_INTENTS.slice(0, 3)) {
-        if (links.length >= limit) return links;
+      for (const intent of HOME_PRIMARY_INTENTS) {
         links.push({
           href: routes.areaService(city.slug, area.slug, `${article.serviceSlug}${intent.suffix}`),
           label: `${article.serviceSlug.replace(/-/g, " ")} ${intent.keyword} · ${area.name}, ${city.name}`,
@@ -247,22 +247,38 @@ export function guideAreaLinks(article: GuideArticle, limit = 16) {
       }
     }
   }
-  return links;
+  const kept = filterIndexableLinks(links);
+  if (kept.length > 0) return kept.slice(0, limit);
+  return filterIndexableLinks([
+    {
+      href: `/chhattisgarh/raipur/${article.serviceSlug}`,
+      label: `${article.serviceSlug.replace(/-/g, " ")} in Raipur`,
+    },
+  ]);
 }
 
 export function blogRelatedLinks(post: BlogPost) {
-  const intents = ["", "-near-me", "-installation", "-price", "-dealers", "-best"];
-  return intents.map((suffix) => ({
-    href: routes.areaService(post.citySlug, post.areaSlug, `${post.serviceSlug}${suffix}`),
-    label: `${post.serviceSlug.replace(/-/g, " ")}${suffix.replace(/-/g, " ")} in ${post.areaSlug.replace(/-/g, " ")}`,
-  }));
+  return filterIndexableLinks([
+    {
+      href: `/chhattisgarh/raipur/${post.serviceSlug}`,
+      label: `${post.serviceSlug.replace(/-/g, " ")} in Raipur`,
+    },
+    {
+      href: `/chhattisgarh/raipur/${post.serviceSlug}-near-me`,
+      label: `${post.serviceSlug.replace(/-/g, " ")} near me in Raipur`,
+    },
+    {
+      href: `/services/${post.serviceSlug}`,
+      label: `${post.serviceSlug.replace(/-/g, " ")} service page`,
+    },
+  ]);
 }
 
 export function allGuideServiceLinks() {
-  return HOME_TOP_SERVICES.flatMap((svc) =>
-    HOME_CITIES.map((city) => ({
-      href: routes.cityService(city.slug, `${svc.slug}-near-me`),
-      label: `${svc.name} near me in ${city.name}`,
+  return filterIndexableLinks(
+    HOME_TOP_SERVICES.map((svc) => ({
+      href: `/chhattisgarh/raipur/${svc.slug}`,
+      label: `${svc.name} in Raipur`,
     })),
   );
 }

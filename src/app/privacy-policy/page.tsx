@@ -8,7 +8,7 @@ export const metadata = buildPageMetadata({
   title: "Privacy Policy | SafeShield Solutions",
   description: "Privacy policy for SafeShield Solutions website and contact enquiries.",
   path: "/privacy-policy",
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
 });
 
 export default function PrivacyPolicyPage() {

@@ -34,7 +34,6 @@ export const navigation = {
   footer: [
     { label: "FAQ", href: routes.faq },
     { label: "HTML Sitemap", href: routes.htmlSitemap },
-    { label: "XML Sitemap", href: routes.sitemap },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "/terms-of-service" },
   ],

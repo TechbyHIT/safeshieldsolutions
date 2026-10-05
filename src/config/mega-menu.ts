@@ -105,12 +105,12 @@ export const cityAreaHighlights: CityAreaHighlight[] = [
     citySlug: "chhattisgarh",
     cityName: "Chhattisgarh",
     areas: [
-      { label: "Raipur", href: routes.areaService("chhattisgarh", "raipur", "invisible-grills") },
-      { label: "Naya Raipur", href: routes.areaService("chhattisgarh", "naya-raipur", "invisible-grills") },
-      { label: "Shankar Nagar", href: routes.areaService("chhattisgarh", "shankar-nagar", "invisible-grills") },
-      { label: "Bhilai", href: routes.areaService("chhattisgarh", "bhilai", "invisible-grills") },
-      { label: "Durg", href: routes.areaService("chhattisgarh", "durg", "invisible-grills") },
-      { label: "Bilaspur", href: routes.areaService("chhattisgarh", "bilaspur", "invisible-grills") },
+      { label: "Raipur", href: "/chhattisgarh/raipur/invisible-grills" },
+      { label: "Naya Raipur", href: "/chhattisgarh/raipur/areas/naya-raipur" },
+      { label: "Shankar Nagar", href: "/chhattisgarh/raipur/areas/shankar-nagar" },
+      { label: "Bhilai", href: "/chhattisgarh/bhilai/invisible-grills" },
+      { label: "Durg", href: "/chhattisgarh/durg/invisible-grills" },
+      { label: "Bilaspur", href: "/chhattisgarh/bilaspur/invisible-grills" },
     ],
   },
 ];

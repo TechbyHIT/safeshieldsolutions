@@ -42,8 +42,10 @@ describe("evaluateSeoPath", () => {
     expect(gate.canonicalPath).toBe("/chhattisgarh/districts/raipur");
   });
 
-  it("keeps legal pages out of the index", () => {
-    expect(evaluateSeoPath("/privacy-policy").index).toBe(false);
+  it("indexes legal pages and keeps internal coverage noindex", () => {
+    expect(evaluateSeoPath("/privacy-policy").index).toBe(true);
+    expect(evaluateSeoPath("/privacy-policy").canonicalPath).toBe("/privacy-policy");
+    expect(evaluateSeoPath("/seo-coverage").index).toBe(false);
   });
 });
 

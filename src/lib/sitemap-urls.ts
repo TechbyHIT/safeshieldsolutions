@@ -44,14 +44,13 @@ export interface SitemapExclusion {
   reason: string;
 }
 
-/** Thin/legal pages: noindex, follow in meta — never submit these in the sitemap. */
-export const NOINDEX_PATHS = ["/privacy-policy", "/terms-of-service"] as const;
+/** Internal-only pages: never submit, never link from public nav. */
+export const NOINDEX_PATHS = ["/seo-coverage"] as const;
 
 const NOINDEX_PATH_SET = new Set<string>(NOINDEX_PATHS);
 
 /**
- * Indexable static hubs. Legal pages stay out — they use noindex, follow
- * so crawlers can still read the meta without ranking the URL.
+ * Indexable static hubs, including legal pages so footer links are not skipped.
  */
 export const STATIC_PATHS = [
   "/",
@@ -64,6 +63,8 @@ export const STATIC_PATHS = [
   "/blog",
   "/faq",
   "/html-sitemap",
+  "/privacy-policy",
+  "/terms-of-service",
 ] as const;
 
 export function getSitemapPhase(): SitemapPhase {
@@ -215,7 +216,8 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
   }
 
   for (const city of cities) {
-    pushEntry(entries, seen, `/locations/${city.slug}`, 0.85, "weekly", lastmod);
+    const path = city.slug === "chhattisgarh" ? "/chhattisgarh" : `/locations/${city.slug}`;
+    pushEntry(entries, seen, path, 0.85, "weekly", lastmod);
   }
 
   // Self-canonical indexable URLs only. Doorway intents stay out. Raipur is its own sitemap.

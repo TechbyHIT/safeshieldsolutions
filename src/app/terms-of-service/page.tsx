@@ -8,7 +8,7 @@ export const metadata = buildPageMetadata({
   title: "Terms of Service | SafeShield Solutions",
   description: "Terms of service for SafeShield Solutions installation and warranty services.",
   path: "/terms-of-service",
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
 });
 
 export default function TermsPage() {

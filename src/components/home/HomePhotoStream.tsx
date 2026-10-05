@@ -11,6 +11,7 @@ import {
   HOME_CITY_AREAS,
   HOME_TOP_SERVICES,
 } from "@/config/home-seo-links";
+import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
 
 const serviceFolderMap: Record<string, string> = {
@@ -33,15 +34,16 @@ function photoLink(photo: ProjectPhoto, index: number): { href: string; caption:
   const areas = HOME_CITY_AREAS[city.slug] ?? [];
   const area = areas[index % areas.length];
 
-  if (area) {
-    return {
-      href: routes.areaService(city.slug, area.slug, `${serviceSlug}-near-me`),
-      caption: `Premium ${service?.name ?? "installation"} near ${area.name}, ${city.name}`,
-    };
-  }
+  const candidates = [
+    area ? routes.areaService(city.slug, area.slug, serviceSlug) : "",
+    `/chhattisgarh/raipur/${serviceSlug}`,
+    routes.service(serviceSlug),
+  ].filter(Boolean);
+
+  const href = candidates.find((path) => isIndexableInternalPath(path)) ?? "/chhattisgarh/raipur";
   return {
-    href: routes.cityService(city.slug, `${serviceSlug}-near-me`),
-    caption: `Best ${service?.name ?? "installation"} near me in ${city.name}`,
+    href,
+    caption: `Premium ${service?.name ?? "installation"} in ${area?.name ?? "Raipur"}, Chhattisgarh`,
   };
 }
 

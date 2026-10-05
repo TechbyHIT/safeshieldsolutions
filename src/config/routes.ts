@@ -3,7 +3,7 @@ export const routes = {
   services: "/services",
   service: (slug: string) => `/services/${slug}`,
   locations: "/locations",
-  city: (slug: string) => `/locations/${slug}`,
+  city: (slug: string) => (slug === "chhattisgarh" ? "/chhattisgarh" : `/locations/${slug}`),
   area: (citySlug: string, areaSlug: string) =>
     `/locations/${citySlug}/${areaSlug}`,
   cityService: (citySlug: string, serviceSlug: string) =>
