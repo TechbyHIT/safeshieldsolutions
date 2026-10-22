@@ -8,11 +8,11 @@ import { routes } from "@/config/routes";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import type { SeoService } from "@/data/seo-services";
 import type { CgPlaceProfile } from "@/data/cg-local-seo";
+import { buildServiceEntityGraph } from "@/lib/entity-seo";
 import {
   buildBreadcrumbSchema,
   buildFaqSchema,
   buildLocalBusinessSchema,
-  buildServiceSchema,
 } from "@/lib/schema";
 import {
   buildLocalLandingCopy,
@@ -45,9 +45,15 @@ export function LocalServicePage({
     <>
       <JsonLd
         data={[
-          buildServiceSchema(service.name, service.description, copy.path),
+          buildServiceEntityGraph({
+            service,
+            place,
+            path: copy.path,
+            title: copy.h1,
+            description: copy.description,
+          }),
           buildBreadcrumbSchema(breadcrumbs),
-          buildFaqSchema(copy.faqs),
+          buildFaqSchema([copy.directAnswer, ...copy.faqs]),
           buildLocalBusinessSchema(place.name),
         ]}
       />
@@ -61,6 +67,13 @@ export function LocalServicePage({
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1.5fr_0.7fr]">
           <div className="space-y-10">
+            <section id="introduction">
+              <p className="text-neutral-700">{copy.intro}</p>
+            </section>
+            <section id="direct-answer">
+              <h2 className="text-2xl font-bold text-neutral-900">{copy.directAnswer.question}</h2>
+              <p className="mt-3 text-neutral-700">{copy.directAnswer.answer}</p>
+            </section>
             {copy.sections.map((section) => (
               <section key={section.id}>
                 <h2 className="text-2xl font-bold text-neutral-900">{section.heading}</h2>
@@ -79,7 +92,7 @@ export function LocalServicePage({
               </section>
             ))}
             <section>
-              <h2 className="text-2xl font-bold text-neutral-900">Questions</h2>
+              <h2 className="text-2xl font-bold text-neutral-900">Frequently asked questions</h2>
               <dl className="mt-4 space-y-4">
                 {copy.faqs.map((faq) => (
                   <div key={faq.question}>

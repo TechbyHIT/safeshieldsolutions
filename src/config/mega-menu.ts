@@ -116,10 +116,10 @@ export const cityAreaHighlights: CityAreaHighlight[] = [
 ];
 
 export const trustBadges = [
-  "Certified Installation",
-  "Warranty Support",
-  "Premium SS304 & SS316 Materials",
-  "Fast Installation",
-  "Affordable Pricing",
-  "Free Site Survey",
+  "Measured installation",
+  "Written warranty terms",
+  "SS304 and SS316 materials",
+  "Scheduled fitting after survey",
+  "Itemised quotation",
+  "Free site survey",
 ] as const;

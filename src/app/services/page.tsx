@@ -6,13 +6,14 @@ import { routes } from "@/config/routes";
 import { getPrimaryServicePhoto, getInterleavedPhotos } from "@/config/photo-catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getActiveServices } from "@/lib/queries";
+import { serviceCardDescription } from "@/lib/search-snippets";
 
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "Our Services | Invisible Grills, Safety Nets & More",
+  title: "Invisible Grills, Safety Nets and Home Fittings",
   description:
-    "Browse all SafeShield Solutions services with real project photos: invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection.",
+    "Compare invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection. Each service page explains materials, fitting, and how to request a written quote.",
   path: "/services",
 });
 
@@ -24,8 +25,8 @@ export default async function ServicesIndexPage() {
     <>
       <PageHero
         eyebrow="Installation services"
-        title="Our Services"
-        description="Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection across Chhattisgarh, with Raipur listed first."
+        title="Invisible grills, safety nets, and home fittings"
+        description="Measured installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, and bird protection across served Chhattisgarh towns, with Raipur listed first."
         photo={photos[0]}
         breadcrumbs={[
           { label: "Home", href: routes.home },
@@ -41,7 +42,7 @@ export default async function ServicesIndexPage() {
                 key={service.id}
                 name={service.name}
                 slug={service.slug}
-                description={service.description}
+                description={serviceCardDescription(service)}
                 imageSlug={service.imageSlug}
                 photoSrc={photo?.src}
                 photoAlt={photo?.alt}

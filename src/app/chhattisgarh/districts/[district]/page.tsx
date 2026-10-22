@@ -8,6 +8,7 @@ import { routes } from "@/config/routes";
 import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
 import { CG_CITY_DISTRICT, getDistrict } from "@/data/cg-hierarchy";
 import { buildPageMetadata } from "@/lib/metadata";
+import { buildSearchSnippet } from "@/lib/search-snippets";
 import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { enforceIndexablePath } from "@/lib/seo-enforce";
@@ -30,9 +31,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   enforceIndexablePath(path);
   const record = getDistrict(district);
   if (!record) notFound();
+  const snippet = buildSearchSnippet({
+    kind: "district",
+    districtName: record.name,
+    summary: record.summary,
+  });
   return buildPageMetadata({
-    title: `${record.name} District | Safety Nets & Bird Spikes`,
-    description: record.summary,
+    title: snippet.title,
+    description: snippet.description,
     path,
     canonicalPath: path,
     robots: { index: true, follow: true },
@@ -46,6 +52,11 @@ export default async function DistrictPage({ params }: PageProps) {
   const record = getDistrict(district);
   if (!record) notFound();
   const towns = CG_PRIORITY_PLACES.filter((place) => CG_CITY_DISTRICT[place.slug] === record.slug);
+  const snippet = buildSearchSnippet({
+    kind: "district",
+    districtName: record.name,
+    summary: record.summary,
+  });
   const breadcrumbs = [
     { name: "Home", url: routes.home },
     { name: "Chhattisgarh", url: "/chhattisgarh" },
@@ -59,12 +70,13 @@ export default async function DistrictPage({ params }: PageProps) {
       />
       <PageHero
         eyebrow="Chhattisgarh district"
-        title={`${record.name} district`}
-        description={record.summary}
+        title={snippet.h1}
+        description={snippet.description}
         photo={getPrimaryServicePhoto("safety-nets")}
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
       />
       <Section>
+        <p className="mb-8 max-w-3xl text-neutral-700">{snippet.intro}</p>
         <h2 className="text-2xl font-bold text-neutral-900">Towns we serve in {record.name}</h2>
         {towns.length === 0 ? (
           <p className="mt-4 text-neutral-700">

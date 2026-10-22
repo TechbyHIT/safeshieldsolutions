@@ -8,9 +8,9 @@ import { routes } from "@/config/routes";
 import { getHeroPhoto } from "@/config/photo-catalog";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Invisible grill and safety net comparisons",
+  title: "Invisible Grill vs Safety Net Comparisons",
   description:
-    "Factual comparisons of invisible grills and safety nets, SS304 and SS316, and nylon and HDPE mesh. No winner is forced.",
+    "Side-by-side notes on invisible grills and safety nets, SS304 and SS316, and nylon and HDPE mesh. No product is declared the winner for every opening.",
   path: "/compare",
 });
 

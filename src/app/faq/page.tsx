@@ -13,11 +13,11 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "FAQ | Invisible Grills, Safety Nets & Free Site Survey",
+  title: "Invisible Grill and Safety Net FAQs",
   description:
-    "Answers on invisible grill price, safety net installation, free surveys, and warranty across Chhattisgarh, with Raipur listed first.",
+    "Answers on invisible grill quotes, safety net installation, free surveys, and warranty in Chhattisgarh. Raipur is listed first. Book a site visit if you still have a question.",
   path: routes.faq,
-  keywords: ["invisible grill faq", "safety net price", "free site survey"],
+  keywords: ["what are invisible grills", "how do safety nets work", "what is a free site survey"],
 });
 
 const breadcrumbs = [
@@ -33,7 +33,7 @@ export default function FaqPage() {
       <PageHero
         eyebrow="Helpful answers"
         title="Frequently asked questions"
-        description="Common questions about invisible grills, safety nets, zip screens, and installation across South India. Need a quote? Book a free site survey."
+        description="Common questions about invisible grills, safety nets, zip screens, and installation across Chhattisgarh. Need a quote? Book a free site survey."
         photo={photos[0]}
         breadcrumbs={[
           { label: "Home", href: routes.home },

@@ -25,7 +25,15 @@ for (const place of CG_PRIORITY_PLACES) {
     for (const intent of ["general", "near-me"] as const) {
       const page = composeServicePage(place, service, intent);
       if (!sitemap.has(page.path)) failures.push(`${page.path} missing from sitemap`);
-      if (page.nearMeMentions > 0) failures.push(`${page.path} repeats "near me" ${page.nearMeMentions} times`);
+      if (intent === "general" && page.nearMeMentions > 0) {
+        failures.push(`${page.path} repeats "near me" ${page.nearMeMentions} times in body copy`);
+      }
+      if (intent === "near-me" && page.nearMeMentions > 0) {
+        failures.push(`${page.path} repeats "near me" ${page.nearMeMentions} times in body copy`);
+      }
+      if (intent === "near-me" && !page.h1.toLowerCase().includes("near me")) {
+        failures.push(`${page.path} near-me page is missing "near me" in the H1`);
+      }
       if (page.wordCount < 1500) failures.push(`${page.path} is under 1500 words (${page.wordCount})`);
       if (page.faqs.length < 2) failures.push(`${page.path} has too few FAQs`);
     }

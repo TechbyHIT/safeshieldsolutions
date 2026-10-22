@@ -1,3 +1,4 @@
+import { blogPosts } from "@/config/guides-content";
 import { getAreaByCitySlugs } from "@/data/areas";
 import { CG_CORE_SERVICE_SLUGS, isCgPriorityPlace } from "@/data/cg-local-seo";
 import { getLocality, isLocalityServiceIndexable } from "@/data/cg-hierarchy";
@@ -53,6 +54,13 @@ export function evaluateSeoPath(path: string): SeoIndexDecision {
       ]);
     }
     return decision(false, "/chhattisgarh", ["Unknown place"]);
+  }
+
+  if (parts[0] === "blog" && parts[1]) {
+    const post = blogPosts.find((item) => item.slug === parts[1]);
+    if (!post || post.citySlug !== "chhattisgarh") {
+      return decision(false, "/blog", ["Article is outside the Chhattisgarh service area"]);
+    }
   }
 
   if (parts[0] !== "chhattisgarh") {

@@ -8,7 +8,7 @@ import { guideArticles, guideAreaLinks } from "@/config/guides-content";
 import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
-import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/schema";
 import { generateGuideSlugStaticParams } from "@/lib/ssg-priority";
 
 export const revalidate = 86400;
@@ -50,7 +50,13 @@ export default async function GuideArticlePage({ params }: PageProps) {
     <>
       <JsonLd
         data={[
-          buildWebPageSchema(guide.title, guide.summary, routes.guide(guide.slug)),
+          buildArticleSchema({
+            kind: "Article",
+            headline: guide.title,
+            description: guide.summary,
+            path: routes.guide(guide.slug),
+            image: getPrimaryServicePhoto(guide.serviceSlug)?.src,
+          }),
           buildBreadcrumbSchema(breadcrumbs),
         ]}
       />

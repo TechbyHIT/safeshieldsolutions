@@ -6,9 +6,9 @@ import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Project Gallery | Real Installation Photos",
+  title: "Invisible Grill and Safety Net Photos",
   description:
-    `Browse ${totalPhotoCount} photos of invisible grill, safety net, mosquito net, cloth hanger, cricket net, and bird spike installations.`,
+    `Installation photos of invisible grills, safety nets, mosquito nets, cloth hangers, cricket nets, and bird spikes (${totalPhotoCount} images). These are finished fittings, not catalogue renders.`,
   path: "/gallery",
 });
 

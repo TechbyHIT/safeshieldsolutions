@@ -37,10 +37,10 @@ export function Header() {
           <Link href="/" className="flex min-w-0 shrink items-center">
             <Image
               src="/images/logo.png"
-              alt="Safe Shield Solutions"
+              alt="SafeShield Solutions"
               width={280}
               height={64}
-              priority
+              priority={false}
               className="h-12 w-auto max-w-[min(220px,46vw)] object-contain object-left sm:max-w-[320px] lg:max-w-[380px]"
             />
           </Link>

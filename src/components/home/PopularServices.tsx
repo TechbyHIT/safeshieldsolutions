@@ -1,13 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { PhoneIcon } from "@/components/ui/SocialIcons";
+import { ServiceCard } from "@/components/ui/ServiceCard";
 import { homeCatalogServices, materialGrades } from "@/config/home-content";
-import { business } from "@/config/business";
-import { getHeroPhoto, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
-
-const telUrl = `tel:${business.phone.replace(/\s/g, "")}`;
 
 export function PopularServices() {
   return (
@@ -15,11 +10,11 @@ export function PopularServices() {
       <div className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-accent-600">Our services</p>
         <h2 className="mt-2 text-3xl font-bold text-neutral-900 md:text-4xl">
-          Complete home & building safety solutions
+          Complete home and building safety fittings
         </h2>
         <p className="mx-auto mt-3 max-w-3xl text-neutral-600">
-          Invisible grills, safety nets, pigeon nets and child protection — fitted in SS304 or
-          marine-grade SS316 quality, from one trusted team.
+          Invisible grills, safety nets, pigeon nets, and child protection — specified in SS304
+          or SS316 after the opening is measured.
         </p>
       </div>
 
@@ -34,57 +29,24 @@ export function PopularServices() {
       </div>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {homeCatalogServices.map((service, index) => {
-          const photo = getPrimaryServicePhoto(service.slug) ?? getHeroPhoto();
-          return (
-            <article
-              key={`${service.slug}-${service.title}`}
-              className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-card"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100">
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  quality={85}
-                  priority={index < 3}
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-lg font-bold text-neutral-900">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600">
-                  {service.description}
-                </p>
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <Link
-                    href={routes.service(service.slug)}
-                    className="inline-flex items-center justify-center gap-1 rounded-full bg-brand-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800"
-                  >
-                    View Details
-                    <span aria-hidden>→</span>
-                  </Link>
-                  <a
-                    href={telUrl}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-brand-900 hover:text-brand-900"
-                  >
-                    <PhoneIcon className="h-4 w-4" />
-                    Call
-                  </a>
-                </div>
-              </div>
-            </article>
-          );
-        })}
+        {homeCatalogServices.map((service) => (
+          <ServiceCard
+            key={service.slug}
+            name={service.title}
+            slug={service.slug}
+            description={service.description}
+            href={routes.service(service.slug)}
+            headingLevel={3}
+          />
+        ))}
       </div>
 
       <p className="mt-10 text-center">
         <Link
           href={routes.services}
-          className="inline-flex items-center justify-center rounded-full bg-brand-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+          className="inline-flex items-center justify-center rounded-full bg-brand-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2"
         >
-          View All Services →
+          Browse all services
         </Link>
       </p>
     </Section>

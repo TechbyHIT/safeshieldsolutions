@@ -10,6 +10,7 @@ import { getSeoService } from "@/data/seo-services";
 import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/schema";
 import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { cityServiceSlugsForPlace } from "@/lib/local-seo-catalog";
+import { buildSearchSnippet } from "@/lib/search-snippets";
 
 interface ChhattisgarhPlacePageProps {
   placeSlug: string;
@@ -31,6 +32,11 @@ export function ChhattisgarhPlacePage({
     .filter((service): service is NonNullable<typeof service> => Boolean(service));
   const district = getDistrictForCity(placeSlug);
   const localities = getIndexableLocalitiesForCity(placeSlug);
+  const snippet = buildSearchSnippet({
+    kind: "place",
+    placeName,
+    placeSlug,
+  });
   const breadcrumbs = [
     { name: "Home", url: routes.home },
     { name: "Chhattisgarh", url: "/chhattisgarh" },
@@ -45,17 +51,15 @@ export function ChhattisgarhPlacePage({
       <JsonLd data={[buildBreadcrumbSchema(breadcrumbs), buildLocalBusinessSchema(placeName)]} />
       <PageHero
         eyebrow={`${stateName} · ${placeName}`}
-        title={`Invisible grills and safety nets in ${placeName}`}
-        description={
-          profile?.localContext ??
-          `${placeName} is listed as a Chhattisgarh service area. Measurement is done on site before any quote.`
-        }
+        title={snippet.h1}
+        description={snippet.description}
         photo={getPrimaryServicePhoto("invisible-grills")}
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
       />
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
           <div className="space-y-8">
+            <p className="text-neutral-700">{snippet.intro}</p>
             <div>
               <h2 className="text-2xl font-bold text-neutral-900">Where these are used</h2>
               <p className="mt-3 text-neutral-700">
@@ -122,8 +126,15 @@ export function ChhattisgarhPlacePage({
             )}
             {localities.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-neutral-900">Localities</h2>
-                <ul className="mt-4 flex flex-wrap gap-3">
+                <h2 className="text-2xl font-bold text-neutral-900">
+                  {placeSlug === "raipur" ? "Raipur areas we survey" : "Localities"}
+                </h2>
+                <p className="mt-3 text-neutral-700">
+                  {placeSlug === "raipur"
+                    ? "Each listed neighbourhood has its own page for invisible grills, balcony safety nets, pigeon nets, and bird spikes. Open the area you live in rather than a generic Raipur search."
+                    : `Listed neighbourhoods in ${placeName} have their own pages when the local copy is specific enough to index.`}
+                </p>
+                <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                   {localities.map((area) => (
                     <li key={area.slug}>
                       <Link

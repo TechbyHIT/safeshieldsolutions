@@ -397,7 +397,7 @@ function buildExtendedFaqs(ctx: LongformContext, seed: number): { question: stri
   return [...categoryFaqs, ...faqs];
 }
 
-/** Long-form sections and FAQs targeting 20,000+ words per area×service page. */
+/** Extra local sections and FAQs for area × service pages that pass the publication gate. */
 export function buildAreaLongformExpansion(ctx: LongformContext): {
   sections: ContentSection[];
   faqs: { question: string; answer: string }[];

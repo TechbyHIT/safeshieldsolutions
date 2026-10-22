@@ -43,7 +43,7 @@ prisma/*.db-journal
 /reports/*.csv
 !/reports/.gitkeep
 
-# public sitemaps (generated at build; index stays /sitemap.xml, children /sitemap-N.xml)
+# public sitemaps (generated at build; index is /sitemap.xml, children are named urlsets)
 /public/sitemap.xml
 /public/sitemap-*.xml
 /public/sitemap.xml.gz

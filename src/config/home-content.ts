@@ -1,19 +1,18 @@
 import { routes } from "./routes";
 
 export const heroBullets = [
-  "Premium SS304 invisible grills, SS316 marine-grade options & UV-stable safety nets",
-  "Cricket box grass, zip screens, mesh doors & 36 service lines",
+  "SS304 invisible grills, SS316 where exposure needs it, and UV-stable safety nets",
+  "Cricket box grass, zip screens, mesh doors, and related home fittings",
   "Raipur first, then Bhilai, Durg, Bilaspur, Korba, and the other served Chhattisgarh towns",
-  "Free site survey across Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur & district towns",
-  "20,000+ word local guides on every area × service page",
+  "Free site survey across served Chhattisgarh towns",
+  "Written quote after the opening is measured",
 ];
 
 export const homeHero = {
-  eyebrow:
-    "Invisible grills and safety nets in Chhattisgarh — Raipur, Bhilai, Durg, Bilaspur",
-  title: "SafeShield Solutions – Premium Invisible Grills & Safety Nets",
+  eyebrow: "Raipur first · then Bhilai, Durg, Bilaspur and served Chhattisgarh towns",
+  title: "Invisible grills and safety nets for Raipur homes",
   description:
-    "Professional installation of invisible grills, safety nets, pigeon nets, mosquito nets, zip screens, mesh doors, cricket box grass, cloth hangers, and bird protection. We use SS304 stainless steel as standard and SS316 marine-grade cables for coastal or high-humidity openings.",
+    "Measured installation of invisible grills, balcony safety nets, pigeon nets, and bird spikes in Raipur localities — then the other served Chhattisgarh towns. SS304 is the standard grill grade. SS316 is specified only where corrosion risk is higher.",
 };
 
 export const problemCategories = [
@@ -128,22 +127,22 @@ export const homeCatalogServices = [
       "Slim cable barriers for bedroom and hall windows where child safety matters without darkening the room.",
   },
   {
-    slug: "invisible-grills",
-    title: "Invisible Grills for Apartments",
+    slug: "pigeon-safety-nets",
+    title: "Pigeon Safety Nets",
     description:
-      "High-rise balcony and window packages planned around society working hours and facade rules.",
+      "Full-opening mesh for balconies, ducts, and ledges where pigeons perch or nest.",
   },
   {
     slug: "child-safety-grills",
-    title: "Invisible Grills for Child Safety",
+    title: "Child Safety Grills",
     description:
       "Closer-spaced cable layouts for openings where toddlers use balconies, windows, or stair edges.",
   },
   {
-    slug: "invisible-grills",
-    title: "Invisible Grill Installation",
+    slug: "bird-spikes",
+    title: "Bird Spikes",
     description:
-      "Site measurement, written quotation, neat SS304 or SS316 fitting, and handover checks for apartments and villas.",
+      "Narrow-ledge fittings that discourage perching without covering the whole opening.",
   },
   {
     slug: "safety-nets",
@@ -176,7 +175,7 @@ export const extendedServices = [
     slug: "window-invisible-grills",
     title: "Window Invisible Grills",
     description:
-      "Slim vertical SS304 cables, with SS316 for coastal exposure, for windows that need child safety without blocking ventilation.",
+      "Slim vertical SS304 cables, with SS316 where corrosion risk is higher, for windows that need child safety without blocking ventilation.",
   },
   {
     slug: "terrace-safety-nets",
@@ -247,8 +246,8 @@ export const materialGrades = [
   },
   {
     grade: "SS316",
-    title: "SS316 quality — marine-grade for coastal homes",
-    note: "Higher molybdenum content for salt-air or pool-facing openings. Recommended where corrosion risk is higher.",
+    title: "SS316 quality — higher corrosion resistance",
+    note: "Higher molybdenum content for pool-facing or persistently damp openings. Recommended where corrosion risk is higher.",
   },
 ] as const;
 
@@ -306,7 +305,7 @@ export const homeFaqs = [
   {
     question: "Do you use SS304 or SS316 steel?",
     answer:
-      "Both. SS304 is the standard rust-resistant grade for most apartments. SS316 is marine-grade steel for sea-facing and pool-adjacent openings. The survey recommends the grade after the exposure is checked.",
+      "Both. SS304 is the standard rust-resistant grade for most apartments. SS316 is specified where pool splash or persistent damp raises corrosion risk. The survey recommends the grade after the exposure is checked.",
   },
   {
     question: "Which safety solution is best for a balcony?",
@@ -319,7 +318,7 @@ export const homeFaqs = [
       "The final price depends on measured area, material or cable type, mesh specification, access, fixing surface, border finish, minimum job charge, and warranty terms. Ask for the price unit and included installation work in writing so quotes can be compared fairly.",
   },
   {
-    question: "How do I find safety nets near me?",
+    question: "How do I book a survey in my town?",
     answer:
       "Open the Raipur page first, or pick another served Chhattisgarh town. Send a photo of the opening before booking.",
   },
@@ -339,19 +338,19 @@ export const homeFaqs = [
       "Send a full photo of the opening, one closer photo of the top and side fixing surfaces, approximate width and height if known, your city or neighbourhood, and whether the priority is children, pets, birds, visibility, or sports use.",
   },
   {
-    question: "Where can I find premium invisible grills near me?",
+    question: "Where should I start if I live in Raipur?",
     answer:
       "Start with invisible grills in Raipur, then the other Raipur service pages. Approved Raipur localities are linked from the Raipur page.",
   },
   {
-    question: "Who are the best pigeon net dealers near me in Raipur?",
+    question: "Do you work through dealers in Raipur?",
     answer:
       "Start with pigeon nets in Raipur, then the approved Raipur localities linked from that city page. The quote names mesh, anchors, and fitting.",
   },
   {
     question: "Do you offer affordable safety nets with premium materials?",
     answer:
-      "Yes. Affordable packages often combine multiple openings in one visit. Premium does not mean overpriced — it means SS304 as standard, SS316 for coastal or pool-facing openings, correct knotless GSM for bird nets, and documented installation.",
+      "Packages can combine multiple openings in one visit. SS304 is the standard grill grade. SS316 is used where corrosion risk is higher. Bird nets are specified by use, not a single mesh for every job.",
   },
   {
     question: "How many local pages does SafeShield Solutions publish?",
@@ -359,9 +358,9 @@ export const homeFaqs = [
       "Chhattisgarh only. Raipur is the main market. Other towns and localities are published only when the page has its own copy and the service is actually offered.",
   },
   {
-    question: "Can I book same-day invisible grill installation near me?",
+    question: "How quickly can installation happen after a quote?",
     answer:
-      "Same-day survey slots are available in many corridors when you share photos early. Installation typically follows within 24–48 hours after quote approval and material cut. Check your area page for local crew coverage and society timing rules.",
+      "Survey slots depend on the town and the photos you send. Installation is scheduled after the quote is approved and the material is cut. Society working hours also affect the date.",
   },
 ];
 

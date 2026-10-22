@@ -1,9 +1,11 @@
 import { photoManifest, type PhotoFolder } from "./photo-manifest";
+import { photoCopy } from "@/lib/media-seo";
 
 export interface ProjectPhoto {
   src: string;
   alt: string;
   title: string;
+  caption: string;
   folder: string;
 }
 
@@ -115,12 +117,14 @@ export const servicePhotoFolders: Record<string, string> = {
   "tennis-court-nets": "cricket-nets",
 };
 
-function buildPhoto(folder: string, filename: string, index: number): ProjectPhoto {
+function buildPhoto(folder: string, filename: string): ProjectPhoto {
   const label = folderLabels[folder] ?? folder;
+  const copy = photoCopy(label, filename);
   return {
     src: `/images/photos/${folder}/${filename}`,
-    alt: `${label} installation project photo ${index + 1} – completed work for Chhattisgarh, Raipur listed first`,
-    title: `${label} – Project ${index + 1}`,
+    alt: copy.alt,
+    title: label,
+    caption: copy.caption,
     folder,
   };
 }
@@ -131,7 +135,7 @@ export function getPhotosForFolder(folder: string, limit?: number): ProjectPhoto
   const hd = pickHdFilename(folder);
   const ordered = hd ? [hd, ...files.filter((file) => file !== hd)] : files;
   const selected = limit ? ordered.slice(0, limit) : ordered;
-  return selected.map((file, i) => buildPhoto(resolved, file, i));
+  return selected.map((file) => buildPhoto(resolved, file));
 }
 
 export function getPhotosForService(serviceSlug: string, limit = 6): ProjectPhoto[] {
@@ -144,8 +148,7 @@ export function getHdPhoto(folder = "balcony-invisible-grills"): ProjectPhoto {
   const resolved = displayFolder(folder);
   const files = folderFiles(resolved);
   const filename = pickHdFilename(folder) ?? files[0] ?? "168.webp";
-  const index = Math.max(0, files.indexOf(filename));
-  return buildPhoto(resolved, filename, index);
+  return buildPhoto(resolved, filename);
 }
 
 export function getHeroPhoto(): ProjectPhoto {
@@ -177,6 +180,19 @@ export function getPrimaryServicePhoto(serviceSlug: string): ProjectPhoto | null
 
 export function getServiceOgImage(serviceSlug: string): string {
   return getPrimaryServicePhoto(serviceSlug)?.src ?? getHeroPhoto().src;
+}
+
+/** Hero image for the homepage and each Raipur service URL. Other towns use the same files. */
+export function sitemapImageForPath(path: string): { src: string; title: string; caption: string } | null {
+  if (path === "/") {
+    const hero = getHeroPhoto();
+    return { src: hero.src, title: hero.title, caption: hero.caption };
+  }
+  const match = path.match(/^\/chhattisgarh\/raipur\/([^/]+)$/);
+  if (!match) return null;
+  const photo = getPrimaryServicePhoto(match[1]!.replace(/-near-me$/, ""));
+  if (!photo) return null;
+  return { src: photo.src, title: photo.title, caption: photo.caption };
 }
 
 export function getAllGalleryPhotos(): { folder: string; label: string; photos: ProjectPhoto[] }[] {

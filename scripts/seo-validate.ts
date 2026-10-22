@@ -14,8 +14,10 @@ import {
   getSitemapPhase,
   getTotalUrlCount,
   NOINDEX_PATHS,
+  renderPublishedSitemapXml,
   renderSitemapIndexXml,
   renderUrlsetXml,
+  summarizeSitemapInventory,
   xmlEscape,
 } from "../src/lib/sitemap-urls";
 import { evaluateSeoPath } from "../src/lib/seo-quality-gate";
@@ -23,6 +25,7 @@ import { isValidServiceLocation } from "../src/lib/service-location";
 import { isBuildTimePrerendered, summarizePrerenderVsIndexable } from "../src/lib/ssg-priority";
 import { listIndexableLocalPaths } from "../src/lib/local-seo-catalog";
 import { site } from "../src/config/site";
+import robots from "../src/app/robots";
 
 const errors: string[] = [];
 
@@ -86,6 +89,14 @@ assert(
 );
 assert(!entries.some((entry) => entry.path.includes("atal-nagar")), "Atal Nagar is in the sitemap");
 assert(!entries.some((entry) => entry.path.startsWith("/locations/chhattisgarh")), "Duplicate locations URL is in the sitemap");
+assert(
+  !entries.some((entry) => entry.path === "/blog/premium-invisible-grills-gachibowli"),
+  "Out-of-area Hyderabad blog post is in the sitemap",
+);
+assert(
+  !entries.every((entry) => entry.lastmod.startsWith(new Date().toISOString().slice(0, 10))),
+  "Every lastmod is today",
+);
 
 for (const path of NOINDEX_PATHS) {
   assert(!entries.some((e) => e.path === path), `noindex path in sitemap: ${path}`);
@@ -98,26 +109,42 @@ for (const p of STATIC_PATHS) {
 
 const locs = getSitemapIndexLocs();
 assert(locs.every((u) => u.startsWith("https://")), "Sitemap index loc is not HTTPS");
-assert(Boolean(locs[0]?.endsWith("/sitemap-chhattisgarh.xml")), "Index should list the state sitemap first");
-assert(Boolean(locs[1]?.endsWith("/sitemap-raipur.xml")), "Index should list the Raipur sitemap second");
+assert(Boolean(locs[0]?.endsWith("/sitemap-pages.xml")), "Index should list the pages sitemap first");
+assert(Boolean(locs.some((u) => u.endsWith("/sitemap-raipur.xml"))), "Index should list the Raipur sitemap");
+assert(Boolean(locs.some((u) => u.endsWith("/sitemap-services.xml"))), "Index should list the services sitemap");
 assert(
   locs.every((u) => /\/sitemap-[a-z0-9-]+\.xml$/.test(u) && !u.includes("/sitemaps/")),
   "Child sitemaps must be named files at the site root",
 );
+assert(!locs.some((u) => u.endsWith("/sitemap.xml")), "Index must not list itself");
 assert(site.url.replace(/\/$/, "").startsWith("https://"), `site.url is not HTTPS: ${site.url}`);
 assert(canonicalOrigin() === site.url.replace(/\/$/, ""), "Canonical origin drift");
+const robotsDoc = robots();
+const robotsSitemaps = Array.isArray(robotsDoc.sitemap) ? robotsDoc.sitemap : [robotsDoc.sitemap];
+assert(robotsSitemaps.includes(`${canonicalOrigin()}/sitemap.xml`), "robots.txt is missing the production sitemap URL");
+
+const groupedPaths = groups.flatMap((group) => group.entries.map((entry) => entry.path));
+assert(groupedPaths.length === entries.length, "Child urlsets do not cover every sitemap URL");
+assert(new Set(groupedPaths).size === entries.length, "A URL appears in more than one child sitemap");
 
 const sampleXml = renderUrlsetXml(entries.slice(0, 3));
 assert(sampleXml.includes("<urlset"), "urlset XML missing root");
 assert(!sampleXml.includes("<sitemapindex"), "Child sitemap must be a urlset, not a nested index");
+assert(!sampleXml.includes("<priority>"), "Child sitemap still emits priority");
+assert(!sampleXml.includes("<changefreq>"), "Child sitemap still emits changefreq");
 assert(xmlEscape(`&<>"'`) === "&amp;&lt;&gt;&quot;&apos;", "XML escape incomplete");
 
-const publishedXml = renderUrlsetXml(entries);
-assert(publishedXml.includes("<urlset"), "Published sitemap.xml must list page URLs");
-assert((publishedXml.match(/<loc>/g) ?? []).length === entries.length, "Published sitemap is missing URLs");
-assert(!publishedXml.includes("<sitemapindex"), "sitemap.xml must not be an index");
+const publishedXml = renderPublishedSitemapXml();
+assert(publishedXml.includes("<sitemapindex"), "sitemap.xml must be a sitemap index");
+assert(!publishedXml.includes("<urlset"), "sitemap.xml must not be a page urlset");
+assert((publishedXml.match(/<loc>/g) ?? []).length === groups.length, "Index is missing a child sitemap");
 const indexXml = renderSitemapIndexXml(locs);
 assert(indexXml.includes("<sitemapindex"), "sitemap index helper missing root");
+assert(groups.some((group) => group.file === "sitemap-pages.xml"), "Pages sitemap missing");
+
+const inventory = summarizeSitemapInventory();
+assert(inventory.total === entries.length, "Inventory total drifted from sitemap entries");
+assert((inventory.byPageType.home ?? 0) === 1, "Homepage missing from sitemap inventory");
 
 let areaHubs = 0;
 for (const city of CITIES) areaHubs += getAreasForCity(city.slug).length;
@@ -145,6 +172,8 @@ console.log(`  Total indexable URLs:     ${total.toLocaleString()}`);
 console.log(`  Child urlsets (≤${SITEMAP_SHARD_SIZE.toLocaleString()}): ${groups.length}`);
 console.log(`  Area hubs:                ${areaHubs}`);
 console.log(`  Sitemap index children:   ${locs.length}`);
+console.log(`  Child files:              ${groups.map((group) => group.file).join(", ")}`);
+console.log(`  Homepage:                 ${inventory.byPageType.home ?? 0}`);
 console.log(`  Build-time local SEO:     ${prerender.buildTimeLocalSeoPages}`);
 console.log(`  Raipur prerendered:       ${prerender.raipurPages}`);
 console.log(`  Other priority SSG:       ${prerender.otherPriorityPages}`);

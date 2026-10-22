@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { sitemapAuditSummary } from "@/lib/seo-crawl";
 import { buildPageMetadata } from "@/lib/metadata";
+import { citationReport } from "@/lib/answer-visibility";
+import { linkableAssets, mentionReport } from "@/lib/off-page-seo";
+import { scoreLandingPage, searchPerformanceReport } from "@/lib/programmatic-seo";
+import { getSitemapPhase } from "@/lib/sitemap-urls";
+import { buildSeoDashboard } from "@/lib/seo-dashboard";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Raipur SEO coverage",
@@ -36,6 +41,40 @@ export default function SeoCoveragePage() {
             </li>
           ))}
       </ul>
+      <h2 className="mt-10 text-xl font-bold">Publishing and quality</h2>
+      <p className="mt-2 max-w-2xl text-sm text-neutral-600">
+        Phase {getSitemapPhase()} is active. A URL in a later wave stays out of the sitemap until that phase.
+        Held this run: {summary.exclusions.filter((item) => item.reason.startsWith("Held")).length}.
+      </p>
+      <ul className="mt-4 space-y-2 text-sm">
+        {summary.raipur.findings
+          .filter((row) => row.priority === "P0")
+          .map((row) => {
+            const score = scoreLandingPage({
+              path: row.url,
+              inboundLinks: row.internalLinks,
+              inSitemap: true,
+              knownPaths: new Set(summary.findings.map((item) => item.url)),
+            });
+            return (
+              <li key={`score-${row.url}`}>
+                {score.score}/100 · {row.url}
+                {score.checks.some((check) => !check.pass)
+                  ? ` · ${score.checks
+                      .filter((check) => !check.pass)
+                      .map((check) => check.detail)
+                      .join("; ")}`
+                  : ""}
+              </li>
+            );
+          })}
+      </ul>
+      <h2 className="mt-10 text-xl font-bold">Search performance</h2>
+      <p className="mt-2 max-w-2xl text-sm text-neutral-600">{searchPerformanceReport().note}</p>
+      <h2 className="mt-10 text-xl font-bold">Off-page</h2>
+      <p className="mt-2 max-w-2xl text-sm text-neutral-600">{mentionReport().note}</p>
+      <p className="mt-2 max-w-2xl text-sm text-neutral-600">{citationReport().note}</p>
+      <p className="mt-2 text-sm text-neutral-600">Original pages available to cite: {linkableAssets().length}.</p>
       <h2 className="mt-10 text-xl font-bold">Sitemap</h2>
       <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Total URLs" value={summary.total} />
@@ -62,6 +101,26 @@ export default function SeoCoveragePage() {
           ))}
         </ul>
       )}
+      <h2 className="mt-10 text-xl font-bold">Reports</h2>
+      <div className="mt-4 space-y-6">
+        {buildSeoDashboard({
+          submitted: summary.total,
+          eligible: summary.indexable,
+          exclusions: summary.exclusions,
+          orphans: summary.orphans.map((row) => row.url),
+          errors: summary.findings.filter((row) => row.flag === "ERROR").map((row) => ({ path: row.url, notes: row.notes })),
+          phase: getSitemapPhase(),
+        }).map((section) => (
+          <section key={section.id}>
+            <h3 className="font-semibold text-neutral-900">{section.title}</h3>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-neutral-700">
+              {section.lines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
     </main>
   );
 }

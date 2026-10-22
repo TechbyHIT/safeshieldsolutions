@@ -79,8 +79,8 @@ export function buildServiceContent(ctx: ServiceContentContext): PageContent {
       },
       {
         id: "why-safeshield",
-        heading: "Why Choose SafeShield Solutions",
-        body: `With 12+ years of experience and 8,500+ completed projects, SafeShield Solutions is trusted across Telangana and Tamil Nadu. We offer same-day quotes, flexible scheduling, and after-sales service you can reach by phone or WhatsApp.`,
+        heading: "How SafeShield Solutions works",
+        body: `SafeShield Solutions surveys the opening, writes the specification, and fits the work in served Chhattisgarh towns. Raipur is listed first. The quote names cable or mesh grade, fixing, labour, and warranty terms. Town pages describe service areas. They do not claim a local branch office.`,
         level: 2,
       },
     ],
@@ -123,17 +123,11 @@ export function buildCityServiceContent(
   const city = cityName ?? locationName;
   const serviceLower = serviceName.toLowerCase();
   const detail = getServiceDetail(serviceSlug);
-  const seo = getSeoService(serviceSlug);
 
   const intentLead =
     intentLabel && intentLabel !== "general"
-      ? `Searching for ${serviceLower} ${intentLabel.replace(/-/g, " ")} in ${city}? This city hub covers premium installers, dealers, price factors, and near-me booking across every major ${city} locality. `
+      ? `This page answers ${serviceLower} ${intentLabel.replace(/-/g, " ")} questions in ${city}. The quote still follows a measurement of the opening. `
       : "";
-
-  const searchSnippet = seo?.searchPhrases
-    ?.slice(0, 5)
-    .map((p) => p.replace(/\{city\}/gi, city))
-    .join(", ");
 
   const longform = buildCityServiceLongform({
     serviceName,
@@ -146,7 +140,7 @@ export function buildCityServiceContent(
   });
 
   return {
-    intro: `${intentLead}Looking for professional ${serviceLower} in ${city}? SafeShield Solutions provides expert installation with SS304 materials, free site surveys, and a 5-year warranty. ${serviceDescription} We serve apartments, gated communities, villas, and commercial properties across ${city}, with dedicated pages for ${searchSnippet ?? `${serviceLower} near me`}, installation, price, dealers, best, and premium options in every neighbourhood.`,
+    intro: `${intentLead}${serviceName} in ${city} is specified after the opening is measured. ${serviceDescription} This page explains materials, fixing, and how to request a written quote. The figure is not a flat rate.`,
     issuesSolved: [
       `Openings in ${city} homes that need measured ${serviceName.toLowerCase()} fitting`,
       "Society facade rules, heat exposure, and monsoon conditions affecting material choice",
@@ -166,8 +160,8 @@ export function buildCityServiceContent(
     sections: [
       {
         id: "near-me-city",
-        heading: `${serviceName} near me in ${city} — how local booking works`,
-        body: `Near-me searches for ${serviceLower} in ${city} route to neighbourhood crews — not a call centre. Share your pin code, society name, and photos of the opening. We confirm survey slot, material grade (${category} category), and written quote scope before production. Premium and affordable packages differ in mesh GSM, cable count, and included hardware — not safety-critical anchors.`,
+        heading: `How booking ${serviceName} works in ${city}`,
+        body: `Share the town, a photo of the opening, and how the space is used. We confirm the survey slot, the ${category} specification, and the written quote scope before production. Packages differ in mesh, cable count, and included hardware — not in the need for measured anchors.`,
         level: 2,
       },
       {
@@ -178,14 +172,14 @@ export function buildCityServiceContent(
       },
       {
         id: "price-dealers-city",
-        heading: `${serviceName} price & dealers in ${city}`,
-        body: `"${serviceLower} price in ${city}" and "dealers near me" should compare anchors, edge treatment, transport, GST, and warranty. ${city} pages are part of the Chhattisgarh list, with Raipur listed first.`,
+        heading: `What a ${serviceName} quote in ${city} should include`,
+        body: `Compare anchors, edge treatment, transport, GST, and warranty on every quote. ${city} pages sit in the Chhattisgarh list, with Raipur listed first.`,
         level: 2,
       },
       {
         id: "areas-covered",
         heading: `Areas We Cover in ${city}`,
-        body: `We install ${serviceLower} across all major localities in ${city}. Whether you need a single balcony or a full building project, our technicians arrive on schedule with the right materials and tools. Browse the city locations page for searchable neighbourhood links.`,
+        body: `We install ${serviceLower} in the served towns listed from this ${city} hub. Single openings and multi-unit jobs both start with a measurement. Browse the town pages for the places that have their own copy.`,
         level: 2,
       },
       {
@@ -204,20 +198,20 @@ export function buildCityServiceContent(
     ],
     faqs: [
       {
-        question: `Where can I find ${serviceLower} near me in ${city}?`,
-        answer: `Open our ${city} locations page, search your neighbourhood, or use intent pages like installation, price, dealers, best, and premium. Each locality page includes 20,000+ words of local guidance and free survey booking.`,
+        question: `Do you install ${serviceLower} in ${city}?`,
+        answer: `Yes, in the served ${city} towns listed on this site. Open the town page, send a photo of the opening, and book a free survey.`,
       },
       {
         question: `What is the ${serviceLower} price in ${city}?`,
-        answer: `Pricing depends on measured area, material specification, access, and finish. For invisible grills, standard ${city} installations often fall around ₹130–180 per sq ft after site survey. We provide a written quotation with included scope.`,
+        answer: `Pricing depends on measured area, material specification, access, and finish. We do not publish a flat rate. The written quotation lists the included scope.`,
       },
       {
         question: `Do you provide ${serviceName.toLowerCase()} in ${city}?`,
-        answer: `Yes. SafeShield Solutions provides ${serviceName.toLowerCase()} installation across ${city} with free site survey and same-day quotation options.`,
+        answer: `Yes. SafeShield Solutions provides ${serviceName.toLowerCase()} installation in served ${city} towns after a free site survey.`,
       },
       {
         question: `How soon can you install in ${city}?`,
-        answer: `Most ${city} installations are scheduled within 24–48 hours of confirmation, subject to material availability and project size.`,
+        answer: `Installation is scheduled after the quote is approved and the material is cut. Timing depends on the town, society hours, and job size.`,
       },
       {
         question: "Is site survey free?",
@@ -229,7 +223,7 @@ export function buildCityServiceContent(
       heading: `Book ${serviceName} Installation in ${city}`,
       text: `Call or WhatsApp now for a free survey in ${city}. Transparent pricing, trained installers, 5-year warranty.`,
     },
-    localNotes: `Serving ${city} with local installation teams for faster response and area-specific expertise.`,
+    localNotes: `${city} is a service area. Quotes follow a measurement of the opening.`,
   };
 }
 
@@ -250,7 +244,7 @@ function intentIntroParagraph(
     dealers: `Looking for ${serviceLower} dealers near ${area}? We operate as manufacturer-installer, so ${locality} customers get factory-spec SS304 and UV-stable nets with direct fitting — no middleman markup or mismatched hardware.`,
     contractors: `Contractors and builders in ${area} use this page for ${serviceLower} specifications on new towers and villa projects. We supply itemised BOQs, harness-compliant crews, and phased installs for ${locality} sites.`,
     company: `Compare ${serviceLower} companies serving ${locality} on written scope, material certificates, and warranty registration. SafeShield Solutions assigns ${area}-familiar installers with documented spacing and society-friendly finishes.`,
-    "near me": `Near-me searches in ${area} route to the same ${locality} team — local mobilisation, same-day survey slots where available, and transparent quotes after on-site measurement.`,
+    "near me": `Searches for a nearby installer in ${area} still need a measurement of the opening in ${locality}. The quote follows the survey.`,
     quote: `Request a written ${serviceLower} quote for ${locality} after a free survey. We itemise labour, hardware, GST, and warranty so ${area} residents can approve scope before production.`,
     best: `Choosing the best ${serviceLower} in ${locality} means verifying steel grade, knotless net GSM, spacing, and after-sales support — not just lowest price. This ${area} guide lists what premium installs include.`,
     affordable: `Affordable ${serviceLower} in ${locality} still requires correct anchors and SS304 where exposed. We explain how ${area} customers save via multi-opening packages without cutting safety-critical components.`,

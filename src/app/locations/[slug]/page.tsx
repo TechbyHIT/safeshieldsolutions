@@ -31,14 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (slug === "chhattisgarh") permanentRedirect("/chhattisgarh");
   const city = await getCityBySlug(slug);
   if (!city) notFound();
-  const raipurLead = slug === "chhattisgarh";
   return buildPageMetadata({
-    title: raipurLead
-      ? "Invisible Grills in Raipur | Chhattisgarh Safety Nets"
-      : `Invisible Grills & Safety Nets in ${city.name}`,
-    description: raipurLead
-      ? "Invisible grills, safety nets and pigeon nets in Raipur. Free survey, itemised quote, SS304. Other Chhattisgarh towns are listed after Raipur."
-      : `Professional invisible grills, safety nets, mosquito nets and home protection in ${city.name}. Free site survey, SS304 materials, 5-year warranty.`,
+    title: `Safety Nets and Invisible Grills in ${city.name}`,
+    description: `Invisible grills, safety nets, mosquito nets, and bird protection in ${city.name}. Free site survey and a written quote after measurement.`,
     path: routes.city(slug),
   });
 }
@@ -73,8 +68,8 @@ export default async function CityPage({ params }: PageProps) {
 
       <PageHero
         eyebrow={`${city.name} installation`}
-        title={`Invisible Grills & Safety Solutions in ${city.name}`}
-        description={`SafeShield Solutions provides professional invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, cricket box grass, zip screens, motorized zip screens, mesh doors, sliding mesh doors, and bird protection across ${city.name}. Free site survey, SS304 materials, trained technicians, and 5-year warranty.`}
+        title={`Invisible grills and safety fittings in ${city.name}`}
+        description={`SafeShield Solutions surveys and fits invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, zip screens, mesh doors, and bird protection in ${city.name} where those lines are offered. The quote follows a measurement.`}
         photo={photos[0]}
         breadcrumbs={breadcrumbItems.map((b) => ({ label: b.name, href: b.url }))}
       />
@@ -99,9 +94,8 @@ export default async function CityPage({ params }: PageProps) {
           All {city.name} localities
         </h2>
         <p className="mt-2 max-w-3xl text-sm text-neutral-600">
-          Browse {(city.children ?? []).length.toLocaleString()} neighbourhoods — each links to
-          dedicated invisible grills, safety nets, and intent pages with 20,000+ words of local SEO
-          content.
+          Browse {(city.children ?? []).length.toLocaleString()} neighbourhoods that have their own
+          pages. Open the service that matches the opening.
         </p>
         <AreaBrowser
           citySlug={city.slug}

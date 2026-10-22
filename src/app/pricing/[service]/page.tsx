@@ -7,6 +7,8 @@ import { AreaEstimator } from "@/components/seo/AreaEstimator";
 import { PRICING_PAGES } from "@/data/cg-local-seo";
 import { getSeoService } from "@/data/seo-services";
 import { buildPageMetadata } from "@/lib/metadata";
+import { buildKeywordPlan } from "@/lib/keyword-targeting";
+import { buildSearchSnippet } from "@/lib/search-snippets";
 import { routes } from "@/config/routes";
 import { getHeroPhoto } from "@/config/photo-catalog";
 
@@ -25,10 +27,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { service } = await params;
   const page = PRICING_PAGES.find((item) => item.slug === service);
   if (!page) notFound();
-  return buildPageMetadata({
-    title: `${page.name} price factors in Chhattisgarh`,
-    description: `What changes a ${page.name.toLowerCase()} quote in Chhattisgarh. No flat rate is published. The figure follows measurement.`,
+  const catalogue = getSeoService(page.serviceSlug);
+  const plan = buildKeywordPlan({
+    serviceSlug: page.serviceSlug,
+    serviceName: catalogue?.name ?? page.name,
     path: `/pricing/${page.slug}`,
+  });
+  const snippet = buildSearchSnippet({
+    kind: "pricing",
+    serviceName: catalogue?.name ?? page.name,
+    serviceSlug: page.serviceSlug,
+  });
+  return buildPageMetadata({
+    title: snippet.title,
+    description: snippet.description,
+    path: `/pricing/${page.slug}`,
+    keywords: plan.metaKeywords,
   });
 }
 
@@ -37,13 +51,18 @@ export default async function PricingServicePage({ params }: PageProps) {
   const page = PRICING_PAGES.find((item) => item.slug === service);
   if (!page) notFound();
   const catalogue = getSeoService(page.serviceSlug);
+  const snippet = buildSearchSnippet({
+    kind: "pricing",
+    serviceName: catalogue?.name ?? page.name,
+    serviceSlug: page.serviceSlug,
+  });
 
   return (
     <>
       <PageHero
         eyebrow="Pricing"
-        title={`${page.name}: what changes the quote`}
-        description="Size, material, access, and the town change the figure. This page does not publish a rate."
+        title={snippet.h1}
+        description={snippet.description}
         photo={getHeroPhoto()}
         breadcrumbs={[
           { label: "Home", href: routes.home },
@@ -52,7 +71,8 @@ export default async function PricingServicePage({ params }: PageProps) {
         ]}
       />
       <Section>
-        <p className="max-w-3xl text-neutral-700">
+        <p className="max-w-3xl text-neutral-700">{snippet.intro}</p>
+        <p className="mt-4 max-w-3xl text-neutral-700">
           {catalogue?.description} A written quote lists the grade or mesh, the measured area, and
           what is included. Compare that scope, not a headline rate.
         </p>

@@ -107,7 +107,11 @@ export function buildCrawlGraph(): Map<string, Set<string>> {
   }
 
   for (const guide of guideArticles) addLink(graph, "/guides", `/guides/${guide.slug}`);
-  for (const post of blogPosts) addLink(graph, "/blog", `/blog/${post.slug}`);
+  for (const post of blogPosts) {
+    const postPath = `/blog/${post.slug}`;
+    const gate = evaluateSeoPath(postPath);
+    if (gate.index && gate.canonicalPath === postPath) addLink(graph, "/blog", postPath);
+  }
   for (const page of PRICING_PAGES) addLink(graph, "/pricing", `/pricing/${page.slug}`);
   for (const item of COMPARISONS) addLink(graph, "/compare", `/compare/${item.slug}`);
   addLink(graph, "/pricing", "/chhattisgarh/raipur/pigeon-safety-nets");

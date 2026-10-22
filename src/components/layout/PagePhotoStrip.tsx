@@ -12,7 +12,7 @@ interface PagePhotoStripProps {
 export function PagePhotoStrip({
   photos,
   heading = "Real installation photos",
-  description = "Completed invisible grill, safety net, pigeon net and cloth hanger work from our South India teams.",
+  description = "Completed invisible grill, safety net, pigeon net and cloth hanger work from our Chhattisgarh crews.",
   columns = 3,
 }: PagePhotoStripProps) {
   if (photos.length === 0) return null;

@@ -1,6 +1,8 @@
 import { business } from "@/config/business";
 import { site } from "@/config/site";
+import { TOPIC_CLUSTERS, entityId } from "@/lib/entity-seo";
 import { buildCanonicalUrl } from "@/lib/metadata";
+import { videoObjectSchema, type EligibleVideo } from "@/lib/media-seo";
 
 export interface BreadcrumbItem {
   name: string;
@@ -11,55 +13,35 @@ export function buildOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": entityId("organization"),
     name: business.name,
+    knowsAbout: TOPIC_CLUSTERS.map((cluster) => cluster.name),
     legalName: business.legalName,
     url: site.url,
     logo: buildCanonicalUrl("/images/logo.png"),
     description: business.description,
     telephone: business.phone,
     email: business.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: business.address.street,
-      addressLocality: business.address.city,
-      addressRegion: business.address.state,
-      postalCode: business.address.pincode,
-      addressCountry: business.address.country,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: business.geo.latitude,
-      longitude: business.geo.longitude,
-    },
+    areaServed: { "@type": "State", name: "Chhattisgarh" },
     sameAs: Object.values(business.social),
   };
 }
 
-export function buildLocalBusinessSchema(areaServedName?: string) {
+export function buildLocalBusinessSchema(areaServedName?: string, neighborhood?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
+    "@id": `${site.url.replace(/\/$/, "")}/#local-business`,
+    parentOrganization: { "@id": entityId("organization") },
     name: business.name,
     image: buildCanonicalUrl("/images/photos/balcony-invisible-grills/168.webp"),
     url: site.url,
     telephone: business.phone,
     priceRange: "₹₹",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: business.address.street,
-      addressLocality: business.address.city,
-      addressRegion: business.address.state,
-      postalCode: business.address.pincode,
-      addressCountry: business.address.country,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: business.geo.latitude,
-      longitude: business.geo.longitude,
-    },
     areaServed: [
       { "@type": "State", name: "Chhattisgarh" },
       ...(areaServedName ? [{ "@type": "City", name: areaServedName }] : []),
+      ...(neighborhood ? [{ "@type": "Place", name: neighborhood }] : []),
     ],
     openingHoursSpecification: [
       {
@@ -82,19 +64,18 @@ export function buildServiceSchema(
   serviceName: string,
   serviceDescription: string,
   path: string,
+  serviceType = "Home installation",
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${buildCanonicalUrl(path)}#service`,
     name: serviceName,
+    serviceType,
     description: serviceDescription,
-    provider: {
-      "@type": "Organization",
-      name: business.name,
-      url: site.url,
-    },
+    provider: { "@id": entityId("organization") },
     areaServed: business.serviceAreas.map((area) => ({
-      "@type": "City",
+      "@type": "State",
       name: area,
     })),
     url: buildCanonicalUrl(path),
@@ -133,28 +114,108 @@ export function buildWebsiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${site.url.replace(/\/$/, "")}/#website`,
     name: site.name,
     url: site.url,
     inLanguage: site.locale,
-    publisher: {
-      "@type": "Organization",
-      name: business.name,
-      url: site.url,
-    },
+    publisher: { "@id": entityId("organization") },
   };
 }
 
 export function buildWebPageSchema(title: string, description: string, path: string) {
+  const url = buildCanonicalUrl(path);
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": url,
     name: title,
     description,
-    url: buildCanonicalUrl(path),
-    isPartOf: {
-      "@type": "WebSite",
-      name: site.name,
-      url: site.url,
+    url,
+    isPartOf: { "@id": `${site.url.replace(/\/$/, "")}/#website` },
+    publisher: { "@id": entityId("organization") },
+  };
+}
+
+export function buildArticleSchema(input: {
+  kind: "Article" | "BlogPosting";
+  headline: string;
+  description: string;
+  path: string;
+  datePublished?: string;
+  image?: string;
+}) {
+  if (input.kind === "BlogPosting" && !input.datePublished) return null;
+  const url = buildCanonicalUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": input.kind,
+    "@id": `${url}#article`,
+    headline: input.headline,
+    name: input.headline,
+    description: input.description,
+    mainEntityOfPage: url,
+    author: { "@id": entityId("organization") },
+    publisher: { "@id": entityId("organization") },
+    ...(input.datePublished
+      ? { datePublished: input.datePublished, dateModified: input.datePublished }
+      : {}),
+    ...(input.image
+      ? { image: input.image.startsWith("http") ? input.image : buildCanonicalUrl(input.image) }
+      : {}),
+  };
+}
+
+/** A product needs a public offer. Catalogue services stay Service records. */
+export function buildProductSchema(input: { name: string; price?: string; path: string }) {
+  if (!input.price) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: input.name,
+    offers: {
+      "@type": "Offer",
+      price: input.price,
+      priceCurrency: "INR",
+      url: buildCanonicalUrl(input.path),
     },
   };
+}
+
+export function buildVideoObjectSchema(video: EligibleVideo) {
+  return videoObjectSchema(video);
+}
+
+export function buildEventSchema(input: { name?: string; startDate?: string; location?: string }) {
+  if (!input.name || !input.startDate || !input.location) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: input.name,
+    startDate: input.startDate,
+    location: input.location,
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+  };
+}
+
+export function buildJobPostingSchema(input: { title?: string; description?: string; datePosted?: string }) {
+  if (!input.title || !input.description || !input.datePosted) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: input.title,
+    description: input.description,
+    datePosted: input.datePosted,
+    hiringOrganization: { "@id": entityId("organization") },
+  };
+}
+
+export function buildRecipeSchema(input: { name?: string; recipeIngredient?: string[] }) {
+  if (!input.name || !input.recipeIngredient?.length) return null;
+  return null;
+}
+
+export function buildCourseSchema(input: { name?: string; description?: string }) {
+  if (!input.name || !input.description) return null;
+  return null;
 }

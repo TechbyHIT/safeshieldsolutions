@@ -13,9 +13,9 @@ import { getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { RAIPUR_ENTRY_LINKS } from "@/lib/seo-priority";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Safety Nets, Invisible Grills & Bird Spikes in Chhattisgarh",
+  title: "Safety Nets and Invisible Grills in Chhattisgarh",
   description:
-    "Safety nets, pigeon nets, bird spikes, and invisible grills in Chhattisgarh. Raipur is listed first, then Bhilai, Durg, Bilaspur, and the other served towns.",
+    "Safety nets, pigeon nets, bird spikes, and invisible grills across Chhattisgarh. Raipur is listed first, then Bhilai, Durg, Bilaspur, and the other served towns. Book a free site survey.",
   path: "/chhattisgarh",
   robots: { index: true, follow: true },
 });
@@ -34,13 +34,13 @@ export default function ChhattisgarhStatePage() {
       <JsonLd data={[buildBreadcrumbSchema(breadcrumbs), buildLocalBusinessSchema("Chhattisgarh")]} />
       <PageHero
         eyebrow="Chhattisgarh"
-        title="Safety nets, bird spikes, and invisible grills in Chhattisgarh"
-        description="Raipur is listed first. Bhilai, Durg, Bilaspur, Korba, and the other towns below are the places with their own service pages. Quotes follow a site measurement."
+        title="Safety nets and invisible grills in Chhattisgarh"
+        description="Raipur is listed first. Bhilai, Durg, Bilaspur, Korba, and the other towns below have their own service pages. Quotes follow a site measurement."
         photo={getPrimaryServicePhoto("safety-nets")}
         breadcrumbs={breadcrumbs.map((item) => ({ label: item.name, href: item.url }))}
       />
       <Section>
-        <h2 className="text-2xl font-bold text-neutral-900">Raipur first</h2>
+        <h2 className="text-2xl font-bold text-neutral-900">Start with Raipur</h2>
         <ul className="mt-4 flex flex-wrap gap-3">
           {RAIPUR_ENTRY_LINKS.filter((link) => link.href !== "/chhattisgarh").map((link) => (
             <li key={link.href}>

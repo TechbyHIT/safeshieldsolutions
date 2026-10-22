@@ -9,7 +9,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 import { getHeroPhoto } from "@/config/photo-catalog";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Invisible Grill & Safety Net Pricing Factors",
+  title: "Invisible Grill and Safety Net Pricing Factors",
   description:
     "What changes an invisible grill or safety net quote in Chhattisgarh: size, material, access, and fixing. No flat rate is published. Ask for a measured quote.",
   path: "/pricing",

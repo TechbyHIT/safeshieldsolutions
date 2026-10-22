@@ -1,16 +1,14 @@
 /**
- * Writes a universal sitemap index + numbered child urlsets into public/.
+ * Writes the sitemap index and named child urlsets into public/.
  *
- *   public/sitemap.xml                 ← urlset of every indexable URL
- *   public/sitemap-1.xml               ← same urlset (Search Console already requests this)
+ *   public/sitemap.xml                 ← sitemap index (lists child urlsets)
+ *   public/sitemap-pages.xml
  *   public/sitemap-chhattisgarh.xml
  *   public/sitemap-raipur.xml
  *   … named urlsets. Empty groups are omitted.
- * sitemap.xml is not an index. An index stays at 0 discovered pages until
- * Google successfully fetches a child, which is what failed in Search Console.
  *
- * Does not invent URLs — all locs come from src/lib/sitemap-urls.ts.
  * Child files are urlsets only (never nested sitemap indexes).
+ * URLs come from src/lib/sitemap-urls.ts (quality gate + self-canonical only).
  *
  * Run: npm run sitemap:build
  */
@@ -49,6 +47,7 @@ const {
   getSitemapPhase,
   getSitemapGroups,
   renderUrlsetXml,
+  renderPublishedSitemapXml,
 } = await import("../src/lib/sitemap-urls.ts");
 
 const publicDir = path.join(root, "public");
@@ -75,13 +74,12 @@ function writeXmlAndGzip(filePath, xml) {
   fs.writeFileSync(`${filePath}.gz`, gzipSync(xml, { level: 6 }));
 }
 
+const indexXml = renderPublishedSitemapXml();
+writeXmlAndGzip(path.join(publicDir, "sitemap.xml"), indexXml);
+
 for (const group of groups) {
   writeXmlAndGzip(path.join(publicDir, group.file), renderUrlsetXml(group.entries));
 }
-
-const allPages = renderUrlsetXml(entries);
-writeXmlAndGzip(path.join(publicDir, "sitemap.xml"), allPages);
-writeXmlAndGzip(path.join(publicDir, "sitemap-1.xml"), allPages);
 
 const metaPath = path.join(root, "src", "generated", "sitemap-meta.ts");
 fs.mkdirSync(path.dirname(metaPath), { recursive: true });
@@ -95,7 +93,7 @@ const names = groups.map((group) => group.file).join(", ");
 const raipurFile = groups.find((group) => group.id === "raipur")?.file ?? groups[0]?.file;
 const shardBytes = fs.statSync(path.join(publicDir, raipurFile)).size;
 console.log(
-  `[sitemap:build] phase ${phase} — ${entries.length.toLocaleString()} URLs in ${groups.length} child urlset(s) (${names}) → public/sitemap.xml`,
+  `[sitemap:build] phase ${phase} — ${entries.length.toLocaleString()} URLs in ${groups.length} child urlset(s) (${names}) → public/sitemap.xml index`,
 );
 console.log(
   `[sitemap:build] first child ${Math.round(shardBytes / 1024).toLocaleString()} KB uncompressed (gzip alongside for nginx gzip_static)`,

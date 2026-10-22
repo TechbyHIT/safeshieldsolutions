@@ -4,9 +4,11 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/ui/Section";
 import { getPublishedNeighbourhood } from "@/data/cg-neighbourhoods";
-import { CG_CORE_SERVICE_SLUGS } from "@/data/cg-local-seo";
+import { CG_CORE_SERVICE_SLUGS, getCgPlace } from "@/data/cg-local-seo";
 import { getSeoService } from "@/data/seo-services";
 import { buildPageMetadata } from "@/lib/metadata";
+import { buildSearchSnippet } from "@/lib/search-snippets";
+import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { routes } from "@/config/routes";
 import { getHeroPhoto } from "@/config/photo-catalog";
 
@@ -19,10 +21,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const neighbourhood = getPublishedNeighbourhood(city, area);
   const catalogue = getSeoService(service);
   if (!neighbourhood || !catalogue) notFound();
+  const canonical = evaluateSeoPath(`/chhattisgarh/${city}/areas/${area}/${service}`);
+  const snippet = buildSearchSnippet({
+    kind: "locality-service",
+    serviceName: catalogue.name,
+    serviceSlug: catalogue.slug,
+    serviceDescription: catalogue.description,
+    placeName: getCgPlace(city)?.name ?? city,
+    placeSlug: city,
+    areaName: neighbourhood.name,
+    summary: neighbourhood.description,
+  });
   return buildPageMetadata({
-    title: `${catalogue.name} in ${neighbourhood.name}, Chhattisgarh`,
-    description: neighbourhood.description,
+    title: snippet.title,
+    description: snippet.description,
     path: `/chhattisgarh/${city}/area/${area}/${service}`,
+    canonicalPath: canonical.index ? canonical.canonicalPath : `/chhattisgarh/${city}/${service}`,
+    robots: { index: false, follow: true },
   });
 }
 

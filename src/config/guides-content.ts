@@ -3,9 +3,9 @@ import {
   HOME_CITIES,
   HOME_CITY_AREAS,
   HOME_TOP_SERVICES,
-  HOME_PRIMARY_INTENTS,
 } from "./home-seo-links";
 import { filterIndexableLinks } from "@/lib/indexable-href";
+import { getSeoService } from "@/data/seo-services";
 
 export interface GuideArticle {
   slug: string;
@@ -18,11 +18,11 @@ export interface GuideArticle {
 export const guideArticles: GuideArticle[] = [
   {
     slug: "invisible-grills-near-me-guide",
-    title: "Invisible Grills Near Me — Complete Buying Guide",
+    title: "How to Compare Invisible Grill Quotes",
     summary:
       "How to compare premium SS304 invisible grills, cable spacing, society rules, and installation quotes in your city.",
     serviceSlug: "invisible-grills",
-    keywords: ["invisible grills near me", "premium invisible grills", "SS304 installation"],
+    keywords: ["how to compare invisible grill quotes", "invisible grill buying guide", "SS304 cable spacing guide"],
   },
   {
     slug: "balcony-safety-nets-price-guide",
@@ -30,7 +30,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Understand mesh grade, access, floor height, and scope items before comparing safety net dealers near you.",
     serviceSlug: "safety-nets",
-    keywords: ["safety nets near me", "balcony safety nets price", "safety net dealers"],
+    keywords: ["how balcony safety net quotes are calculated", "balcony safety net buying guide", "what changes a balcony net quote"],
   },
   {
     slug: "pigeon-net-installation-checklist",
@@ -38,7 +38,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Duct areas, balcony gaps, ledges, and shaft openings — what to measure before bird net fitting.",
     serviceSlug: "pigeon-safety-nets",
-    keywords: ["pigeon nets near me", "pigeon net installation", "anti bird nets"],
+    keywords: ["pigeon net installation checklist", "what to measure before pigeon net fitting", "pigeon net apartment guide"],
   },
   {
     slug: "child-safety-grills-high-rise",
@@ -46,7 +46,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Spacing, openable sections, harness rules, and invisible grill vs safety net decisions for families.",
     serviceSlug: "child-safety-grills",
-    keywords: ["child safety grills near me", "best child safety grills", "balcony child safety"],
+    keywords: ["child safety grill buying guide", "how to choose balcony child protection", "high-rise grill checklist"],
   },
   {
     slug: "mosquito-nets-types-comparison",
@@ -54,15 +54,15 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Compare airflow, cleaning access, and price for window and balcony door mosquito protection.",
     serviceSlug: "mosquito-nets",
-    keywords: ["mosquito nets near me", "mosquito net price", "sliding mosquito nets"],
+    keywords: ["mosquito net types guide", "frameless vs sliding mosquito nets", "how to compare mosquito nets"],
   },
   {
     slug: "cloth-hangers-ceiling-vs-balcony",
     title: "Ceiling vs Balcony Cloth Hangers — Space-Saving Drying",
     summary:
-      "Pulley systems, SS304 rods, and society-friendly drying setups for Chennai, Hyderabad, Coimbatore & Kochi.",
+      "Pulley systems, SS304 rods, and society-friendly drying setups for Raipur, Bhilai, Bilaspur, and other Chhattisgarh towns.",
     serviceSlug: "cloth-hangers",
-    keywords: ["cloth hangers near me", "ceiling cloth hangers", "pulley cloth hangers"],
+    keywords: ["ceiling vs balcony cloth hangers", "cloth hanger buying guide", "pulley cloth hanger checklist"],
   },
   {
     slug: "cricket-practice-nets-terrace",
@@ -70,15 +70,15 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Contain balls, protect neighbours, and size knotless sports nets for regular batting practice.",
     serviceSlug: "cricket-nets",
-    keywords: ["cricket nets near me", "sports nets installation", "terrace cricket nets"],
+    keywords: ["cricket practice net guide", "terrace cricket net checklist", "how to size cricket nets"],
   },
   {
     slug: "bird-spikes-vs-bird-nets",
     title: "Bird Spikes vs Bird Nets — When to Use Each",
     summary:
-      "Ledges and AC ducts vs full openings — humane bird control options for coastal and urban homes.",
+      "Ledges and AC ducts vs full openings — humane bird control options for apartments and urban homes.",
     serviceSlug: "bird-spikes",
-    keywords: ["bird spikes near me", "bird protection nets", "pigeon spikes installation"],
+    keywords: ["bird spikes vs bird nets", "when to use bird spikes", "bird control buying guide"],
   },
   {
     slug: "cricket-box-grass-price-guide",
@@ -86,7 +86,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Compare pile height, infill type, base preparation, and sq ft rates for box cricket courts and academies.",
     serviceSlug: "cricket-box-grass",
-    keywords: ["cricket box grass near me", "box cricket turf price per sq ft", "artificial grass for box cricket"],
+    keywords: ["how box cricket turf quotes work", "cricket box grass buying guide", "indoor vs outdoor box cricket turf"],
   },
   {
     slug: "zip-screens-balcony-guide",
@@ -94,7 +94,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Manual vs motorized zip screens, wind resistance, transparent vs mesh grades, and cost per sq ft.",
     serviceSlug: "zip-screens",
-    keywords: ["zip screens near me", "balcony zip screens", "zip screen cost per sq ft"],
+    keywords: ["zip screen buying guide", "how zip screens work on balconies", "zip screen checklist"],
   },
   {
     slug: "motorized-zip-screens-automation",
@@ -102,7 +102,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Electric zip screens, remote control, automation service, and motor sizing for wide openings.",
     serviceSlug: "motorized-zip-screens",
-    keywords: ["motorized zip screens near me", "automatic zip screens", "electric zip screens price"],
+    keywords: ["motorized zip screen guide", "how automatic zip screens work", "zip screen motor checklist"],
   },
   {
     slug: "mesh-doors-mosquito-guide",
@@ -110,7 +110,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Aluminium vs SS mesh, magnetic vs hinged, pet-friendly options, and main door mesh sizing.",
     serviceSlug: "mesh-doors",
-    keywords: ["mesh doors near me", "mosquito mesh doors", "mesh door price"],
+    keywords: ["mesh door buying guide", "how to choose a mosquito mesh door", "mesh door checklist"],
   },
   {
     slug: "sliding-mesh-doors-space-saving",
@@ -118,7 +118,7 @@ export const guideArticles: GuideArticle[] = [
     summary:
       "Double sliding mesh doors, track installation, repair vs replacement, and patio applications.",
     serviceSlug: "sliding-mesh-doors",
-    keywords: ["sliding mesh doors near me", "sliding mosquito mesh doors", "balcony sliding mesh doors"],
+    keywords: ["sliding mesh door guide", "how sliding mesh doors are measured", "patio mesh door checklist"],
   },
 ];
 
@@ -235,16 +235,15 @@ export const blogPosts: BlogPost[] = [
 ];
 
 export function guideAreaLinks(article: GuideArticle, limit = 16) {
+  const name = getSeoService(article.serviceSlug)?.name ?? article.serviceSlug.replace(/-/g, " ");
   const links: { href: string; label: string }[] = [];
   for (const city of HOME_CITIES) {
     const areas = HOME_CITY_AREAS[city.slug]?.slice(0, 8) ?? [];
     for (const area of areas) {
-      for (const intent of HOME_PRIMARY_INTENTS) {
-        links.push({
-          href: routes.areaService(city.slug, area.slug, `${article.serviceSlug}${intent.suffix}`),
-          label: `${article.serviceSlug.replace(/-/g, " ")} ${intent.keyword} · ${area.name}, ${city.name}`,
-        });
-      }
+      links.push({
+        href: routes.areaService(city.slug, area.slug, article.serviceSlug),
+        label: `${name} in ${area.name}`,
+      });
     }
   }
   const kept = filterIndexableLinks(links);
@@ -258,18 +257,19 @@ export function guideAreaLinks(article: GuideArticle, limit = 16) {
 }
 
 export function blogRelatedLinks(post: BlogPost) {
+  const name = getSeoService(post.serviceSlug)?.name ?? post.serviceSlug.replace(/-/g, " ");
   return filterIndexableLinks([
     {
       href: `/chhattisgarh/raipur/${post.serviceSlug}`,
-      label: `${post.serviceSlug.replace(/-/g, " ")} in Raipur`,
+      label: `${name} in Raipur`,
     },
     {
       href: `/chhattisgarh/raipur/${post.serviceSlug}-near-me`,
-      label: `${post.serviceSlug.replace(/-/g, " ")} near me in Raipur`,
+      label: `${name} near me in Raipur`,
     },
     {
       href: `/services/${post.serviceSlug}`,
-      label: `${post.serviceSlug.replace(/-/g, " ")} service page`,
+      label: name,
     },
   ]);
 }

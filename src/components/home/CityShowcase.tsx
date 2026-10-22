@@ -4,6 +4,8 @@ import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { serviceCities } from "@/config/home-content";
 import { getHdPhotoSet } from "@/config/photo-catalog";
+import { business } from "@/config/business";
+import { routes } from "@/config/routes";
 
 export function CityShowcase() {
   const photos = getHdPhotoSet(5);
@@ -12,19 +14,18 @@ export function CityShowcase() {
     <Section className="bg-brand-950 text-white" ariaLabel="Service cities">
       <div className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-shield-400">
-          Active service cities
+          Service area
         </p>
-        <h2 className="mt-2 text-3xl font-bold">
-          Best safety nets & invisible grills near me in your city
-        </h2>
+        <h2 className="mt-2 text-3xl font-bold">Towns we install in across Chhattisgarh</h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-          Raipur is listed first. Every other Chhattisgarh area is on this site too — installation,
-          price, dealers, and a free survey on each locality page.
+          Raipur is listed first. Other served towns have their own pages. Quotes follow a site
+          measurement — not a published flat rate.
         </p>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {serviceCities.map((city, index) => {
           const photo = photos[index];
+          const href = city.slug === "chhattisgarh" ? "/chhattisgarh" : routes.city(city.slug);
           return (
             <article
               key={city.slug}
@@ -34,7 +35,7 @@ export function CityShowcase() {
                 <div className="relative aspect-[16/10] bg-brand-900">
                   <Image
                     src={photo.src}
-                    alt={`${city.name} invisible grill and safety net installation`}
+                    alt={photo.alt}
                     fill
                     sizes="(max-width: 768px) 100vw, 25vw"
                     quality={85}
@@ -43,7 +44,7 @@ export function CityShowcase() {
                 </div>
               )}
               <div className="p-6">
-                <h3 className="text-2xl font-bold">Safety Nets in {city.name}</h3>
+                <h3 className="text-2xl font-bold">{city.name}</h3>
                 <p className="mt-3 text-neutral-300">{city.summary}</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {city.highlights.map((tag) => (
@@ -56,10 +57,10 @@ export function CityShowcase() {
                   ))}
                 </ul>
                 <Link
-                  href="/chhattisgarh"
+                  href={href}
                   className="mt-6 inline-flex font-semibold text-shield-400 hover:text-shield-300"
                 >
-                  Explore {city.name}, starting with Raipur →
+                  Open {city.name} service pages
                 </Link>
               </div>
             </article>
@@ -83,11 +84,10 @@ export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
           Helpful answers
         </p>
         <h2 className="mt-2 text-3xl font-bold text-neutral-900">
-          Safety net questions worth asking before installation
+          Questions worth asking before installation
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-          These answers help you compare design, price, and purpose without
-          relying on unsupported claims.
+          These answers help you compare design, price, and purpose without unsupported claims.
         </p>
       </div>
       <dl className="mx-auto mt-10 max-w-3xl space-y-4">
@@ -108,28 +108,26 @@ export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
 }
 
 export function FinalCta() {
+  const telUrl = `tel:${business.phone.replace(/\s/g, "")}`;
   return (
     <Section className="bg-gradient-to-r from-brand-950 to-brand-800" ariaLabel="Contact">
       <div className="text-center text-white">
-        <h2 className="text-3xl font-bold">
-          Ready to compare the right safety solution for your space?
-        </h2>
+        <h2 className="text-3xl font-bold">Ready to compare the right fitting for your opening?</h2>
         <p className="mx-auto mt-4 max-w-2xl text-neutral-300">
-          Send the opening, your city, and the main concern — children, pets,
-          birds, visibility, or sports use. That is enough to start a useful
-          conversation.
+          Send the opening, your town, and the main concern — children, pets, birds, visibility,
+          or sports use. That is enough to start a useful conversation.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button href="/contact" size="lg" className="bg-accent-500 text-white hover:bg-accent-400">
-            Send Photo for Estimate
+          <Button href={routes.contact} size="lg" className="bg-accent-500 text-white hover:bg-accent-400">
+            Send a photo for a quote
           </Button>
           <Button
-            href="/contact"
+            href={telUrl}
             variant="outline"
             size="lg"
             className="border-white text-white hover:bg-white/10"
           >
-            Call for Guidance
+            Call {business.phone}
           </Button>
         </div>
       </div>

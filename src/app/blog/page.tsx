@@ -11,16 +11,11 @@ import { routes } from "@/config/routes";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "Local Project Blog | Invisible Grills & Safety Nets Near Me",
+  title: "Chhattisgarh Installation Notes",
   description:
-    "Installation notes for invisible grills, safety nets, and pigeon nets in Chhattisgarh. Raipur pages are listed first.",
+    "Installation notes are listed here only when they are about towns SafeShield Solutions actually serves in Chhattisgarh. Out-of-state articles stay out of the index.",
   path: "/blog",
-  keywords: [
-    "safety nets blog",
-    "invisible grills near me",
-    "local installation tips",
-    "premium home safety",
-  ],
+  keywords: ["SafeShield Solutions", "Chhattisgarh installation notes"],
 });
 
 export default function BlogPage() {
@@ -29,8 +24,8 @@ export default function BlogPage() {
     <>
     <PageHero
       eyebrow="Blog"
-      title="Local Installation Blog — Premium Near-Me Tips by City"
-      description="Real locality-focused articles linking to full 20,000+ word SEO pages. Browse project tips for Gachibowli, Kakkanad, Peelamedu, Adyar, and more — each post connects to installation, price, dealers, and near-me variants."
+      title="Installation notes"
+      description="Articles about towns outside Chhattisgarh are not service pages and are excluded from the index."
       photo={photos[0]}
       breadcrumbs={[
         { label: "Home", href: routes.home },
@@ -40,7 +35,7 @@ export default function BlogPage() {
     <Section>
 
       <div className="mt-12 space-y-10">
-        {blogPosts.map((post) => (
+        {blogPosts.filter((post) => post.citySlug === "chhattisgarh").map((post) => (
           <article
             key={post.slug}
             className="rounded-2xl border border-neutral-200 p-6 md:p-8"
@@ -73,8 +68,13 @@ export default function BlogPage() {
         ))}
       </div>
 
+      {blogPosts.every((post) => post.citySlug !== "chhattisgarh") && (
+        <p className="max-w-3xl text-neutral-700">
+          There are no indexed articles yet. Service pages for Raipur and the other Chhattisgarh towns are the pages to use.
+        </p>
+      )}
       <section className="mt-16 border-t border-neutral-200 pt-12">
-        <h2 className="text-2xl font-bold text-neutral-900">Browse by city</h2>
+        <h2 className="text-2xl font-bold text-neutral-900">Chhattisgarh</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {HOME_CITIES.map((city) => (
             <Link
@@ -82,7 +82,7 @@ export default function BlogPage() {
               href={city.slug === "chhattisgarh" ? "/chhattisgarh" : routes.city(city.slug)}
               className="rounded-xl border border-neutral-200 p-5 hover:border-accent-500 hover:bg-neutral-100"
             >
-              <h3 className="font-bold text-neutral-900">{city.name} near me</h3>
+              <h3 className="font-bold text-neutral-900">{city.name}</h3>
               <p className="mt-2 text-sm text-neutral-600">
                 All localities, services, and premium installation pages
               </p>

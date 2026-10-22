@@ -34,6 +34,7 @@
     "areas:generate:all": "tsx scripts/generate-hyderabad-areas.ts && tsx scripts/generate-chennai-areas.ts && tsx scripts/generate-coimbatore-areas.ts && tsx scripts/generate-kochi-areas.ts && tsx scripts/generate-chhattisgarh-areas.ts",
     "pages:count": "tsx scripts/page-count.ts",
     "seo:validate": "tsx scripts/seo-validate.ts",
+    "sitemap:audit": "tsx scripts/sitemap-audit.ts",
     "seo:audit": "tsx scripts/seo-index-audit.ts",
     "seo:pages": "tsx scripts/seo-page-validate.ts",
     "seo:content-audit": "tsx scripts/seo-content-audit.ts",
@@ -41,7 +42,9 @@
     "duplicates:audit": "tsx scripts/duplicate-audit.ts",
     "links:audit": "tsx scripts/internal-link-audit.ts",
     "schema:audit": "tsx scripts/schema-audit.ts",
-    "placeholder:audit": "tsx scripts/placeholder-audit.ts"
+    "placeholder:audit": "tsx scripts/placeholder-audit.ts",
+    "seo:on-page": "tsx scripts/on-page-audit.ts",
+    "seo:check": "npm run typecheck && npm test -- --run && npm run seo:validate && npm run sitemap:audit && npm run seo:pages && npm run seo:content-audit && npm run schema:audit && npm run links:audit && npm run seo:on-page"
   },
   "dependencies": {
     "next": "^15.1.0",

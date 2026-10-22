@@ -51,8 +51,8 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Gated communities needing a consistent facade finish",
     ],
     materials: [
-      "SS304 or SS316 marine-grade stainless steel cables",
-      "Nylon-coated options for coastal and humid conditions",
+      "SS304 or SS316 stainless steel cables",
+      "Nylon-coated options for persistently humid or pool-facing openings",
       "Aluminium or SS base channels with corrosion-resistant anchors",
       "Spacing planned for child safety and local wind exposure",
     ],
@@ -96,7 +96,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       {
         question: "What is the invisible grill price per sq ft?",
         answer:
-          "For standard balcony and window openings in Hyderabad and Chennai, installed invisible grills generally fall around ₹130–180 per sq ft depending on cable grade, spacing, channel type, access, and total area. Irregular openings and premium specifications need a site quotation.",
+          "The quote follows a measurement of width, height, access, cable grade, spacing, and channel type. We do not publish a flat per-sq-ft rate because openings and fixing conditions differ.",
       },
       {
         question: "Do invisible grills block the view?",
@@ -105,7 +105,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       },
     ],
     priceGuide:
-      "Budget around ₹130–180/sq ft for standard SS304 balcony and window systems. Premium 2.5mm–3mm cables, closer spacing, openable frames, and difficult high-floor access are quoted separately after measurement.",
+      "SS304 balcony and window systems are quoted after measurement. Closer spacing, openable frames, thicker cables, and difficult high-floor access change the figure. Ask for the included labour and hardware in writing.",
   },
   "safety-nets": {
     overview:
@@ -170,7 +170,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     materials: [
       "Fine mesh sizes to block pigeons without heavy visual weight",
       "UV-resistant nylon for long outdoor life",
-      "Stainless fixtures for coastal Chennai properties",
+      "Stainless fixtures for apartment ducts and terrace edges",
       "Removable access panels where maintenance is needed",
     ],
     priceFactors: [
@@ -550,7 +550,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       {
         question: "Are mesh doors rust proof and pet friendly?",
         answer:
-          "Aluminium and SS304 frames resist rust in Chennai, Kochi, and coastal belts. Pet-friendly magnetic mesh doors allow pets to push through and re-seal — specify during quotation.",
+          "Aluminium and SS304 frames resist rust in monsoon-exposed Chhattisgarh openings. Pet-friendly magnetic mesh doors allow pets to push through and re-seal — specify during quotation.",
       },
     ],
   },

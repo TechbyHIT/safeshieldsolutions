@@ -47,6 +47,9 @@ const nextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          ...(isProd
+            ? [{ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" }]
+            : []),
         ],
       },
       {
@@ -98,6 +101,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/sitemap.xml",
+        destination: "/api/sitemaps/index",
+      },
+      {
         source: "/sitemap-:id.xml",
         destination: "/api/sitemaps/:id",
       },
@@ -119,6 +126,11 @@ const nextConfig = {
       ["/industrial-safety-nets", "/services/industrial-safety-nets"],
     ];
     return [
+      {
+        source: "/sitemap-1.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
       {
         source: "/sitemaps/sitemap-:id.xml",
         destination: "/sitemap-:id.xml",

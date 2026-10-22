@@ -7,7 +7,9 @@ export const routes = {
   area: (citySlug: string, areaSlug: string) =>
     `/locations/${citySlug}/${areaSlug}`,
   cityService: (citySlug: string, serviceSlug: string) =>
-    `/${citySlug}/${serviceSlug}`,
+    citySlug === "chhattisgarh"
+      ? `/chhattisgarh/${serviceSlug}`
+      : `/chhattisgarh/${citySlug}/${serviceSlug}`,
   areaService: (citySlug: string, areaSlug: string, serviceSlug: string) =>
     `/${citySlug}/${areaSlug}/${serviceSlug}`,
   guides: "/guides",
@@ -18,6 +20,7 @@ export const routes = {
   about: "/about",
   gallery: "/gallery",
   faq: "/faq",
+  glossary: "/glossary",
   htmlSitemap: "/html-sitemap",
   sitemap: "/sitemap.xml",
 } as const;

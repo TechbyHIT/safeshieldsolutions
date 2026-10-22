@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {
-  getAllSitemapEntries,
   getSitemapGroups,
+  renderPublishedSitemapXml,
   renderUrlsetXml,
 } from "@/lib/sitemap-urls";
 
@@ -17,17 +17,16 @@ function xmlResponse(xml: string) {
   });
 }
 
-/** Named urlsets: /api/sitemaps/raipur → sitemap-raipur.xml */
+/** /api/sitemaps/index → sitemap.xml index. Named ids → child urlsets. */
 export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const slug = id.replace(/\.xml$/i, "").toLowerCase();
-  const entries = getAllSitemapEntries();
 
-  if (/^[1-9]$/.test(slug)) {
-    return xmlResponse(renderUrlsetXml(entries));
+  if (slug === "index" || slug === "xml" || slug === "1") {
+    return xmlResponse(renderPublishedSitemapXml());
   }
 
   const group = getSitemapGroups().find((item) => item.file === `sitemap-${slug}.xml`);

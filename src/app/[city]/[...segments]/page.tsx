@@ -31,7 +31,8 @@ import {
 } from "@/lib/queries";
 import { enforceIndexablePath } from "@/lib/seo-enforce";
 import { buildLocalLandingCopy, type LocalIntent } from "@/lib/local-landing-content";
-import { getDistrictForCity } from "@/data/cg-hierarchy";
+import { buildKeywordPlan } from "@/lib/keyword-targeting";
+import { buildSearchSnippet } from "@/lib/search-snippets";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -57,14 +58,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const asPlace = await getAreaBySlugs(city, pageSlug);
     const resolved = resolveAreaPageSlug(pageSlug, city);
     if (asPlace && !resolved) {
-      const district = getDistrictForCity(pageSlug);
+      const snippet = buildSearchSnippet({
+        kind: "place",
+        placeName: asPlace.name,
+        placeSlug: pageSlug,
+      });
       return buildPageMetadata({
-        title: `Invisible Grills & Safety Nets in ${asPlace.name}, Chhattisgarh`,
-        description: `Safety nets, pigeon nets, bird spikes, and invisible grills in ${asPlace.name}${district ? `, ${district.name} district` : ""}. Free site survey and a written quote.`,
+        title: snippet.title,
+        description: snippet.description,
         path,
         canonicalPath: path,
         robots: { index: true, follow: true },
-        keywords: [asPlace.name, "Chhattisgarh", "invisible grills", "safety nets", "bird spikes"],
+        keywords: [`safety nets in ${asPlace.name}`, `invisible grills in ${asPlace.name}`, asPlace.name],
       });
     }
     const serviceSlug = resolved?.serviceSlug ?? pageSlug;
@@ -92,7 +97,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: copy.description,
     path: copy.path,
     canonicalPath: copy.path,
-    keywords: [catalogue.name, place.name, "Chhattisgarh", "installation"],
+    keywords: buildKeywordPlan({
+      serviceSlug: catalogue.slug,
+      serviceName: catalogue.name,
+      path: copy.path,
+      placeName: place.name,
+      placeSlug: place.slug,
+      intentLabel: intent === "near-me" ? "near me" : "general",
+    }).metaKeywords,
     robots: { index: gate.index, follow: true },
   });
 }

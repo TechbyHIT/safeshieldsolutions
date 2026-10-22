@@ -5,6 +5,8 @@
  */
 import { sitemapAuditSummary } from "../src/lib/seo-crawl";
 import { SERVICE_ALIAS_REDIRECTS } from "../src/data/cg-local-seo";
+import { CONTENT_VERSION } from "../src/lib/compose-service-page";
+import { formatIntelligenceReport } from "../src/lib/seo-intelligence";
 
 const summary = sitemapAuditSummary();
 const errors = summary.findings.filter((row) => row.flag === "ERROR");
@@ -56,6 +58,19 @@ console.log("  /locations/chhattisgarh → /chhattisgarh");
 
 console.log("\nNOT CREATED");
 console.log("  sitemap-projects.xml — no verified project case studies");
+
+console.log(
+  `\n${formatIntelligenceReport({
+    asOf: "2026-10-22",
+    indexation: {
+      indexable: summary.indexable,
+      inSitemap: summary.total,
+      orphans: summary.orphans.length,
+      errors: errors.length,
+    },
+    contentVersions: [{ path: "/chhattisgarh/raipur/invisible-grills", version: CONTENT_VERSION }],
+  }).join("\n")}`,
+);
 
 if (errors.length) {
   console.log("\nERRORS");

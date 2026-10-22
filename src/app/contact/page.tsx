@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
-import { Button } from "@/components/ui/Button";
+import { QuoteForm } from "@/components/contact/QuoteForm";
+import { telHref, whatsappHref } from "@/lib/quote-lead";
 import { PageHero } from "@/components/layout/PageHero";
 import { PagePhotoStrip } from "@/components/layout/PagePhotoStrip";
 import { business } from "@/config/business";
@@ -9,9 +10,9 @@ import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Contact Us | Free Site Survey & Quote",
+  title: "Contact SafeShield Solutions | Free Site Survey",
   description:
-    "Contact SafeShield Solutions for a free invisible grill and safety net site survey in Raipur and across Chhattisgarh. Send your opening photo for a clear estimate.",
+    "Book a free site survey for invisible grills and safety nets in Raipur and across Chhattisgarh. Send a photo of the opening for a written quote.",
   path: "/contact",
 });
 
@@ -27,7 +28,7 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Free site survey"
-        title="Contact Us"
+        title="Request a measured quote"
         description="Get a free site survey and quotation for invisible grills, safety nets, and home protection solutions. Send a clear photo of your opening with your city — we respond within 2 hours during business hours."
         photo={samplePhotos[0]}
         breadcrumbs={[
@@ -53,7 +54,7 @@ export default function ContactPage() {
               <div>
                 <dt className="font-semibold text-neutral-900">Phone</dt>
                 <dd>
-                  <a href={`tel:${business.phone}`} className="text-brand-700 hover:underline">
+                  <a href={telHref()} className="text-brand-700 hover:underline">
                     {business.phone}
                   </a>
                 </dd>
@@ -61,10 +62,7 @@ export default function ContactPage() {
               <div>
                 <dt className="font-semibold text-neutral-900">WhatsApp</dt>
                 <dd>
-                  <a
-                    href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
-                    className="text-brand-700 hover:underline"
-                  >
+                  <a href={whatsappHref("Hi SafeShield Solutions, I need a free site survey.")} className="text-brand-700 hover:underline">
                     {business.whatsapp}
                   </a>
                 </dd>
@@ -95,25 +93,17 @@ export default function ContactPage() {
                 </dd>
               </div>
             </dl>
-
-            <Button
-              href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
-              external
-              size="lg"
-              className="mt-8"
-            >
-              WhatsApp Your Opening Photo
-            </Button>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold text-neutral-900">Sample completed work</h2>
-            <p className="mt-2 text-sm text-neutral-600">
-              Examples of the finish you can expect from our installation teams.
-            </p>
-            <div className="mt-4">
-              <PhotoGallery photos={samplePhotos} columns={2} showCaptions={false} />
-            </div>
-          </div>
+          <QuoteForm />
+        </div>
+      </Section>
+      <Section>
+        <h2 className="text-lg font-semibold text-neutral-900">Sample completed work</h2>
+        <p className="mt-2 text-sm text-neutral-600">
+          Examples of the finish you can expect from the installation crew.
+        </p>
+        <div className="mt-4">
+          <PhotoGallery photos={samplePhotos} columns={2} showCaptions={false} />
         </div>
       </Section>
       <PagePhotoStrip

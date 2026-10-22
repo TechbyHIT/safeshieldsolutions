@@ -7,6 +7,7 @@ import { getServiceDetail } from "@/config/service-details";
 import { getDistrictForCity, getIndexableLocalitiesForCity } from "@/data/cg-hierarchy";
 import { CG_PRIORITY_PLACES, getCgPlace, type CgPlaceProfile } from "@/data/cg-local-seo";
 import { getSeoService, type SeoService } from "@/data/seo-services";
+import { buildEntityProfile } from "@/lib/entity-seo";
 import { cityServiceSlugsForPlace, nearMeSlug } from "@/lib/local-seo-catalog";
 import { composeServicePage, type LocalIntent } from "@/lib/compose-service-page";
 
@@ -26,6 +27,7 @@ export interface LocalLandingCopy {
   install: string;
   serviceArea: string;
   faqs: { question: string; answer: string }[];
+  directAnswer: { question: string; answer: string };
   relatedServices: { href: string; label: string }[];
   nearbyPlaces: { href: string; label: string }[];
   localityLinks: { href: string; label: string }[];
@@ -254,6 +256,14 @@ function benefitsFor(service: SeoService, place: CgPlaceProfile): string[] {
 }
 
 function relatedLinks(place: CgPlaceProfile, serviceSlug: string): { href: string; label: string }[] {
+  const service = getSeoService(serviceSlug);
+  if (!service) return [];
+  const fromEntity = buildEntityProfile(service, place).links
+    .filter((link) => link.relationship !== "place")
+    .slice(0, 4)
+    .map((link) => ({ href: link.href, label: link.anchor }));
+  if (fromEntity.length > 0) return fromEntity;
+
   const allowed = new Set(cityServiceSlugsForPlace(place.slug));
   const preferred = RELATED_FOR_SERVICE[serviceSlug] ?? ["invisible-grills", "safety-nets", "pigeon-safety-nets", "bird-spikes"];
   const links: { href: string; label: string }[] = [];
@@ -312,6 +322,7 @@ export function buildLocalLandingCopy(
       .join(" "),
     serviceArea: `${place.localContext} ${district?.name ?? "Chhattisgarh"} district. Specification stays on the technical sections above. ${detail.installSteps[0]?.title ?? "Measurement"} comes before any quote.`,
     faqs: composed.faqs,
+    directAnswer: composed.directAnswer,
     relatedServices: relatedLinks(place, service.slug),
     nearbyPlaces: [],
     localityLinks: localities.slice(0, 6).map((area) => ({

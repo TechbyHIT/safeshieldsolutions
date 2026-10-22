@@ -1,10 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { ServiceCard } from "@/components/ui/ServiceCard";
 import { extendedServices } from "@/config/home-content";
-import { HOME_CITIES } from "@/config/home-seo-links";
-import { getHeroPhoto, getPrimaryServicePhoto } from "@/config/photo-catalog";
-import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
 
 export function ExtendedServices() {
@@ -12,65 +9,28 @@ export function ExtendedServices() {
     <Section ariaLabel="More services">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-neutral-900">
-          Premium invisible grills, terrace nets & cloth hangers near me
+          Balcony, terrace, and laundry fittings
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-          Best dealers and installers for balcony grills, terrace safety, sports nets, and
-          construction covering — with near-me pages in every city.
+          Extra lines for windows, terraces, cloth drying, and sports practice — each with its
+          own measured specification.
         </p>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {extendedServices.map((service) => {
-          const photo = getPrimaryServicePhoto(service.slug) ?? getHeroPhoto();
-          return (
-            <article
-              key={service.slug}
-              className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-card transition hover:border-accent-500 hover:shadow-md"
-            >
-              <Link
-                href={routes.service(service.slug)}
-                className="relative block aspect-[16/10] bg-neutral-100"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={85}
-                  className="object-cover object-center"
-                />
-              </Link>
-              <div className="p-5">
-                <Link href={routes.service(service.slug)}>
-                  <h3 className="font-semibold text-neutral-900">{service.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">
-                    {service.description}
-                  </p>
-                </Link>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {HOME_CITIES.slice(0, 2).map((city) => {
-                    const href = `/chhattisgarh/raipur/${service.slug}`;
-                    const safeHref = isIndexableInternalPath(href) ? href : routes.service(service.slug);
-                    return (
-                    <li key={city.slug}>
-                      <Link
-                        href={safeHref}
-                        className="text-xs font-medium text-brand-700 hover:underline"
-                      >
-                        {service.title} in Raipur
-                      </Link>
-                    </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </article>
-          );
-        })}
+        {extendedServices.map((service) => (
+          <ServiceCard
+            key={service.slug}
+            name={service.title}
+            slug={service.slug}
+            description={service.description}
+            href={routes.service(service.slug)}
+            headingLevel={3}
+          />
+        ))}
       </div>
       <p className="mt-8 text-center">
         <Link href={routes.services} className="font-semibold text-brand-700 hover:underline">
-          View all premium services & near-me hubs →
+          Browse the full service list
         </Link>
       </p>
     </Section>

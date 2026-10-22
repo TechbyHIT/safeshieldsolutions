@@ -158,8 +158,7 @@ export function PageContentRenderer({ content, h1, hideH1 = false }: PageContent
             WhatsApp Us
           </Button>
           <Button
-            href={`tel:${business.phone}`}
-            external
+            href={`tel:${business.phone.replace(/\s/g, "")}`}
             variant="outline"
             className="border-white text-white hover:bg-white/10"
           >

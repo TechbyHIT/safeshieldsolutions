@@ -46,7 +46,7 @@ export function ProjectPhotoImage({
         />
       </div>
       <figcaption className="mt-2 text-center text-xs text-neutral-500">
-        {photo.title}
+        {photo.caption}
       </figcaption>
     </figure>
   );
@@ -89,7 +89,7 @@ export function PhotoGallery({
           </div>
           {showCaptions && (
             <figcaption className="bg-white px-3 py-2 text-xs text-neutral-600">
-              {photo.title}
+              {photo.caption}
             </figcaption>
           )}
         </figure>

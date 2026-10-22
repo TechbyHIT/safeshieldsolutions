@@ -13,9 +13,9 @@ export function ServicePhotoSidebar({ serviceSlug, serviceName }: ServicePhotosP
 
   return (
     <div className="lg:sticky lg:top-24 lg:self-start">
-      <ProjectPhotoImage photo={primaryPhoto} priority />
+      <ProjectPhotoImage photo={primaryPhoto} />
       <p className="mt-3 text-center text-sm text-neutral-500">
-        Real {serviceName} installation photo
+        {serviceName}. {primaryPhoto.caption}
       </p>
     </div>
   );

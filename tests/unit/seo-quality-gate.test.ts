@@ -42,6 +42,12 @@ describe("evaluateSeoPath", () => {
     expect(gate.canonicalPath).toBe("/chhattisgarh/districts/raipur");
   });
 
+  it("keeps out-of-area blog posts out of the index", () => {
+    const gate = evaluateSeoPath("/blog/premium-invisible-grills-gachibowli");
+    expect(gate.index).toBe(false);
+    expect(gate.canonicalPath).toBe("/blog");
+  });
+
   it("indexes legal pages and keeps internal coverage noindex", () => {
     expect(evaluateSeoPath("/privacy-policy").index).toBe(true);
     expect(evaluateSeoPath("/privacy-policy").canonicalPath).toBe("/privacy-policy");

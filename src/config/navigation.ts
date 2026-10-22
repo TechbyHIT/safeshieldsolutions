@@ -30,9 +30,14 @@ export const navigation = {
   cities: [
     { label: "Chhattisgarh", href: "/chhattisgarh" },
     { label: "Raipur", href: "/chhattisgarh/raipur" },
+    { label: "Invisible Grills in Raipur", href: "/chhattisgarh/raipur/invisible-grills" },
+    { label: "Safety Nets in Raipur", href: "/chhattisgarh/raipur/safety-nets" },
+    { label: "Pigeon Nets in Raipur", href: "/chhattisgarh/raipur/pigeon-safety-nets" },
+    { label: "Bird Spikes in Raipur", href: "/chhattisgarh/raipur/bird-spikes" },
   ],
   footer: [
     { label: "FAQ", href: routes.faq },
+    { label: "Glossary", href: routes.glossary },
     { label: "HTML Sitemap", href: routes.htmlSitemap },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "/terms-of-service" },

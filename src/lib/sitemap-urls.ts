@@ -8,6 +8,7 @@ import { CG_DISTRICTS, getIndexableLocalitiesForCity, LOCALITY_SERVICE_SLUGS } f
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { cityServiceSlugsForPlace, nearMeSlug } from "@/lib/local-seo-catalog";
 import {
+  pageTypeForPath,
   seoPriorityForPath,
   sitemapGroupForPath,
   sitemapSortRank,
@@ -18,6 +19,8 @@ import {
 } from "@/lib/seo-priority";
 import { site } from "@/config/site";
 import { getSitemapLastmodIso } from "@/lib/seo-freshness";
+import { isPublishedInPhase, publishingWave } from "@/lib/programmatic-seo";
+import { sitemapImageForPath } from "@/config/photo-catalog";
 
 /** Under Google’s 50k urlset limit. */
 export const SITEMAP_SHARD_SIZE = 40_000;
@@ -62,6 +65,7 @@ export const STATIC_PATHS = [
   "/guides",
   "/blog",
   "/faq",
+  "/glossary",
   "/html-sitemap",
   "/privacy-policy",
   "/terms-of-service",
@@ -93,6 +97,19 @@ function absoluteUrl(path: string): string {
   return `${origin}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/** Reliable lastmod only. Blog posts use their published date; other URLs use the content revision. */
+export function lastmodForPath(path: string): string {
+  if (path.startsWith("/blog/")) {
+    const slug = path.slice("/blog/".length);
+    const post = blogPosts.find((item) => item.slug === slug);
+    if (post?.date) {
+      const parsed = new Date(`${post.date}T00:00:00.000Z`);
+      if (!Number.isNaN(parsed.getTime())) return parsed.toISOString();
+    }
+  }
+  return getSitemapLastmodIso();
+}
+
 /** Unique mega-menu + homepage featured service slugs (the “menu” cap). */
 export function getMenuServiceSlugs(): string[] {
   const slugs = new Set<string>();
@@ -122,6 +139,8 @@ function exclude(path: string, reason: string) {
   cachedExclusions.push({ path, reason });
 }
 
+let activePhase: SitemapPhase = 4;
+
 function pushEntry(
   entries: SitemapEntry[],
   seen: Set<string>,
@@ -144,6 +163,10 @@ function pushEntry(
   }
   if (NOINDEX_PATH_SET.has(path)) {
     exclude(path, "noindex");
+    return;
+  }
+  if (!isPublishedInPhase(path, activePhase)) {
+    exclude(path, `Held for publishing phase ${publishingWave(path)}`);
     return;
   }
   const gate = evaluateSeoPath(path);
@@ -182,10 +205,10 @@ function hubPriority(path: string): number {
 }
 
 function buildEntries(phase: SitemapPhase): SitemapEntry[] {
+  activePhase = phase;
   cachedExclusions = [];
   const entries: SitemapEntry[] = [];
   const seen = new Set<string>();
-  const lastmod = getSitemapLastmodIso();
   const menuSlugs = getMenuServiceSlugs();
   const menuSet = new Set(menuSlugs);
   const services = publishedServices();
@@ -198,52 +221,57 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
       path,
       hubPriority(path),
       path === "/" ? "daily" : "weekly",
-      lastmod,
+      lastmodForPath(path),
     );
   }
 
   for (const guide of guideArticles) {
-    pushEntry(entries, seen, `/guides/${guide.slug}`, 0.7, "weekly", lastmod);
+    const path = `/guides/${guide.slug}`;
+    pushEntry(entries, seen, path, 0.7, "weekly", lastmodForPath(path));
   }
   for (const post of blogPosts) {
-    pushEntry(entries, seen, `/blog/${post.slug}`, 0.55, "weekly", lastmod);
+    const path = `/blog/${post.slug}`;
+    pushEntry(entries, seen, path, 0.55, "weekly", lastmodForPath(path));
   }
 
   const serviceList = phase === 1 ? services.filter((s) => menuSet.has(s.slug)) : services;
   for (const service of serviceList) {
     const priority = menuSet.has(service.slug) ? 0.9 : 0.65;
-    pushEntry(entries, seen, `/services/${service.slug}`, priority, "weekly", lastmod);
+    pushEntry(entries, seen, `/services/${service.slug}`, priority, "weekly", lastmodForPath(`/services/${service.slug}`));
   }
 
   for (const city of cities) {
     const path = city.slug === "chhattisgarh" ? "/chhattisgarh" : `/locations/${city.slug}`;
-    pushEntry(entries, seen, path, 0.85, "weekly", lastmod);
+    pushEntry(entries, seen, path, 0.85, "weekly", lastmodForPath(path));
   }
 
   // Self-canonical indexable URLs only. Doorway intents stay out. Raipur is its own sitemap.
-  pushEntry(entries, seen, "/chhattisgarh", 0.95, "weekly", lastmod);
+  pushEntry(entries, seen, "/chhattisgarh", 0.95, "weekly", lastmodForPath("/chhattisgarh"));
   for (const district of CG_DISTRICTS) {
-    pushEntry(entries, seen, `/chhattisgarh/districts/${district.slug}`, 0.7, "monthly", lastmod);
+    const path = `/chhattisgarh/districts/${district.slug}`;
+    pushEntry(entries, seen, path, 0.7, "monthly", lastmodForPath(path));
   }
-  pushEntry(entries, seen, "/pricing", 0.6, "monthly", lastmod);
-  pushEntry(entries, seen, "/compare", 0.55, "monthly", lastmod);
+  pushEntry(entries, seen, "/pricing", 0.6, "monthly", lastmodForPath("/pricing"));
+  pushEntry(entries, seen, "/compare", 0.55, "monthly", lastmodForPath("/compare"));
   for (const page of PRICING_PAGES) {
-    pushEntry(entries, seen, `/pricing/${page.slug}`, 0.5, "monthly", lastmod);
+    const path = `/pricing/${page.slug}`;
+    pushEntry(entries, seen, path, 0.5, "monthly", lastmodForPath(path));
   }
   for (const item of COMPARISONS) {
-    pushEntry(entries, seen, `/compare/${item.slug}`, 0.5, "monthly", lastmod);
+    const path = `/compare/${item.slug}`;
+    pushEntry(entries, seen, path, 0.5, "monthly", lastmodForPath(path));
   }
 
   for (const place of CG_PRIORITY_PLACES) {
     for (const locality of getIndexableLocalitiesForCity(place.slug)) {
       const hub = `/chhattisgarh/${place.slug}/areas/${locality.slug}`;
       if (evaluateSeoPath(hub).index) {
-        pushEntry(entries, seen, hub, 0.6, "monthly", lastmod);
+        pushEntry(entries, seen, hub, 0.6, "monthly", lastmodForPath(hub));
       }
       for (const serviceSlug of LOCALITY_SERVICE_SLUGS) {
         const path = `${hub}/${serviceSlug}`;
         if (!evaluateSeoPath(path).index) continue;
-        pushEntry(entries, seen, path, 0.55, "monthly", lastmod);
+        pushEntry(entries, seen, path, 0.55, "monthly", lastmodForPath(path));
       }
     }
   }
@@ -257,7 +285,7 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
         placePath,
         place.slug === "raipur" ? 0.9 : 0.8,
         "weekly",
-        lastmod,
+        lastmodForPath(placePath),
       );
     }
     for (const serviceSlug of cityServiceSlugsForPlace(place.slug)) {
@@ -270,7 +298,7 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
           path,
           place.slug === "raipur" ? 0.85 : 0.65,
           "monthly",
-          lastmod,
+          lastmodForPath(path),
         );
       }
       if (evaluateSeoPath(nearMe).index) {
@@ -280,7 +308,7 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
           nearMe,
           place.slug === "raipur" ? 0.84 : 0.64,
           "monthly",
-          lastmod,
+          lastmodForPath(nearMe),
         );
       }
     }
@@ -289,7 +317,7 @@ function buildEntries(phase: SitemapPhase): SitemapEntry[] {
   for (const serviceSlug of CG_CORE_SERVICE_SLUGS) {
     const path = `/chhattisgarh/${serviceSlug}`;
     if (!evaluateSeoPath(path).index) continue;
-    pushEntry(entries, seen, path, 0.75, "weekly", lastmod);
+    pushEntry(entries, seen, path, 0.75, "weekly", lastmodForPath(path));
   }
 
   entries.sort((a, b) => {
@@ -318,16 +346,23 @@ export function shardSitemapEntries(entries: SitemapEntry[]): SitemapEntry[][] {
 }
 
 export function renderUrlsetXml(entries: SitemapEntry[]): string {
-  // Compact rows — Google ignores changefreq/priority. Smaller files fetch before timeout.
+  const images = entries.map((entry) => sitemapImageForPath(entry.path));
+  const hasImages = images.some(Boolean);
   const urls = entries
-    .map(
-      (entry) =>
-        `<url><loc>${xmlEscape(entry.loc)}</loc><lastmod>${xmlEscape(entry.lastmod)}</lastmod></url>`,
-    )
+    .map((entry, index) => {
+      const image = images[index];
+      const imageXml = image
+        ? `<image:image><image:loc>${xmlEscape(absoluteUrl(image.src))}</image:loc><image:title>${xmlEscape(image.title)}</image:title><image:caption>${xmlEscape(image.caption)}</image:caption></image:image>`
+        : "";
+      return `<url><loc>${xmlEscape(entry.loc)}</loc><lastmod>${xmlEscape(entry.lastmod)}</lastmod>${imageXml}</url>`;
+    })
     .join("\n");
+  const xmlns = hasImages
+    ? 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
+    : 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset ${xmlns}>
 ${urls}
 </urlset>
 `;
@@ -392,4 +427,42 @@ export function childSitemapFilename(index: number): string {
 export function getSitemapIndexLocs(): string[] {
   const origin = canonicalOrigin();
   return getSitemapGroups().map((group) => `${origin}/${group.file}`);
+}
+
+/** Production document at /sitemap.xml — an index of child urlsets, not a second copy of every URL. */
+export function renderPublishedSitemapXml(): string {
+  return renderSitemapIndexXml(getSitemapIndexLocs());
+}
+
+export interface SitemapInventory {
+  total: number;
+  groups: { id: SitemapGroupId; file: string; count: number }[];
+  byPageType: Record<string, number>;
+  exclusions: SitemapExclusion[];
+  exclusionsByReason: Record<string, number>;
+}
+
+export function summarizeSitemapInventory(): SitemapInventory {
+  const entries = getAllSitemapEntries();
+  const byPageType: Record<string, number> = {};
+  for (const entry of entries) {
+    const type = pageTypeForPath(entry.path);
+    byPageType[type] = (byPageType[type] ?? 0) + 1;
+  }
+  const exclusions = getSitemapExclusions();
+  const exclusionsByReason: Record<string, number> = {};
+  for (const item of exclusions) {
+    exclusionsByReason[item.reason] = (exclusionsByReason[item.reason] ?? 0) + 1;
+  }
+  return {
+    total: entries.length,
+    groups: getSitemapGroups().map((group) => ({
+      id: group.id,
+      file: group.file,
+      count: group.entries.length,
+    })),
+    byPageType,
+    exclusions,
+    exclusionsByReason,
+  };
 }

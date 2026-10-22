@@ -31,19 +31,10 @@ export const business = {
     youtube: "https://youtube.com/@safeshieldsolutions",
   },
   trustSignals: {
-    yearsExperience: 12,
-    projectsCompleted: 8500,
-    rating: 4.9,
-    reviewCount: 1240,
     warrantyYears: 5,
     freeSurvey: true,
     sameDayQuote: true,
   },
-  certifications: [
-    "ISO 9001:2015 Quality Management",
-    "SS304 & SS316 Grade Stainless Steel",
-    "Trained & Verified Installation Team",
-  ],
 } as const;
 
 export type BusinessConfig = typeof business;

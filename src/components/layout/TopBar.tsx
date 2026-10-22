@@ -7,7 +7,7 @@ export function TopBar() {
     <div className="border-b border-brand-950 bg-brand-950 text-xs text-brand-100 sm:text-sm">
       <div className="container flex h-9 items-center justify-between gap-3">
         <p className="truncate font-medium">
-          Professional Invisible Grills & Safety Nets across South India
+          Invisible grills and safety nets across Chhattisgarh
         </p>
         <div className="flex shrink-0 items-center gap-3 sm:gap-5">
           <a

@@ -3,7 +3,7 @@ import { Section } from "@/components/ui/Section";
 import { PageHero } from "@/components/layout/PageHero";
 import { SEO_SERVICES } from "@/data/seo-services";
 import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
-import { CG_DISTRICTS } from "@/data/cg-hierarchy";
+import { CG_DISTRICTS, getIndexableLocalitiesForCity } from "@/data/cg-hierarchy";
 import { guideArticles, blogPosts } from "@/config/guides-content";
 import { getInterleavedPhotos } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
@@ -13,9 +13,9 @@ import { SITEMAP_URL_COUNT } from "@/generated/sitemap-meta";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "HTML Sitemap | All Services, Cities & Guides",
+  title: "HTML Sitemap | SafeShield Solutions",
   description:
-    "Human sitemap for SafeShield Solutions — services, city hubs, popular localities, guides, and the XML sitemap index for search engines.",
+    "A readable map of SafeShield Solutions pages: services, Chhattisgarh towns, guides, and the XML sitemap used by search engines.",
   path: routes.htmlSitemap,
 });
 
@@ -26,6 +26,7 @@ const HUB_LINKS = [
   { href: routes.guides, label: "Guides" },
   { href: routes.blog, label: "Blog" },
   { href: routes.faq, label: "FAQ" },
+  { href: routes.glossary, label: "Glossary" },
   { href: routes.gallery, label: "Gallery" },
   { href: routes.about, label: "About" },
   { href: routes.contact, label: "Contact" },
@@ -90,6 +91,20 @@ export default function HtmlSitemapPage() {
         ))}
       </ul>
 
+      <h2 className="mt-12 text-xl font-bold text-neutral-900">Raipur areas</h2>
+      <ul className="mt-4 columns-1 gap-x-8 sm:columns-2 lg:columns-3">
+        {getIndexableLocalitiesForCity("raipur").map((area) => (
+          <li key={area.slug} className="break-inside-avoid py-1">
+            <Link
+              href={`/chhattisgarh/raipur/areas/${area.slug}`}
+              className="text-sm text-brand-700 hover:underline"
+            >
+              {area.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
       <h2 className="mt-12 text-xl font-bold text-neutral-900">Districts</h2>
       <ul className="mt-4 columns-1 gap-x-8 sm:columns-2 lg:columns-3">
         {CG_DISTRICTS.map((district) => (
@@ -115,16 +130,22 @@ export default function HtmlSitemapPage() {
         ))}
       </ul>
 
-      <h2 className="mt-12 text-xl font-bold text-neutral-900">Blog</h2>
-      <ul className="mt-4 space-y-2">
-        {blogPosts.map((p) => (
-          <li key={p.slug}>
-            <Link href={routes.blogPost(p.slug)} className="text-sm text-brand-700 hover:underline">
-              {p.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {blogPosts.some((post) => post.citySlug === "chhattisgarh") && (
+        <>
+          <h2 className="mt-12 text-xl font-bold text-neutral-900">Blog</h2>
+          <ul className="mt-4 space-y-2">
+            {blogPosts
+              .filter((post) => post.citySlug === "chhattisgarh")
+              .map((post) => (
+                <li key={post.slug}>
+                  <Link href={routes.blogPost(post.slug)} className="text-sm text-brand-700 hover:underline">
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </>
+      )}
     </Section>
     </>
   );

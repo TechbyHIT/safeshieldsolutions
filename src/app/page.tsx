@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
+import { RaipurFocus } from "@/components/home/RaipurFocus";
 import { RaipurEntryLinks } from "@/components/seo/RaipurEntryLinks";
 import { ProblemSelector } from "@/components/home/ProblemSelector";
 import { PopularServices } from "@/components/home/PopularServices";
@@ -17,27 +18,30 @@ import {
 } from "@/components/home/CityShowcase";
 import { Testimonials } from "@/components/home/Testimonials";
 import { homeFaqs } from "@/config/home-content";
-import { homeKeywordTags } from "@/config/home-seo-links";
+import { buildBrandKeywordPlan } from "@/lib/keyword-targeting";
 import { buildPageMetadata } from "@/lib/metadata";
+import { buildSearchSnippet } from "@/lib/search-snippets";
 import { buildFaqSchema, buildLocalBusinessSchema, buildWebsiteSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 
+const brandPlan = buildBrandKeywordPlan();
+const homeSnippet = buildSearchSnippet({ kind: "home" });
+
 export const metadata: Metadata = buildPageMetadata({
-  title:
-    "Invisible Grills in Chhattisgarh | Safety Nets Raipur, Bhilai, Bilaspur",
-  description:
-    "Invisible grills, safety nets and pigeon nets in Chhattisgarh. Raipur pages are listed first, then every other Chhattisgarh area. Free site survey, SS304.",
+  title: homeSnippet.title,
+  description: homeSnippet.description,
   path: "/",
-  keywords: [...homeKeywordTags],
+  keywords: brandPlan.metaKeywords,
 });
 
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={[buildWebsiteSchema(), buildLocalBusinessSchema(), buildFaqSchema(homeFaqs)]} />
+      <JsonLd data={[buildWebsiteSchema(), buildLocalBusinessSchema("Raipur"), buildFaqSchema(homeFaqs)]} />
 
       <HomeHero />
       <RaipurEntryLinks />
+      <RaipurFocus />
 
       <ProblemSelector />
       <PopularServices />

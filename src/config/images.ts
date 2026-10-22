@@ -18,13 +18,13 @@ export const imageCatalog: Record<string, ImageAsset> = {
   hero: {
     slug: "hero",
     src: base("hero.svg"),
-    alt: "Professional invisible grill and safety net installation on a modern apartment balcony in Hyderabad",
+    alt: "Professional invisible grill and safety net installation on a modern apartment balcony",
     title: "Premium Invisible Grills & Safety Solutions",
     caption: "SS304 invisible grills with unobstructed views and child-safe balcony protection",
     width: 1200,
     height: 760,
     priority: true,
-    keywords: ["invisible grills", "balcony safety", "apartment protection", "Hyderabad"],
+    keywords: ["invisible grills", "balcony safety", "apartment protection", "Raipur"],
   },
   "invisible-grills": {
     slug: "invisible-grills",
@@ -38,11 +38,11 @@ export const imageCatalog: Record<string, ImageAsset> = {
   "balcony-invisible-grills": {
     slug: "balcony-invisible-grills",
     src: base("balcony-invisible-grills.svg"),
-    alt: "Balcony invisible grill installation with clear city skyline views in Hyderabad",
+    alt: "Balcony invisible grill installation with a clear city skyline view",
     title: "Balcony Invisible Grills",
     width: 1200,
     height: 760,
-    keywords: ["balcony invisible grills", "balcony safety", "Hyderabad"],
+    keywords: ["balcony invisible grills", "balcony safety", "Raipur"],
   },
   "window-invisible-grills": {
     slug: "window-invisible-grills",
@@ -308,7 +308,7 @@ export const imageCatalog: Record<string, ImageAsset> = {
   why: {
     slug: "why",
     src: base("why.svg"),
-    alt: "Why choose SafeShield Solutions: 12+ years experience, 8500+ projects, 5-year warranty",
+    alt: "Why choose SafeShield Solutions: a written quote after the opening is measured",
     title: "Why Choose SafeShield Solutions",
     width: 1200,
     height: 760,
@@ -326,7 +326,7 @@ export const imageCatalog: Record<string, ImageAsset> = {
   gallery: {
     slug: "gallery",
     src: base("gallery.svg"),
-    alt: "Gallery of completed invisible grill and safety net projects across Hyderabad and Chennai",
+    alt: "Gallery of completed invisible grill and safety net projects across Chhattisgarh",
     title: "Project Gallery",
     width: 1200,
     height: 760,

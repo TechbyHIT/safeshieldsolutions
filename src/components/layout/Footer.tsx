@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navigation } from "@/config/navigation";
 import { business } from "@/config/business";
+import { raipurLocalityLinks } from "@/config/raipur-seo";
 
 export function Footer() {
   return (
@@ -17,7 +18,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="font-semibold text-white">Services</h2>
+          <p className="font-semibold text-white">Services</p>
           <ul className="mt-4 space-y-2 text-sm">
             {navigation.services.map((item) => (
               <li key={item.href}>
@@ -30,7 +31,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="font-semibold text-white">Locations</h2>
+          <p className="font-semibold text-white">Raipur</p>
           <ul className="mt-4 space-y-2 text-sm">
             {navigation.cities.map((item) => (
               <li key={item.href}>
@@ -39,11 +40,26 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            {raipurLocalityLinks()
+              .filter((area) => area.slug !== "raipur")
+              .slice(0, 8)
+              .map((area) => (
+                <li key={area.href}>
+                  <Link href={area.href} className="hover:text-shield-400">
+                    {area.name}
+                  </Link>
+                </li>
+              ))}
+            <li>
+              <Link href="/chhattisgarh/raipur" className="hover:text-shield-400">
+                All Raipur areas
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h2 className="font-semibold text-white">Company</h2>
+          <p className="font-semibold text-white">Company</p>
           <ul className="mt-4 space-y-2 text-sm">
             {navigation.footer.map((item) => (
               <li key={item.href}>

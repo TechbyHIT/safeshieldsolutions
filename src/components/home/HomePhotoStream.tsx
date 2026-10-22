@@ -6,11 +6,6 @@ import {
   totalPhotoCount,
   type ProjectPhoto,
 } from "@/config/photo-catalog";
-import {
-  HOME_CITIES,
-  HOME_CITY_AREAS,
-  HOME_TOP_SERVICES,
-} from "@/config/home-seo-links";
 import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
 
@@ -27,29 +22,19 @@ const serviceFolderMap: Record<string, string> = {
   "pet-safety-nets": "pet-safety-nets",
 };
 
-function photoLink(photo: ProjectPhoto, index: number): { href: string; caption: string } {
+function photoLink(photo: ProjectPhoto): { href: string; caption: string } {
   const serviceSlug = serviceFolderMap[photo.folder] ?? "invisible-grills";
-  const service = HOME_TOP_SERVICES.find((s) => s.slug === serviceSlug);
-  const city = HOME_CITIES[index % HOME_CITIES.length]!;
-  const areas = HOME_CITY_AREAS[city.slug] ?? [];
-  const area = areas[index % areas.length];
-
-  const candidates = [
-    area ? routes.areaService(city.slug, area.slug, serviceSlug) : "",
-    `/chhattisgarh/raipur/${serviceSlug}`,
-    routes.service(serviceSlug),
-  ].filter(Boolean);
-
-  const href = candidates.find((path) => isIndexableInternalPath(path)) ?? "/chhattisgarh/raipur";
+  const candidates = [`/chhattisgarh/raipur/${serviceSlug}`, routes.service(serviceSlug)];
+  const href = candidates.find((path) => isIndexableInternalPath(path)) ?? routes.gallery;
   return {
     href,
-    caption: `Premium ${service?.name ?? "installation"} in ${area?.name ?? "Raipur"}, Chhattisgarh`,
+    caption: photo.caption,
   };
 }
 
 export function HomePhotoStream() {
-  const items: PhotoStreamItem[] = getInterleavedPhotos().map((photo, index) => {
-    const link = photoLink(photo, index);
+  const items: PhotoStreamItem[] = getInterleavedPhotos().map((photo) => {
+    const link = photoLink(photo);
     return { photo, ...link };
   });
 
@@ -59,13 +44,10 @@ export function HomePhotoStream() {
         <p className="text-sm font-semibold uppercase tracking-wide text-accent-400">
           {totalPhotoCount} real project photos
         </p>
-        <h2 className="mt-2 text-3xl font-bold">
-          Premium invisible grills, safety nets & pigeon nets — completed work
-        </h2>
+        <h2 className="mt-2 text-3xl font-bold">Finished installation photographs</h2>
         <p className="mx-auto mt-3 max-w-3xl text-neutral-300">
-          Scroll through installation photos. Raipur pages are listed first, then the rest of Chhattisgarh.
-          projects. Each image links to a near-me locality page with pricing, dealer, and
-          installation guides.
+          Scroll through measured fittings. Each image opens the matching service page for Raipur
+          when that page is published.
         </p>
       </div>
 

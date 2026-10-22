@@ -29,6 +29,7 @@ export const RAIPUR_ENTRY_LINKS = [
 ] as const;
 
 export const SITEMAP_GROUP_ORDER = [
+  "pages",
   "chhattisgarh",
   "raipur",
   "cities",
@@ -37,11 +38,13 @@ export const SITEMAP_GROUP_ORDER = [
   "areas",
   "services",
   "guides",
+  "blog",
 ] as const;
 
 export type SitemapGroupId = (typeof SITEMAP_GROUP_ORDER)[number];
 
 export const SITEMAP_GROUP_FILES: Record<SitemapGroupId, string> = {
+  pages: "sitemap-pages.xml",
   chhattisgarh: "sitemap-chhattisgarh.xml",
   raipur: "sitemap-raipur.xml",
   cities: "sitemap-cities.xml",
@@ -50,6 +53,7 @@ export const SITEMAP_GROUP_FILES: Record<SitemapGroupId, string> = {
   areas: "sitemap-areas.xml",
   services: "sitemap-services.xml",
   guides: "sitemap-guides.xml",
+  blog: "sitemap-blog.xml",
 };
 
 const P1_SET = new Set<string>(P1_CITY_SLUGS);
@@ -78,6 +82,9 @@ function serviceRank(slug: string): number {
 }
 
 export function sitemapGroupForPath(path: string): SitemapGroupId {
+  if (path === "/blog" || path.startsWith("/blog/")) return "blog";
+  if (path === "/guides" || path.startsWith("/guides/")) return "guides";
+  if (path === "/services" || path.startsWith("/services/")) return "services";
   if (path === "/chhattisgarh") return "chhattisgarh";
   if (path.startsWith("/chhattisgarh/districts/")) return "districts";
   if (path === "/chhattisgarh/raipur" || path.startsWith("/chhattisgarh/raipur/")) return "raipur";
@@ -87,10 +94,8 @@ export function sitemapGroupForPath(path: string): SitemapGroupId {
   if (parts[0] === "chhattisgarh" && parts.length === 3 && isCgPriorityPlace(parts[1]!)) {
     return "city-services";
   }
-  if (path === "/services" || path.startsWith("/services/") || (parts[0] === "chhattisgarh" && parts.length === 2)) {
-    return "services";
-  }
-  return "guides";
+  if (parts[0] === "chhattisgarh" && parts.length === 2) return "services";
+  return "pages";
 }
 
 export function seoPriorityForPath(path: string): SeoPriority {
@@ -179,9 +184,11 @@ export function pageTypeForPath(path: string): string {
   if (/^\/chhattisgarh\/raipur\/[^/]+$/.test(path)) return "raipur-service";
   if (/^\/chhattisgarh\/raipur\/areas\/[^/]+$/.test(path)) return "raipur-locality";
   if (/^\/chhattisgarh\/raipur\/areas\/[^/]+\/[^/]+$/.test(path)) return "raipur-locality-service";
+  if (path.startsWith("/chhattisgarh/districts/")) return "district";
   if (/^\/chhattisgarh\/[^/]+$/.test(path) && isCgPriorityPlace(path.split("/")[2] ?? "")) return "city";
   if (/^\/chhattisgarh\/[^/]+\/[^/]+$/.test(path)) return "city-service";
   if (path.includes("/areas/")) return "locality";
+  if (/^\/chhattisgarh\/[^/]+$/.test(path)) return "state-service";
   if (path.startsWith("/services")) return "service";
   if (path.startsWith("/guides")) return "guide";
   if (path.startsWith("/blog")) return "blog";

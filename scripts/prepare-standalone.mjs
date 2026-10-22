@@ -107,12 +107,36 @@ if (fs.existsSync(publicDir)) {
 }
 
 const sitemapIndex = path.join(standalonePublic, "sitemap.xml");
-const sitemapRaipur = path.join(standalonePublic, "sitemap-raipur.xml");
-if (!fs.existsSync(sitemapIndex) || !fs.existsSync(sitemapRaipur)) {
-  console.error("FATAL: public/sitemap.xml or sitemap-raipur.xml missing — run sitemap:build before next build.");
+if (!fs.existsSync(sitemapIndex)) {
+  console.error("FATAL: public/sitemap.xml missing — run sitemap:build before next build.");
   process.exit(1);
 }
-console.log("Standalone public includes sitemap.xml + sitemap-raipur.xml");
+const sitemapIndexXml = fs.readFileSync(sitemapIndex, "utf8");
+if (!sitemapIndexXml.includes("<sitemapindex") || sitemapIndexXml.includes("<urlset")) {
+  console.error("FATAL: public/sitemap.xml must be a sitemap index of child urlsets.");
+  process.exit(1);
+}
+const childNames = [...sitemapIndexXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => {
+  const loc = match[1];
+  return loc.slice(loc.lastIndexOf("/") + 1);
+});
+if (childNames.length === 0) {
+  console.error("FATAL: sitemap index lists no child sitemaps.");
+  process.exit(1);
+}
+for (const name of childNames) {
+  const childPath = path.join(standalonePublic, name);
+  if (!fs.existsSync(childPath)) {
+    console.error(`FATAL: index lists ${name} but standalone public/${name} is missing.`);
+    process.exit(1);
+  }
+  const childXml = fs.readFileSync(childPath, "utf8");
+  if (!childXml.includes("<urlset") || childXml.includes("<sitemapindex")) {
+    console.error(`FATAL: ${name} must be a urlset, not a nested index.`);
+    process.exit(1);
+  }
+}
+console.log(`Standalone public includes sitemap.xml index + ${childNames.length} child urlset(s)`);
 
 const faviconFile = path.join(standalonePublic, "favicon.png");
 if (!fs.existsSync(faviconFile)) {

@@ -10,6 +10,9 @@ import { knowledgeForCategory, type KnowledgeModule, type SourceReference } from
 import { depthChaptersForCategory, readingTheSpecification } from "@/content/depth-chapters";
 import { nearMeSlug } from "@/lib/local-seo-catalog";
 import { wordCount } from "@/lib/content-fingerprint";
+import { buildEntityProfile } from "@/lib/entity-seo";
+import { buildKeywordPlan, supportingSearchSentence } from "@/lib/keyword-targeting";
+import { snippetForPlaceService } from "@/lib/search-snippets";
 
 export type LocalIntent = "general" | "near-me";
 
@@ -31,9 +34,11 @@ export interface ComposedServicePage {
   explanation: string;
   sections: ComposedSection[];
   faqs: { question: string; answer: string }[];
+  directAnswer: { question: string; answer: string };
   sources: SourceReference[];
   checklist: string[];
   wordCount: number;
+  /** Count of "near me" in section paragraphs, bullets, and FAQ answers only (not title/H1/meta). */
   nearMeMentions: number;
 }
 
@@ -95,8 +100,19 @@ export function selectModuleIndexes(
   return chosen;
 }
 
+function answerForKeyword(phrase: string, placeName: string, serviceName: string): string {
+  const lower = serviceName.toLowerCase();
+  if (/\bhow much\b|\bprice\b|\bcost\b|\bcharges\b/.test(phrase)) {
+    return `${serviceName} in ${placeName} is quoted after the opening is measured. Width, height, access, and material change the figure. No flat rate is published for ${lower}.`;
+  }
+  if (/\bwho installs\b|\bwhere to\b/.test(phrase)) {
+    return `SafeShield Solutions surveys and fits ${lower} in ${placeName}. Send the floor and a photo of the fixing edge to book the visit.`;
+  }
+  return `A ${placeName} ${lower} visit checks the fixing edge, access, and how the opening is used before any specification is written.`;
+}
+
 function localParagraph(place: CgPlaceProfile, service: SeoService): string {
-  return `${place.localContext} On a ${service.name.toLowerCase()} visit the survey records access, the fixing surface, and how this opening is used. ${place.name} is a service area, not a branch office.`;
+  return `${place.localContext} On a ${service.name.toLowerCase()} visit the survey records access, the fixing surface, and how this opening is used. SafeShield Solutions measures and fits the opening. ${place.name} is a service area, not a branch office.`;
 }
 
 export function composeServicePage(
@@ -143,24 +159,67 @@ export function composeServicePage(
   ];
 
   const checklist = modules.flatMap((item) => item.bullets ?? []);
-  const faqs = modules.flatMap((item) => item.faqs).slice(0, 12);
-  const lead = modules[0];
   const second = modules[1] ?? modules[0];
   const path =
     intent === "near-me"
       ? `/chhattisgarh/${place.slug}/${nearMeSlug(service.slug)}`
       : `/chhattisgarh/${place.slug}/${service.slug}`;
+  const plan = buildKeywordPlan({
+    serviceSlug: service.slug,
+    serviceName: service.name,
+    path,
+    placeName: place.name,
+    placeSlug: place.slug,
+    intentLabel: intent === "near-me" ? "near me" : "general",
+  });
+  const support = supportingSearchSentence(plan);
+  if (support && sections[0]) sections[0].paragraphs.push(support);
+  const entity = buildEntityProfile(service, place);
+  sections.push(entity.section);
 
-  const title = `${service.name} in ${place.name}: ${lead?.heading ?? "site survey"}`;
-  const h1 = `${service.name} in ${place.name} — ${lead?.heading ?? "site survey"}`;
-  const description = `${service.name} in ${place.name}. ${lead?.paragraphs[0]?.slice(0, 120) ?? service.description} The quote follows a measurement.`;
+  const moduleFaqs = modules.flatMap((item) => item.faqs).slice(0, 12);
+  const entityFaq = entity.fanOut.find((item) => item.query.startsWith("How is"));
+  const questionPool =
+    intent === "near-me"
+      ? plan.questions.filter((item) => !/\bnear me\b/i.test(item.phrase))
+      : plan.questions;
+  const extraFaqs = questionPool.slice(0, 2).map((item) => ({
+    question: item.phrase.endsWith("?") ? item.phrase.charAt(0).toUpperCase() + item.phrase.slice(1) : `${item.phrase.charAt(0).toUpperCase()}${item.phrase.slice(1)}?`,
+    answer: answerForKeyword(item.phrase, place.name, service.name),
+  }));
+  const faqs = [
+    ...moduleFaqs,
+    ...extraFaqs,
+    ...(entityFaq ? [{ question: entityFaq.query, answer: entityFaq.answer }] : []),
+  ];
+
+  const snippet = snippetForPlaceService(place.slug, place.name, service, intent);
+  const title = snippet.title;
+  const h1 = snippet.h1;
+  const description = snippet.description;
+  const directAnswer =
+    intent === "near-me"
+      ? {
+          question: `Who fits ${service.name} in ${place.name}?`,
+          answer: `SafeShield Solutions surveys and fits ${service.name} in ${place.name}. The quote follows a measurement. ${place.name} is a service area, not a branch office.`,
+        }
+      : {
+          question: `What is ${service.name} in ${place.name}?`,
+          answer: `${service.name} in ${place.name} is specified after the opening is measured. The quote is not a flat rate. SafeShield Solutions treats ${place.name} as a service area, not a branch office.`,
+        };
 
   const bodyText = [
     title,
     h1,
     description,
+    directAnswer.question,
+    directAnswer.answer,
     ...sections.flatMap((section) => [section.heading, ...section.paragraphs, ...(section.bullets ?? [])]),
     ...faqs.flatMap((faq) => [faq.question, faq.answer]),
+  ].join("\n");
+  const nearMeBodyText = [
+    ...sections.flatMap((section) => [...section.paragraphs, ...(section.bullets ?? [])]),
+    ...faqs.map((faq) => faq.answer),
   ].join("\n");
 
   return {
@@ -170,13 +229,14 @@ export function composeServicePage(
     title,
     h1,
     description,
-    intro: `${local} ${lead?.paragraphs.join(" ") ?? service.description}`,
+    intro: snippet.intro,
     explanation: `${second?.paragraphs.join(" ") ?? ""} ${service.description}`.trim(),
     sections,
     faqs,
+    directAnswer,
     sources: knowledge.sources,
     checklist,
     wordCount: wordCount(bodyText),
-    nearMeMentions: (bodyText.match(/near me/gi) ?? []).length,
+    nearMeMentions: (nearMeBodyText.match(/near me/gi) ?? []).length,
   };
 }

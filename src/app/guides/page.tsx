@@ -10,9 +10,9 @@ import { routes } from "@/config/routes";
 export const revalidate = 86400;
 
 export const metadata = buildPageMetadata({
-  title: "Installation Guides | Invisible Grills, Safety Nets & Pigeon Nets Near Me",
+  title: "Invisible Grill and Safety Net Guides",
   description:
-    "Premium installation guides for invisible grills, safety nets, pigeon nets, and cloth hangers in Chhattisgarh, starting with Raipur.",
+    "Buying and installation guides for invisible grills, safety nets, pigeon nets, and cloth hangers. Written for Chhattisgarh homes, starting with Raipur.",
   path: "/guides",
   keywords: [
     "invisible grills guide",
@@ -30,8 +30,8 @@ export default function GuidesPage() {
     <>
     <PageHero
       eyebrow="Guides"
-      title="Premium Installation Guides — Near Me, Price & Dealers"
-      description="Expert guides for invisible grills, safety nets, pigeon protection, mosquito nets, cloth hangers, sports nets, and bird spikes. Each guide links to neighbourhood pages with installation, price, dealers, and premium intent variants."
+      title="Installation guides for grills, nets, and hangers"
+      description="Guides for invisible grills, safety nets, pigeon protection, mosquito nets, cloth hangers, sports nets, and bird spikes. Each guide links to served town pages."
       photo={photos[0]}
       breadcrumbs={[
         { label: "Home", href: routes.home },
@@ -66,7 +66,7 @@ export default function GuidesPage() {
               Read full guide →
             </Link>
             <h3 className="mt-6 text-sm font-bold uppercase tracking-wide text-neutral-800">
-              Local near-me pages for this guide
+              Related town pages
             </h3>
             <ul className="mt-3 columns-1 gap-x-4 space-y-1.5 sm:columns-2">
               {guideAreaLinks(guide, 12).map((link) => (
@@ -82,7 +82,7 @@ export default function GuidesPage() {
       </div>
 
       <section className="mt-16 border-t border-neutral-200 pt-12">
-        <h2 className="text-2xl font-bold text-neutral-900">All services near me by city</h2>
+        <h2 className="text-2xl font-bold text-neutral-900">Service pages by topic</h2>
         <ul className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {serviceLinks.map((link) => (
             <li key={link.href}>

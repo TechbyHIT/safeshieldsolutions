@@ -8,9 +8,9 @@ import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Why Choose Us | Trusted Safety Installation Experts",
+  title: "About SafeShield Solutions | Chhattisgarh Installation",
   description:
-    "Invisible grills and safety nets for Chhattisgarh. Raipur is listed first. Free site survey and a 5-year warranty.",
+    "SafeShield Solutions surveys and fits invisible grills and safety nets in Chhattisgarh. Raipur is listed first. Free site survey and a 5-year warranty on the written job.",
   path: "/about",
 });
 
@@ -63,17 +63,10 @@ export default function AboutPage() {
           ))}
         </div>
         <p className="prose-content mt-8 max-w-3xl">
-          With over {business.trustSignals.yearsExperience} years of experience and{" "}
-          {business.trustSignals.projectsCompleted.toLocaleString()}+ completed projects,
-          we help families compare the right safety solution before installation —
-          invisible grills, safety nets, mosquito nets, cloth hangers, and sports nets.
+          {business.name} surveys the opening, then writes the specification. The quote
+          covers cable or mesh grade, fixing, labour, and a {business.trustSignals.warrantyYears} year
+          warranty. Town pages describe Chhattisgarh service areas. They do not claim a local branch.
         </p>
-        <h2 className="mt-10 text-2xl font-semibold text-neutral-900">Our Certifications</h2>
-        <ul className="prose-content mt-4 list-disc pl-6">
-          {business.certifications.map((cert) => (
-            <li key={cert}>{cert}</li>
-          ))}
-        </ul>
       </Section>
       <PagePhotoStrip
         photos={photos}

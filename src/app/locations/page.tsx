@@ -13,7 +13,7 @@ export const revalidate = 86400;
 export const metadata = buildPageMetadata({
   title: "Chhattisgarh Service Areas | Raipur Listed First",
   description:
-    "All Chhattisgarh areas: Raipur first, then Naya Raipur, Bhilai, Durg, Bilaspur, Korba, and every other listed town.",
+    "Find your town: Raipur first, then Bhilai, Durg, Bilaspur, Korba, and every other listed Chhattisgarh service area. Each town page links to measured installation quotes.",
   path: "/locations",
 });
 
@@ -26,8 +26,8 @@ export default async function LocationsIndexPage() {
     <>
       <PageHero
         eyebrow="Service cities"
-        title="Our Locations"
-        description="Chhattisgarh only. Raipur is listed first, then every other area in the state."
+        title="Chhattisgarh service areas"
+        description="Chhattisgarh only. Raipur is listed first, then every other served town in the state."
         photo={getHdPhoto("safety-nets")}
         breadcrumbs={[
           { label: "Home", href: routes.home },
@@ -48,7 +48,7 @@ export default async function LocationsIndexPage() {
                   <div className="relative aspect-[16/9] overflow-hidden bg-neutral-100">
                     <Image
                       src={photo.src}
-                      alt={`${city.name} invisible grill and safety net installation`}
+                      alt={photo.alt}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       quality={85}

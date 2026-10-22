@@ -1,4 +1,5 @@
 import { raipurListingRank } from "@/config/chhattisgarh-zones";
+import { getIndexableLocalitiesForCity } from "@/data/cg-hierarchy";
 
 export interface RaipurSeoBlock {
   id: string;
@@ -18,29 +19,27 @@ export function isRaipurFocusArea(areaSlug: string): boolean {
 
 export const RAIPUR_SERVICE_LINKS = [
   { slug: "invisible-grills", name: "Invisible grills" },
-  { slug: "safety-nets", name: "Safety nets" },
-  { slug: "pigeon-safety-nets", name: "Pigeon safety nets" },
   { slug: "balcony-invisible-grills", name: "Balcony invisible grills" },
+  { slug: "window-invisible-grills", name: "Window invisible grills" },
+  { slug: "safety-nets", name: "Safety nets" },
+  { slug: "balcony-safety-nets", name: "Balcony safety nets" },
+  { slug: "pigeon-safety-nets", name: "Pigeon safety nets" },
+  { slug: "bird-spikes", name: "Bird spikes" },
   { slug: "child-safety-grills", name: "Child safety grills" },
   { slug: "mosquito-nets", name: "Mosquito nets" },
-  { slug: "bird-spikes", name: "Bird spikes" },
   { slug: "cloth-hangers", name: "Cloth hangers" },
 ] as const;
 
-export const RAIPUR_LOCALITY_LINKS = [
-  { slug: "raipur", name: "Raipur" },
-  { slug: "naya-raipur", name: "Naya Raipur" },
-  { slug: "shankar-nagar", name: "Shankar Nagar" },
-  { slug: "telibandha", name: "Telibandha" },
-  { slug: "civil-lines-raipur", name: "Civil Lines" },
-  { slug: "devendra-nagar", name: "Devendra Nagar" },
-  { slug: "vip-road", name: "VIP Road" },
-  { slug: "pandri", name: "Pandri" },
-  { slug: "samta-colony", name: "Samta Colony" },
-  { slug: "mowa", name: "Mowa" },
-  { slug: "kachna", name: "Kachna" },
-  { slug: "amanaka", name: "Amanaka" },
-] as const;
+export function raipurLocalityLinks() {
+  return [
+    { slug: "raipur", name: "Raipur city", href: "/chhattisgarh/raipur" },
+    ...getIndexableLocalitiesForCity("raipur").map((area) => ({
+      slug: area.slug,
+      name: area.name,
+      href: `/chhattisgarh/raipur/areas/${area.slug}`,
+    })),
+  ];
+}
 
 export function raipurHubSections(): RaipurSeoBlock[] {
   return [
@@ -62,7 +61,7 @@ export function raipurHubSections(): RaipurSeoBlock[] {
     {
       id: "raipur-localities",
       heading: "Raipur localities with their own pages",
-      body: "Raipur city is listed first, then Naya Raipur, Shankar Nagar, Telibandha, Tatibandh, Devendra Nagar, Samta Colony, VIP Road, Avanti Vihar, Civil Lines, Pandri, Gudhiyari, Mowa, Kachna, Saddu, and the other Raipur localities on this site. Each locality has service pages for installation, price, dealers, near-me, and the rest of the search intents. Bhilai, Durg, Bilaspur, and the other Chhattisgarh towns stay in the sitemap after the Raipur set.",
+      body: "Raipur city is listed first. Then each listed locality has its own hub and service pages: Naya Raipur, Shankar Nagar, Telibandha, Tatibandh, Civil Lines, VIP Road, Pandri, Devendra Nagar, Samta Colony, Avanti Vihar, Gudhiyari, Fafadih, Amanaka, Kota, Mowa, Kachna, Saddu, Sejbahar, Labhandi, Pachpedi Naka, Tikrapara, Dangania, Birgaon, and Mandir Hasaud. Bhilai, Durg, Bilaspur, and the other Chhattisgarh towns stay in the sitemap after the Raipur set.",
     },
   ];
 }
@@ -87,7 +86,7 @@ export function raipurHubFaqs(): RaipurFaq[] {
     {
       question: "Which Raipur areas have service pages?",
       answer:
-        "Raipur, Naya Raipur, Shankar Nagar, Telibandha, Civil Lines, Devendra Nagar, VIP Road, Pandri, Samta Colony, Mowa, Kachna, Amanaka, and the other listed Raipur localities each have their own pages.",
+        "Each listed Raipur locality has its own page, including Naya Raipur, Shankar Nagar, Telibandha, Civil Lines, VIP Road, Pandri, Samta Colony, Avanti Vihar, Gudhiyari, Amanaka, Mowa, Kachna, and the other neighbourhoods in the Raipur area list.",
     },
     {
       question: "How do I book a Raipur site survey?",
@@ -108,8 +107,8 @@ export function raipurAreaSections(
   return [
     {
       id: "raipur-search",
-      heading: `${serviceName} in ${place}`,
-      body: `People searching "${serviceLower} in ${place}", "${serviceLower} near me", and "${serviceLower} price" need the same three facts: what will be measured, which material is specified, and what the quote includes. In ${place} that means opening size, fixing surface, floor access, and society rules. SS304 is the standard grill grade. Nets are specified by use — fall protection, birds, or insects — not by a single mesh for every job.`,
+      heading: `What a ${serviceLower} survey covers in ${place}`,
+      body: `A useful ${serviceLower} quote in ${place} names the opening size, fixing surface, floor access, and society rules. SS304 is the standard grill grade. Nets are specified by use — fall protection, birds, or insects — not by a single mesh for every job. Price, dealer, and near-me searches for ${place} are answered on this page after a site measurement.`,
     },
     {
       id: "raipur-compare",

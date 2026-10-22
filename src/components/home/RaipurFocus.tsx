@@ -2,16 +2,18 @@ import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { isIndexableInternalPath } from "@/lib/indexable-href";
 import { routes } from "@/config/routes";
+import { business } from "@/config/business";
 import {
-  RAIPUR_LOCALITY_LINKS,
   RAIPUR_SERVICE_LINKS,
   raipurHubFaqs,
   raipurHubSections,
+  raipurLocalityLinks,
 } from "@/config/raipur-seo";
 
 export function RaipurFocus() {
   const sections = raipurHubSections();
   const faqs = raipurHubFaqs();
+  const areas = raipurLocalityLinks().filter((area) => isIndexableInternalPath(area.href));
 
   return (
     <Section className="bg-white" ariaLabel="Raipur invisible grills and safety nets">
@@ -20,21 +22,25 @@ export function RaipurFocus() {
         Invisible grills, safety nets and pigeon nets in Raipur
       </h2>
       <p className="mt-3 max-w-3xl text-neutral-700">
-        Raipur pages are the priority: citywide service pages, then Shankar Nagar, Naya Raipur,
-        Telibandha, Civil Lines, and the other Raipur localities. Each page covers installation,
-        price, dealers, and a free residential survey.
+        Raipur is the priority service area: citywide pages for each fitting, then a page for every
+        listed locality. Open the neighbourhood you live in, or start with a citywide service page.
+        Residential surveys in Raipur are free; the quote is written after measurement.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {RAIPUR_SERVICE_LINKS.map((service) => (
-          <Link
-            key={service.slug}
-            href={routes.areaService("chhattisgarh", "raipur", service.slug)}
-            className="rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm font-semibold text-brand-800 hover:border-brand-500"
-          >
-            {service.name} in Raipur
-          </Link>
-        ))}
+        {RAIPUR_SERVICE_LINKS.map((service) => {
+          const href = routes.areaService("chhattisgarh", "raipur", service.slug);
+          if (!isIndexableInternalPath(href)) return null;
+          return (
+            <Link
+              key={service.slug}
+              href={href}
+              className="rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm font-semibold text-brand-800 hover:border-brand-500"
+            >
+              {service.name} in Raipur
+            </Link>
+          );
+        })}
       </div>
 
       <div className="mt-10 space-y-8">
@@ -46,26 +52,33 @@ export function RaipurFocus() {
         ))}
       </div>
 
-      <h3 className="mt-10 text-xl font-bold text-neutral-900">Raipur localities</h3>
+      <h3 className="mt-10 text-xl font-bold text-neutral-900">Raipur areas with their own pages</h3>
+      <p className="mt-2 max-w-3xl text-sm text-neutral-600">
+        These are survey neighbourhoods, not claimed branch offices. Each hub links to the fittings
+        measured there.
+      </p>
       <ul className="mt-4 flex flex-wrap gap-2">
-        {RAIPUR_LOCALITY_LINKS.map((area) => {
-          const href =
-            area.slug === "raipur"
-              ? "/chhattisgarh/raipur"
-              : `/chhattisgarh/raipur/areas/${area.slug}`;
-          if (!isIndexableInternalPath(href)) return null;
-          return (
-            <li key={area.slug}>
-              <Link
-                href={href}
-                className="rounded-full border border-neutral-200 px-3 py-1.5 text-sm text-brand-800 hover:border-brand-500"
-              >
-                {area.name}
-              </Link>
-            </li>
-          );
-        })}
+        {areas.map((area) => (
+          <li key={area.slug}>
+            <Link
+              href={area.href}
+              className="rounded-full border border-neutral-200 px-3 py-1.5 text-sm text-brand-800 hover:border-brand-500"
+            >
+              {area.name}
+            </Link>
+          </li>
+        ))}
       </ul>
+
+      <p className="mt-6 text-sm text-neutral-700">
+        <a href={`tel:${business.phone.replace(/\s/g, "")}`} className="font-semibold text-brand-800 hover:underline">
+          Call {business.phone}
+        </a>
+        {" for a Raipur site survey · "}
+        <Link href={routes.contact} className="text-brand-700 hover:underline">
+          Request a written quote
+        </Link>
+      </p>
 
       <dl className="mt-10 max-w-3xl space-y-4">
         {faqs.map((faq) => (

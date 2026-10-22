@@ -1,6 +1,6 @@
-import { HOME_CITY_AREAS } from "@/config/home-seo-links";
 import { CITIES } from "@/data/cities";
 import { AREA_PAGE_SERVICES } from "@/data/seo-services";
+import { isCgPriorityPlace } from "@/data/cg-local-seo";
 import { raipurHubFaqs, raipurHubSections } from "@/config/raipur-seo";
 import { filterIndexableLinks } from "@/lib/indexable-href";
 
@@ -20,36 +20,36 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
   faqs: CityHubFaq[];
   serviceLinks: { href: string; label: string }[];
 } {
-  const areas = HOME_CITY_AREAS[citySlug] ?? [];
-  const topAreas = areas.slice(0, 8).map((a) => a.name).join(", ");
   const otherCities = CITIES.filter((c) => c.slug !== citySlug).map((c) => c.name).join(", ");
+  const placeSlug = citySlug === "chhattisgarh" || !isCgPriorityPlace(citySlug) ? "raipur" : citySlug;
+  const placeName = placeSlug === "raipur" && citySlug === "chhattisgarh" ? "Raipur" : cityName;
 
   const sections: CityHubSection[] = [
     ...(citySlug === "chhattisgarh" ? raipurHubSections() : []),
     {
       id: "near-me-hub",
-      heading: `Premium invisible grills, safety nets & zip screens near me in ${cityName}`,
-      body: `Searching "invisible grills near me", "safety nets near me", "pigeon nets near me", "zip screens near me", or "cricket box grass near me" in ${cityName} should lead to measurable installation — not generic listings. SafeShield Solutions publishes dedicated pages for every major ${cityName} neighbourhood with 20,000+ words covering installation, price, dealers, contractors, premium, and near-me intent. From ${topAreas || cityName} to outer corridors, the same SS304, UV-stable, and factory-spec standards apply.`,
+      heading: `What to book in ${cityName}`,
+      body: `A search for invisible grills, safety nets, pigeon nets, zip screens, or cricket box grass in ${cityName} should lead to a survey and a written quote. SafeShield Solutions publishes a town page when there is distinct local copy and the service is actually offered. SS304 is the standard grill grade. Nets are specified by use.`,
     },
     {
       id: "services-overview",
-      heading: `All services we install across ${cityName}`,
-      body: `${cityName} residents book invisible grills, balcony safety nets, pigeon nets, mosquito nets, cloth hangers, cricket nets, cricket box grass, zip screens, motorized zip screens, mesh doors, sliding mesh doors, bird spikes, and sports nets. Each service has city-wide and locality-specific pages — over 29,000 URL variants per area for long-tail SEO coverage. City hub pages connect you to searchable localities below.`,
+      heading: `Services installed across ${cityName}`,
+      body: `${cityName} pages cover invisible grills, balcony safety nets, pigeon nets, mosquito nets, cloth hangers, cricket nets, cricket box grass, zip screens, mesh doors, bird spikes, and sports nets where those catalogue lines are offered. Open the town service page that matches the opening.`,
     },
     {
       id: "pricing-guide",
-      heading: `${cityName} price guide — what affects your quote`,
-      body: `Price searches — "invisible grill price in ${cityName}", "safety net dealers", "zip screen cost per sq ft", "box cricket turf price per sq ft" — need itemised scope. Compare anchors, edge treatment, material grade, transport, GST, and warranty on every quote. We operate as manufacturer-installer across ${cityName} so residents skip dealer markup while keeping documented SS304, knotless net GSM, and automation specs where applicable.`,
+      heading: `What affects a ${cityName} quote`,
+      body: `Useful quotes list anchors, edge treatment, material grade, transport, GST, and warranty. Compare those items rather than a headline rate. The figure follows a measurement of the opening.`,
     },
     {
       id: "process",
       heading: `How booking works in ${cityName}`,
-      body: `Share photos, pin code, and society name by phone or WhatsApp. We assign the nearest ${cityName} survey crew, measure openings or court dimensions, and send a written quotation. Installation typically follows within days after approval — phased for full-tower or commercial projects. Post-install warranty registration and care instructions are included for every ${cityName} locality.`,
+      body: `Share photos, the town, and the society name by phone or WhatsApp. We measure the opening and send a written quotation. Installation is scheduled after approval. Care instructions are included at handover.`,
     },
     {
       id: "new-services",
-      heading: `Cricket box grass, zip screens & mesh doors in ${cityName}`,
-      body: `New ${cityName} service lines include premium cricket box grass and box cricket turf for indoor/outdoor courts, manual and motorized zip screens for balconies and patios, and mesh doors plus sliding mesh doors for insect-free ventilation. Each links to near-me, installation, price, dealers, and premium pages in every ${cityName} locality listed below.`,
+      heading: `Sports, zip screens, and mesh doors`,
+      body: `Where offered, cricket box grass, zip screens, and mesh doors follow the same survey-then-quote process as balcony fittings. Specification depends on span, motor load, or mesh grade — not a catalogue default.`,
     },
   ];
 
@@ -57,24 +57,24 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
     ...(citySlug === "chhattisgarh" ? raipurHubFaqs() : []),
     {
       question: `How many localities do you cover in ${cityName}?`,
-      answer: `We cover all listed ${cityName} neighbourhoods on this page, each with thousands of service and intent URLs. Use the search box to find your area, then open installation, price, or near-me variants for your service.`,
+      answer: `We cover the listed ${cityName} neighbourhoods that have their own pages. Use the list on this hub, then open the service that matches the opening.`,
     },
     {
       question: `Do you offer free site survey in ${cityName}?`,
-      answer: `Yes. Residential and commercial enquiries in ${cityName} receive free measurement and specification guidance before quotation.`,
+      answer: `Yes. Residential enquiries in served ${cityName} towns receive free measurement before quotation.`,
     },
     {
-      question: `Which services are most popular in ${cityName}?`,
-      answer: `Invisible grills, balcony safety nets, pigeon nets, zip screens, and cricket box grass are among the most searched services in ${cityName}. Each has dedicated city and locality pages with full buying guides.`,
+      question: `Which services are most requested in ${cityName}?`,
+      answer: `Invisible grills, balcony safety nets, pigeon nets, zip screens, and cricket box grass are among the lines people ask about. Each has a dedicated page where the service is offered.`,
     },
     {
       question: `Can I find dealers and contractors for safety nets in ${cityName}?`,
-      answer: `Our ${cityName} pages cover dealers, contractors, company, suppliers, and manufacturers intent searches — all resolving to direct supply and installation with written scope.`,
+      answer: `Dealer and contractor searches for ${cityName} resolve to the same measured installation: written scope, named materials, and fitting by the crew that surveyed the opening.`,
     },
     {
       question: `Do you serve other cities besides ${cityName}?`,
       answer: otherCities
-        ? `Yes. We also serve ${otherCities} with the same page scale and quality standards.`
+        ? `This site also lists ${otherCities}. Coverage is Chhattisgarh only.`
         : `This site covers Chhattisgarh. Raipur is listed first, then every other listed town in the state.`,
     },
   ];
@@ -100,12 +100,12 @@ export function buildCityHubContent(citySlug: string, cityName: string): {
       .filter(Boolean)
       .flatMap((svc) => [
         {
-          href: `/chhattisgarh/raipur/${svc!.slug}`,
-          label: `${svc!.name} in Raipur`,
+          href: `/chhattisgarh/${placeSlug}/${svc!.slug}`,
+          label: `${svc!.name} in ${placeName}`,
         },
         {
-          href: `/chhattisgarh/raipur/${svc!.slug}-near-me`,
-          label: `${svc!.name} near me in Raipur`,
+          href: `/chhattisgarh/${placeSlug}/${svc!.slug}-near-me`,
+          label: `${svc!.name} in ${placeName} — nearby booking`,
         },
       ]),
   );

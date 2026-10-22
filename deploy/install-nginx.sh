@@ -63,13 +63,22 @@ done
 if [ "$icon_copied" -eq 0 ]; then
   echo "WARN: favicon.png missing. /favicon.png will 404 until public/favicon.png exists."
 fi
-# Search Console still requests sitemap-1.xml … sitemap-9.xml from the first submission.
-# If the main file is a urlset, copy it onto those names so they are not 404s with 0 pages.
-if [ -f /var/www/safeshield-sitemaps/sitemap.xml ] && grep -q "<urlset" /var/www/safeshield-sitemaps/sitemap.xml; then
-  for n in 1 2 3 4 5 6 7 8 9; do
-    cp -a /var/www/safeshield-sitemaps/sitemap.xml "/var/www/safeshield-sitemaps/sitemap-$n.xml"
-  done
-  echo "==> Copied the page list onto sitemap-1.xml … sitemap-9.xml"
+# sitemap.xml is a sitemap index of named child urlsets. Do not copy it onto
+# sitemap-1.xml … sitemap-9.xml — those would be competing indexes.
+# Next still 301s /sitemap-1.xml → /sitemap.xml for the old Search Console submission.
+if [ -f /var/www/safeshield-sitemaps/sitemap.xml ] && grep -q "<sitemapindex" /var/www/safeshield-sitemaps/sitemap.xml; then
+  echo "==> sitemap.xml is an index of named child urlsets"
+  missing=0
+  while IFS= read -r loc; do
+    name="${loc##*/}"
+    if [ ! -f "/var/www/safeshield-sitemaps/${name}" ]; then
+      echo "WARN: index lists ${name} but the file is missing"
+      missing=1
+    fi
+  done < <(grep -oE 'https://[^<]+/sitemap-[a-z0-9-]+\.xml' /var/www/safeshield-sitemaps/sitemap.xml | sort -u)
+  if [ "$missing" -eq 0 ]; then
+    echo "==> All child sitemaps listed in the index are present"
+  fi
 fi
 chmod -R a+rX /var/www/safeshield-sitemaps
 

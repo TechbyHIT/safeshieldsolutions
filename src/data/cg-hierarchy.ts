@@ -1,3 +1,4 @@
+import { raipurListingRank } from "@/config/chhattisgarh-zones";
 import { CG_PRIORITY_PLACES } from "@/data/cg-local-seo";
 
 /**
@@ -129,6 +130,7 @@ export const CG_CITY_DISTRICT: Record<string, string> = {
 export const LOCALITY_SERVICE_SLUGS = [
   "invisible-grills",
   "safety-nets",
+  "balcony-safety-nets",
   "pigeon-safety-nets",
   "bird-spikes",
 ] as const;
@@ -234,6 +236,182 @@ export const CG_LOCALITIES: CgLocality[] = [
       "Devendra Nagar is a residential colony in Raipur, close to the VIP Road side of the city. Most jobs are balcony and window openings on houses and small apartment buildings.",
   },
   {
+    slug: "samta-colony",
+    name: "Samta Colony",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["shankar-nagar", "devendra-nagar", "civil-lines-raipur"],
+    localContent:
+      "Samta Colony is a compact residential pocket in central Raipur, with older plotted houses and later walk-up apartments. Openings are usually shallow front balconies and street-facing windows, so access is from the house side rather than a high-rise podium.",
+  },
+  {
+    slug: "avanti-vihar",
+    name: "Avanti Vihar",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["telibandha", "shankar-nagar"],
+    localContent:
+      "Avanti Vihar sits on the Telibandha side of Raipur, with independent houses and mid-rise apartments around the lake belt. Balcony work here often faces open sky and wind, so cable tension and net edge sealing are checked on site rather than copied from an inner-city house.",
+  },
+  {
+    slug: "gudhiyari",
+    name: "Gudhiyari",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["pandri", "fafadih"],
+    localContent:
+      "Gudhiyari is an older mixed residential and market locality in Raipur. Many openings are shop-top homes and narrow balcony rails on busy streets, so daytime access and fixing into existing masonry matter as much as the measured width.",
+  },
+  {
+    slug: "fafadih",
+    name: "Fafadih",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["gudhiyari", "pandri"],
+    localContent:
+      "Fafadih lies on the eastern side of Raipur, with industrial-adjacent housing and independent houses on inner lanes. Jobs are typically house balconies and parapets rather than tower podiums, and fixing surfaces are often older brick or plastered RCC.",
+  },
+  {
+    slug: "amanaka",
+    name: "Amanaka",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["tatibandh", "kota-raipur"],
+    localContent:
+      "Amanaka is on the western education and hospital belt of Raipur, near the medical-college side of the city. Housing mixes student apartments, staff quarters, and independent houses, so balcony sizes repeat on some blocks and vary on others.",
+  },
+  {
+    slug: "mowa",
+    name: "Mowa",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["kachna", "saddu"],
+    localContent:
+      "Mowa is a northern Raipur locality with newer plotted colonies and a growing stock of low-rise apartments. Openings are usually rear and side balconies on houses still being finished, so the survey notes plaster, railing type, and whether the slab edge is ready for anchors.",
+  },
+  {
+    slug: "kachna",
+    name: "Kachna",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["mowa", "saddu"],
+    localContent:
+      "Kachna sits in north-east Raipur, with plotted residential streets and a smaller apartment stock than VIP Road. Work is mostly house balconies, terrace sit-outs, and window lines on boundary-facing rooms rather than high-rise ducts.",
+  },
+  {
+    slug: "saddu",
+    name: "Saddu",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["mowa", "kachna"],
+    localContent:
+      "Saddu is on the northern highway approach to Raipur, with mixed housing along the main road and quieter inner plots. Balcony and terrace jobs here often need a note on road noise, dust, and whether the opening faces the highway or the colony lane.",
+  },
+  {
+    slug: "kota-raipur",
+    name: "Kota",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["amanaka", "tatibandh"],
+    localContent:
+      "Kota is a western Raipur residential area, inland from the Tatibandh medical-college belt. Housing is mostly independent houses and small apartment buildings; openings are balcony rails and windows rather than podium towers.",
+  },
+  {
+    slug: "sejbahar",
+    name: "Sejbahar",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["labhandi", "amanaka"],
+    localContent:
+      "Sejbahar lies on the south-western edge of Raipur, with newer residential pockets and remaining open plots. Jobs are house balconies and terrace edges on buildings that are still filling in, so access and unfinished parapets are checked before a date is set.",
+  },
+  {
+    slug: "labhandi",
+    name: "Labhandi",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["sejbahar", "amanaka"],
+    localContent:
+      "Labhandi is known for the agricultural-university side of Raipur. Housing includes staff quarters, student hostels, and nearby independent houses. Openings are repeating balcony sizes on campus blocks plus one-off house rails on the approach roads.",
+  },
+  {
+    slug: "pachpedi-naka",
+    name: "Pachpedi Naka",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["gudhiyari", "pandri"],
+    localContent:
+      "Pachpedi Naka is a major junction locality in Raipur, with commercial frontage and residences behind the main roads. Work is often on flats above shops and on house balconies one street in, so society or shop-timing rules affect when a crew can set anchors.",
+  },
+  {
+    slug: "tikrapara",
+    name: "Tikrapara",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["dangania", "gudhiyari"],
+    localContent:
+      "Tikrapara is an older inner-city Raipur neighbourhood with dense plotted streets. Balconies are typically shallow, and neighbouring walls sit close, so the survey records swing space, shared walls, and whether a net or grill must stay inside the existing railing line.",
+  },
+  {
+    slug: "dangania",
+    name: "Dangania",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["tikrapara", "pandri"],
+    localContent:
+      "Dangania sits toward the railway side of central Raipur, with older houses and mixed commercial streets. Openings are house balconies, courtyard sides, and windows on plots that were not built as apartment towers.",
+  },
+  {
+    slug: "birgaon",
+    name: "Birgaon",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["saddu", "mowa"],
+    localContent:
+      "Birgaon is the industrial municipal area on the northern edge of Raipur. Housing is colony quarters and independent houses near plant and warehouse belts. Corrosion and dust exposure are noted on the quote when the opening faces the industrial side.",
+  },
+  {
+    slug: "mandir-hasaud",
+    name: "Mandir Hasaud",
+    citySlug: "raipur",
+    districtSlug: "raipur",
+    serviceAvailable: true,
+    indexable: true,
+    nearby: ["naya-raipur", "sejbahar"],
+    localContent:
+      "Mandir Hasaud sits on the Raipur–Naya Raipur approach, with highway-side houses and newer residential pockets. Jobs are typically independent-house balconies and terrace sit-outs rather than Naya Raipur sector towers, so access is from the plot rather than a society lift.",
+  },
+  {
     slug: "nehru-nagar-bhilai",
     name: "Nehru Nagar",
     citySlug: "bhilai",
@@ -308,7 +486,9 @@ export function getLocalitiesForCity(citySlug: string): CgLocality[] {
 }
 
 export function getIndexableLocalitiesForCity(citySlug: string): CgLocality[] {
-  return getLocalitiesForCity(citySlug).filter((area) => area.indexable && area.localContent.length >= 160);
+  return getLocalitiesForCity(citySlug)
+    .filter((area) => area.indexable && area.localContent.length >= 160)
+    .sort((a, b) => raipurListingRank(a.slug) - raipurListingRank(b.slug) || a.name.localeCompare(b.name));
 }
 
 export function getLocality(citySlug: string, areaSlug: string): CgLocality | undefined {

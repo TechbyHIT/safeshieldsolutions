@@ -8,7 +8,7 @@ import { blogPosts, blogRelatedLinks } from "@/config/guides-content";
 import { getPhotosForService, getPrimaryServicePhoto } from "@/config/photo-catalog";
 import { routes } from "@/config/routes";
 import { buildPageMetadata } from "@/lib/metadata";
-import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/schema";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/schema";
 import { generateBlogSlugStaticParams } from "@/lib/ssg-priority";
 
 export const revalidate = 86400;
@@ -26,10 +26,13 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) notFound();
+  const inServiceArea = post.citySlug === "chhattisgarh";
   return buildPageMetadata({
     title: post.title,
     description: post.excerpt,
     path: routes.blogPost(post.slug),
+    canonicalPath: inServiceArea ? routes.blogPost(post.slug) : "/blog",
+    robots: { index: inServiceArea, follow: true },
   });
 }
 
@@ -48,10 +51,21 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <JsonLd
-        data={[
-          buildWebPageSchema(post.title, post.excerpt, routes.blogPost(post.slug)),
-          buildBreadcrumbSchema(breadcrumbs),
-        ]}
+        data={
+          post.citySlug === "chhattisgarh"
+            ? [
+                buildArticleSchema({
+                  kind: "BlogPosting",
+                  headline: post.title,
+                  description: post.excerpt,
+                  path: routes.blogPost(post.slug),
+                  datePublished: post.date,
+                  image: getPrimaryServicePhoto(post.serviceSlug)?.src,
+                }),
+                buildBreadcrumbSchema(breadcrumbs),
+              ]
+            : [buildBreadcrumbSchema(breadcrumbs)]
+        }
       />
       <PageHero
         eyebrow={post.date}
@@ -62,9 +76,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       />
       <Section>
         <p className="prose-content max-w-3xl">
-          This locality note covers {post.serviceSlug.replace(/-/g, " ")} work in{" "}
-          {post.areaSlug.replace(/-/g, " ")}, {post.citySlug}. Open the full area service page for
-          materials, pricing signals, and installation process.
+          {post.citySlug === "chhattisgarh"
+            ? `This note is about ${post.serviceSlug.replace(/-/g, " ")} in ${post.areaSlug.replace(/-/g, " ")}.`
+            : `This note mentions ${post.areaSlug.replace(/-/g, " ")}. SafeShield Solutions publishes service pages for Chhattisgarh, with Raipur listed first. This article is not a claim that we run a branch there.`}
         </p>
         <p className="mt-6">
           <Link

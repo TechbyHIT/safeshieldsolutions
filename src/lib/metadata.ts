@@ -5,13 +5,12 @@ import {
   isPageIndexable,
   type PageIndexabilityInput,
 } from "@/lib/indexability";
-import { truncate, titleCase } from "@/lib/slug";
-import {
-  buildAreaServiceKeywords,
-} from "@/lib/seo-keywords";
-import { isCgPriorityPlace } from "@/data/cg-local-seo";
+import { buildAreaServiceKeywords } from "@/lib/seo-keywords";
+import { buildKeywordPlan } from "@/lib/keyword-targeting";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import { languageAlternates } from "@/lib/technical-seo";
 import { getHeroPhoto, getServiceOgImage } from "@/config/photo-catalog";
+import { buildSearchSnippet, fitDescription, fitTitle, stripMetaText } from "@/lib/search-snippets";
 
 export interface MetadataInput {
   title: string;
@@ -38,8 +37,8 @@ export function buildCanonicalUrl(path: string): string {
 }
 
 export function buildPageMetadata(input: MetadataInput): Metadata {
-  const title = truncate(input.title, seoDefaults.maxTitleLength);
-  const description = truncate(input.description, seoDefaults.maxDescriptionLength);
+  const title = fitTitle(stripMetaText(input.title), seoDefaults.maxTitleLength);
+  const description = fitDescription(stripMetaText(input.description), seoDefaults.maxDescriptionLength);
   const canonical = buildCanonicalUrl(input.canonicalPath ?? input.path);
   const ogImage = input.ogImage ?? getHeroPhoto().src;
   const follow = input.robots?.follow ?? true;
@@ -53,7 +52,10 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
     title,
     description,
     keywords: [...(input.keywords ?? seoDefaults.defaultKeywords)],
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: languageAlternates(canonical),
+    },
     robots: {
       index,
       follow,
@@ -90,63 +92,21 @@ export function buildServiceMetadata(
   serviceDescription: string,
   serviceSlug: string,
 ): Metadata {
+  const path = `/services/${serviceSlug}`;
+  const plan = buildKeywordPlan({ serviceSlug, serviceName, path });
+  const snippet = buildSearchSnippet({
+    kind: "service",
+    serviceName,
+    serviceSlug,
+    serviceDescription,
+  });
   return buildPageMetadata({
-    title: `${serviceName} Near Me | Installation, Price & Dealers`,
-    description: truncate(
-      `${serviceDescription} ${serviceName} in Chhattisgarh — Raipur first, then every other area. Free site survey, installation, and price.`,
-      seoDefaults.maxDescriptionLength,
-    ),
-    path: `/services/${serviceSlug}`,
-    keywords: [serviceName, "installation", "Chhattisgarh", "Raipur"],
+    title: snippet.title,
+    description: snippet.description,
+    path,
+    keywords: plan.metaKeywords,
     ogImage: getServiceOgImage(serviceSlug),
   });
-}
-
-function highIntentTitlePart(intentLabel?: string): string {
-  if (!intentLabel || intentLabel === "general") {
-    return "Near Me | Free Survey";
-  }
-  const label = intentLabel.toLowerCase().replace(/-/g, " ");
-  if (label.includes("near me") || label === "nearby") return "Near Me | Free Survey";
-  if (label.includes("install")) return "Installation | Same-Day Quote";
-  if (label.includes("price") || label.includes("cost")) return "Price | Free Quotation";
-  if (label.includes("dealer")) return "Dealers Near Me | Direct Install";
-  if (label.includes("contractor")) return "Contractors | Verified Crew";
-  if (label.includes("quote") || label.includes("quotation")) return "Quotation | Itemised BOQ";
-  if (label.includes("best") || label.includes("top")) return "Best Rated | SS304 Spec";
-  if (label.includes("premium")) return "Premium | Factory Direct";
-  if (label.includes("affordable")) return "Affordable | No Hidden Charges";
-  if (label.includes("free survey")) return "Free Site Survey | Book Now";
-  if (label.includes("same day")) return "Same-Day Survey | Fast Install";
-  if (label.includes("supplier") || label.includes("manufacturer")) {
-    return "Suppliers & Manufacturers | Direct";
-  }
-  if (label.includes("repair") || label.includes("maintenance")) return "Repair & Service";
-  return titleCase(label);
-}
-
-function highIntentDescriptionLead(
-  serviceLower: string,
-  place: string,
-  intentLabel?: string,
-): string {
-  if (!intentLabel || intentLabel === "general") {
-    return `${serviceLower} near me in ${place} — free site survey, dealers, installation & price quote.`;
-  }
-  const label = intentLabel.toLowerCase().replace(/-/g, " ");
-  if (label.includes("near")) {
-    return `${serviceLower} near me in ${place} — local installers, free survey, SS304 & UV-stable materials.`;
-  }
-  if (label.includes("price") || label.includes("cost")) {
-    return `${serviceLower} price in ${place} — itemised quotation, dealers comparison, GST-inclusive scope.`;
-  }
-  if (label.includes("install")) {
-    return `${serviceLower} installation in ${place} — trained crew, society NOC support, 5-year warranty.`;
-  }
-  if (label.includes("dealer") || label.includes("contractor") || label.includes("company")) {
-    return `${serviceLower} dealers & contractors in ${place} — manufacturer-direct install, no middleman markup.`;
-  }
-  return `${serviceLower} ${label} in ${place} — SafeShield Solutions, free survey, premium materials.`;
 }
 
 export function buildCityServiceMetadata(
@@ -157,20 +117,36 @@ export function buildCityServiceMetadata(
   intentLabel?: string,
   canonicalServiceSlug?: string,
 ): Metadata {
-  const intent =
-    intentLabel && intentLabel !== "general" ? ` ${intentLabel.replace(/-/g, " ")}` : "";
   const serviceSlug = canonicalServiceSlug ?? pageSlug;
-  const titlePart = highIntentTitlePart(intentLabel);
+  const path = `/${citySlug}/${pageSlug}`;
+  const nearMe = Boolean(intentLabel && /near me/i.test(intentLabel));
+  const plan = buildKeywordPlan({
+    serviceSlug,
+    serviceName,
+    path,
+    placeName: cityName,
+    placeSlug: citySlug === "chhattisgarh" ? undefined : citySlug,
+    intentLabel,
+  });
+  const snippet = buildSearchSnippet({
+    kind:
+      citySlug === "chhattisgarh" && !nearMe
+        ? "state-service"
+        : nearMe
+          ? "place-service-near-me"
+          : "place-service",
+    serviceName,
+    serviceSlug,
+    placeName: cityName,
+    placeSlug: citySlug === "chhattisgarh" ? undefined : citySlug,
+  });
   return buildPageMetadata({
-    title: `${serviceName}${intent} in ${cityName} | ${titlePart}`,
-    description: truncate(
-      `${highIntentDescriptionLead(serviceName.toLowerCase(), cityName, intentLabel)} SafeShield Solutions — SS304, 5-year warranty. Call for same-day quote.`,
-      seoDefaults.maxDescriptionLength,
-    ),
-    path: `/${citySlug}/${pageSlug}`,
-    keywords: [serviceName, cityName, `${serviceName} ${cityName}`, "installation", cityName],
+    title: snippet.title,
+    description: snippet.description,
+    path,
+    keywords: plan.metaKeywords,
     ogImage: getServiceOgImage(serviceSlug),
-    ...seoRobotsForPath(`/${citySlug}/${pageSlug}`),
+    ...seoRobotsForPath(path),
   });
 }
 
@@ -184,30 +160,26 @@ export function buildAreaServiceMetadata(
   intentLabel?: string,
   canonicalServiceSlug?: string,
 ): Metadata {
-  const intent =
-    intentLabel && intentLabel !== "general" ? ` ${intentLabel.replace(/-/g, " ")}` : "";
   const serviceSlug = canonicalServiceSlug ?? pageSlug;
-  const titlePart = highIntentTitlePart(intentLabel);
-  const placeLabel =
-    citySlug === "chhattisgarh" && isCgPriorityPlace(areaSlug)
-      ? `${areaName}, Chhattisgarh`
-      : `${areaName}, ${cityName}`;
-  const title =
-    !intentLabel || intentLabel === "general"
-      ? `${serviceName} in ${placeLabel}`
-      : `${serviceName}${intent} in ${placeLabel} | ${titlePart}`;
+  const snippet = buildSearchSnippet({
+    kind: intentLabel && /near me/i.test(intentLabel) ? "place-service-near-me" : "locality-service",
+    serviceName,
+    serviceSlug,
+    placeName: cityName,
+    placeSlug: citySlug === "chhattisgarh" ? areaSlug : citySlug,
+    areaName,
+  });
   return buildPageMetadata({
-    title,
-    description: truncate(
-      `${highIntentDescriptionLead(serviceName.toLowerCase(), placeLabel, intentLabel)} Written quote after measurement.`,
-      seoDefaults.maxDescriptionLength,
-    ),
+    title: snippet.title,
+    description: snippet.description,
     path: `/${citySlug}/${areaSlug}/${pageSlug}`,
     keywords: buildAreaServiceKeywords({
       serviceSlug,
       serviceName,
       areaName,
       cityName,
+      citySlug,
+      areaSlug,
     }),
     ogImage: getServiceOgImage(serviceSlug),
     ...seoRobotsForPath(`/${citySlug}/${areaSlug}/${pageSlug}`),

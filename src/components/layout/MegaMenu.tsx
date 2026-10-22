@@ -118,7 +118,7 @@ function AreasMegaMenu({ onClose }: { onClose: () => void }) {
       </div>
       <div className="mt-8 flex items-center justify-between rounded-xl bg-neutral-50 px-5 py-4">
         <p className="text-sm font-medium text-neutral-800">
-          2,000+ neighbourhoods · 20,000+ word local guides per page
+          Chhattisgarh towns with their own service pages — Raipur listed first
         </p>
         <Link
           href={routes.locations}

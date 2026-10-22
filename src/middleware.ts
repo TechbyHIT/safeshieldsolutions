@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { CITIES } from "@/data/cities";
 import { getAreasForCity } from "@/data/areas";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
+import { crawlUrlChanged, normalizeCrawlUrl, type CrawlUrl } from "@/lib/technical-seo";
 
 const CITY_SLUGS = new Set(CITIES.map((c) => c.slug));
 const AREA_SLUGS_BY_CITY = new Map(
@@ -18,6 +19,7 @@ const APP_ROUTE_ROOTS = new Set([
   "guides",
   "blog",
   "faq",
+  "glossary",
   "html-sitemap",
   "privacy-policy",
   "terms-of-service",
@@ -32,27 +34,21 @@ const APP_ROUTE_ROOTS = new Set([
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const { pathname } = url;
-
-  if (pathname.length > 1 && pathname.endsWith("/")) {
-    url.pathname = pathname.replace(/\/+$/, "") || "/";
-    return NextResponse.redirect(url, 301);
-  }
-
-  if (pathname !== pathname.toLowerCase()) {
-    url.pathname = pathname.toLowerCase();
-    return NextResponse.redirect(url, 301);
-  }
-
-  const host = request.headers.get("host") ?? "";
-  if (host.startsWith("www.")) {
-    const proto = request.headers.get("x-forwarded-proto") ?? "http";
-    url.host = host.slice(4);
-    url.protocol = `${proto}:`;
-    return NextResponse.redirect(url, 301);
-  }
-
-  if (url.search && !pathname.startsWith("/api/")) {
-    url.search = "";
+  const forwarded = request.headers.get("x-forwarded-proto");
+  const protocol: CrawlUrl["protocol"] =
+    forwarded === "https" || url.protocol === "https:" ? "https:" : "http:";
+  const current: CrawlUrl = {
+    protocol,
+    host: request.headers.get("host") ?? url.host,
+    pathname,
+    search: url.search,
+  };
+  const normalized = normalizeCrawlUrl(current, { keepSearch: pathname.startsWith("/api/") });
+  if (crawlUrlChanged(current, normalized)) {
+    url.protocol = normalized.protocol;
+    url.host = normalized.host;
+    url.pathname = normalized.pathname;
+    url.search = normalized.search;
     return NextResponse.redirect(url, 301);
   }
 

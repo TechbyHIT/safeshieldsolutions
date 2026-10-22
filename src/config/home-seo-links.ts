@@ -45,95 +45,8 @@ export const HOME_TOP_SERVICES: HomeServiceLink[] = [
 
 export const HOME_CITIES = [{ slug: "chhattisgarh", name: "Chhattisgarh" }] as const;
 
-/** Featured localities per city — deep-linked on homepage for crawl + near-me SEO */
+/** Featured Chhattisgarh towns deep-linked from the homepage. */
 export const HOME_CITY_AREAS: Record<string, HomeAreaLink[]> = {
-  chennai: [
-    { slug: "adyar", name: "Adyar" },
-    { slug: "velachery", name: "Velachery" },
-    { slug: "anna-nagar", name: "Anna Nagar" },
-    { slug: "t-nagar", name: "T. Nagar" },
-    { slug: "omr", name: "OMR" },
-    { slug: "tambaram", name: "Tambaram" },
-    { slug: "porur", name: "Porur" },
-    { slug: "chromepet", name: "Chromepet" },
-    { slug: "mylapore", name: "Mylapore" },
-    { slug: "nungambakkam", name: "Nungambakkam" },
-    { slug: "sholinganallur", name: "Sholinganallur" },
-    { slug: "medavakkam", name: "Medavakkam" },
-    { slug: "pallavaram", name: "Pallavaram" },
-    { slug: "guindy", name: "Guindy" },
-    { slug: "east-coast-road", name: "East Coast Road" },
-    { slug: "avadi", name: "Avadi" },
-    { slug: "ambattur", name: "Ambattur" },
-    { slug: "perungudi", name: "Perungudi" },
-    { slug: "kilpauk", name: "Kilpauk" },
-    { slug: "royapettah", name: "Royapettah" },
-  ],
-  hyderabad: [
-    { slug: "gachibowli", name: "Gachibowli" },
-    { slug: "kukatpally", name: "Kukatpally" },
-    { slug: "madhapur", name: "Madhapur" },
-    { slug: "banjara-hills", name: "Banjara Hills" },
-    { slug: "secunderabad", name: "Secunderabad" },
-    { slug: "miyapur", name: "Miyapur" },
-    { slug: "hitech-city", name: "HITEC City" },
-    { slug: "kondapur", name: "Kondapur" },
-    { slug: "manikonda", name: "Manikonda" },
-    { slug: "lb-nagar", name: "LB Nagar" },
-    { slug: "uppal", name: "Uppal" },
-    { slug: "financial-district", name: "Financial District" },
-    { slug: "jubilee-hills", name: "Jubilee Hills" },
-    { slug: "dilsukhnagar", name: "Dilsukhnagar" },
-    { slug: "kompally", name: "Kompally" },
-    { slug: "nizampet", name: "Nizampet" },
-    { slug: "bachupally", name: "Bachupally" },
-    { slug: "tellapur", name: "Tellapur" },
-    { slug: "kokapet", name: "Kokapet" },
-    { slug: "nallagandla", name: "Nallagandla" },
-  ],
-  coimbatore: [
-    { slug: "gandhipuram", name: "Gandhipuram" },
-    { slug: "peelamedu", name: "Peelamedu" },
-    { slug: "saibaba-colony", name: "Saibaba Colony" },
-    { slug: "rs-puram", name: "R.S. Puram" },
-    { slug: "singanallur", name: "Singanallur" },
-    { slug: "saravanampatti", name: "Saravanampatti" },
-    { slug: "race-course", name: "Race Course" },
-    { slug: "vadavalli", name: "Vadavalli" },
-    { slug: "ukkadam", name: "Ukkadam" },
-    { slug: "podanur", name: "Podanur" },
-    { slug: "kuniyamuthur", name: "Kuniyamuthur" },
-    { slug: "thudiyalur", name: "Thudiyalur" },
-    { slug: "vilankurichi", name: "Vilankurichi" },
-    { slug: "kalapatti", name: "Kalapatti" },
-    { slug: "neelambur", name: "Neelambur" },
-    { slug: "avinashi-road", name: "Avinashi Road" },
-    { slug: "mettupalayam", name: "Mettupalayam" },
-    { slug: "pollachi", name: "Pollachi" },
-    { slug: "perur", name: "Perur" },
-  ],
-  kochi: [
-    { slug: "kakkanad", name: "Kakkanad" },
-    { slug: "edappally", name: "Edappally" },
-    { slug: "aluva", name: "Aluva" },
-    { slug: "vyttila", name: "Vyttila" },
-    { slug: "fort-kochi", name: "Fort Kochi" },
-    { slug: "palarivattom", name: "Palarivattom" },
-    { slug: "kaloor", name: "Kaloor" },
-    { slug: "kadavanthra", name: "Kadavanthra" },
-    { slug: "maradu", name: "Maradu" },
-    { slug: "tripunithura", name: "Tripunithura" },
-    { slug: "infopark-phase-1", name: "Infopark Phase 1" },
-    { slug: "thrikkakara", name: "Thrikkakara" },
-    { slug: "kalamassery", name: "Kalamassery" },
-    { slug: "angamaly", name: "Angamaly" },
-    { slug: "panampilly-nagar", name: "Panampilly Nagar" },
-    { slug: "thevara", name: "Thevara" },
-    { slug: "mattancherry", name: "Mattancherry" },
-    { slug: "palluruthy", name: "Palluruthy" },
-    { slug: "kumbalangi", name: "Kumbalangi" },
-    { slug: "perumbavoor", name: "Perumbavoor" },
-  ],
   chhattisgarh: [
     { slug: "raipur", name: "Raipur" },
     { slug: "bhilai", name: "Bhilai" },
@@ -173,9 +86,13 @@ export function buildAreaKeywordLinks(
     for (const service of services) {
       for (const intent of intents) {
         const pageSlug = `${service.slug}${intent.suffix}`;
+        const label =
+          intent.suffix === "-near-me"
+            ? `${service.name} near me in ${area.name}`
+            : `${service.name} in ${area.name}`;
         links.push({
           href: routes.areaService(citySlug, area.slug, pageSlug),
-          label: `${intent.label === "General" ? "Premium" : intent.label} ${service.name} in ${area.name}`,
+          label,
           citySlug,
           areaSlug: area.slug,
           serviceSlug: service.slug,
@@ -196,9 +113,13 @@ export function buildCityKeywordLinks(
     services.flatMap((service) =>
       intents.map((intent) => {
         const pageSlug = `${service.slug}${intent.suffix}`;
+        const label =
+          intent.suffix === "-near-me"
+            ? `${service.name} near me in ${cityName}`
+            : `${service.name} in ${cityName}`;
         return {
           href: routes.cityService(citySlug, pageSlug),
-          label: `${intent.label === "General" ? "Best" : intent.label} ${service.name} in ${cityName}`,
+          label,
           citySlug,
           serviceSlug: service.slug,
         };
@@ -215,12 +136,12 @@ export const HOME_PRIMARY_INTENTS = HOME_SEARCH_INTENTS.filter((i) =>
 export const homeSeoParagraphs = [
   {
     id: "near-me",
-    heading: "Premium invisible grills & safety nets near me — Chhattisgarh first",
+    heading: "Where a Chhattisgarh search should land",
     body: `Searching "invisible grills near me" or "bird spikes near me" in Chhattisgarh should open a local survey and a written quote. Coverage is Chhattisgarh only: Raipur first, then Bhilai, Durg, Bilaspur, Korba, and the other served towns.`,
   },
   {
     id: "premium",
-    heading: "Best premium SS304 invisible grills & bird nets — local installers, not middlemen",
+    heading: "What a useful local quote should name",
     body: `Premium searches — "best invisible grill company in Raipur", "safety nets Bhilai", "pigeon nets Bilaspur" — get a clear spec. Chhattisgarh pages explain cable spacing, knotless net GSM, anchors, high-rise access, and warranty. Raipur is listed first. Bhilai, Durg, Bilaspur, and the other towns follow in the same sitemap.`,
   },
   {
