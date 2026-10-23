@@ -6,7 +6,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=oneshot
+Type=simple
 WorkingDirectory=@ROOT@
 Environment=ROOT=@ROOT@
 ExecStart=/bin/bash @ROOT@/deploy/vps-run.sh @ROOT@
@@ -14,8 +14,9 @@ StandardOutput=append:/var/log/safeshield-deploy.log
 StandardError=append:/var/log/safeshield-deploy.log
 TimeoutStartSec=3600
 OOMScoreAdjust=-500
+Nice=-5
 # Do not kill npm/next when unrelated sessions log out
-KillMode=control-group
+KillMode=mixed
 
 [Install]
 WantedBy=multi-user.target

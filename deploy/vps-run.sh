@@ -51,9 +51,19 @@ fi
 echo "==> Clean install from lockfile + build + prune"
 export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=4096}"
 export NEXT_TELEMETRY_DISABLED=1
+echo "==> Removing node_modules (partial manual installs break npm ci)"
 rm -rf node_modules
-npm ci --no-audit --no-fund
-npm run build
+echo "==> npm ci (from package-lock.json)"
+if ! npm ci --no-audit --no-fund; then
+  echo "ERROR: npm ci failed — see lines above (do not pgrep-kill this process)"
+  exit 1
+fi
+echo "==> npm run build"
+if ! npm run build; then
+  echo "ERROR: next build failed"
+  exit 1
+fi
+echo "==> npm run deploy:prune"
 npm run deploy:prune
 
 if [ ! -f .next/standalone/server.js ] && [ ! -f .next/standalone/safeshieldsolutions/server.js ]; then

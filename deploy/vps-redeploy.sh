@@ -42,22 +42,25 @@ touch /var/log/safeshield-deploy.log
 chmod 644 /var/log/safeshield-deploy.log
 
 echo "==> Starting systemd redeploy (log: /var/log/safeshield-deploy.log)"
-systemctl start safeshield-deploy.service &
-sleep 3
+: > /var/log/safeshield-deploy.log
+systemctl start --no-block safeshield-deploy.service
+sleep 4
 
-if systemctl is-active --quiet safeshield-deploy.service; then
-  echo "==> Build running. Safe to close SSH."
+state="$(systemctl show safeshield-deploy.service -p ActiveState --value 2>/dev/null || echo unknown)"
+sub="$(systemctl show safeshield-deploy.service -p SubState --value 2>/dev/null || echo unknown)"
+echo "==> Unit ActiveState=$state SubState=$sub"
+
+if [ "$state" = "active" ] || [ "$sub" = "start" ] || [ "$sub" = "running" ]; then
+  echo "==> Build running under systemd. Safe to close SSH."
   echo "    tail -f /var/log/safeshield-deploy.log"
-  echo "    journalctl -u safeshield-deploy -f"
   exit 0
 fi
 
-# oneshot may finish very fast on failure
 if systemctl is-failed --quiet safeshield-deploy.service; then
   echo "ERROR: redeploy failed. Last log lines:"
-  tail -n 40 /var/log/safeshield-deploy.log
+  tail -n 50 /var/log/safeshield-deploy.log
   exit 1
 fi
 
-echo "==> Redeploy finished (or still starting). Check:"
-tail -n 25 /var/log/safeshield-deploy.log
+echo "==> Check log (may still be starting):"
+tail -n 30 /var/log/safeshield-deploy.log
