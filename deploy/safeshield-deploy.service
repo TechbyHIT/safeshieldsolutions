@@ -1,0 +1,21 @@
+# Full redeploy from GitHub (survives SSH disconnect).
+# Installed by: bash deploy/vps-redeploy.sh /root/safeshieldsolutions
+[Unit]
+Description=SafeShield Solutions — pull, npm ci, build, PM2, nginx
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=@ROOT@
+Environment=ROOT=@ROOT@
+ExecStart=/bin/bash @ROOT@/deploy/vps-run.sh @ROOT@
+StandardOutput=append:/var/log/safeshield-deploy.log
+StandardError=append:/var/log/safeshield-deploy.log
+TimeoutStartSec=3600
+OOMScoreAdjust=-500
+# Do not kill npm/next when unrelated sessions log out
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

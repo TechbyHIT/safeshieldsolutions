@@ -7,13 +7,13 @@ cd "$ROOT"
 
 stop_app() {
   if command -v pm2 >/dev/null 2>&1; then
-    echo "==> Stop PM2 so .next is not locked"
+    echo "==> Stop PM2 app safeshield-solutions only (never pgrep repo path — kills npm)"
     pm2 stop safeshield-solutions >/dev/null 2>&1 || true
     pm2 delete safeshield-solutions >/dev/null 2>&1 || true
     sleep 1
   fi
-  if command -v fuser >/dev/null 2>&1 && [ -d .next ]; then
-    fuser -km .next >/dev/null 2>&1 || true
+  if command -v fuser >/dev/null 2>&1; then
+    fuser -k 3010/tcp >/dev/null 2>&1 || true
     sleep 1
   fi
 }
@@ -48,8 +48,13 @@ if [ ! -f .env ]; then
   echo "Created .env from .env.example — edit NEXT_PUBLIC_SITE_URL if needed"
 fi
 
-echo "==> Install + build + prune"
-npm run deploy:prod
+echo "==> Clean install from lockfile + build + prune"
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=4096}"
+export NEXT_TELEMETRY_DISABLED=1
+rm -rf node_modules
+npm ci --no-audit --no-fund
+npm run build
+npm run deploy:prune
 
 if [ ! -f .next/standalone/server.js ] && [ ! -f .next/standalone/safeshieldsolutions/server.js ]; then
   echo "ERROR: standalone server.js missing — build failed"
@@ -65,9 +70,11 @@ else
   exit 1
 fi
 
-echo "==> Nginx HTTP → 127.0.0.1:3010"
+echo "==> Nginx → 127.0.0.1:3010"
 if command -v nginx >/dev/null 2>&1; then
   bash "$ROOT/deploy/install-nginx.sh" "$ROOT"
+  systemctl start nginx 2>/dev/null || true
+  systemctl reload nginx 2>/dev/null || true
 fi
 
 echo "==> Health check"
@@ -75,6 +82,11 @@ sleep 2
 curl -sI http://127.0.0.1:3010/ | head -n 5 || true
 echo
 curl -sI http://127.0.0.1:3010/sitemap.xml | head -n 8 || true
+if [ -f "$ROOT/public/sitemap.xml" ] && grep -q '<sitemapindex' "$ROOT/public/sitemap.xml"; then
+  echo "==> Sitemap index OK in public/"
+else
+  echo "WARN: public/sitemap.xml is not a sitemap index — check sitemap:build"
+fi
 echo
 echo "Done. Open https://safeshieldsolutions.in"
 echo "Sitemap must be HTTP 200:"
