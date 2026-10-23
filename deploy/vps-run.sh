@@ -48,17 +48,21 @@ if [ ! -f .env ]; then
   echo "Created .env from .env.example — edit NEXT_PUBLIC_SITE_URL if needed"
 fi
 
-echo "==> Clean install from lockfile + build + prune"
-export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=4096}"
+echo "==> npm install + build + prune"
+# npm ci + rm -rf node_modules is SIGKILL'd on this VPS (kernel overcommit).
+# npm install reuses existing modules and does not trigger that kill.
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=2048}"
 export NEXT_TELEMETRY_DISABLED=1
-echo "==> Removing node_modules (partial manual installs break npm ci)"
-rm -rf node_modules
-echo "==> npm ci (from package-lock.json)"
-if ! npm ci --no-audit --no-fund; then
-  echo "ERROR: npm ci failed — see lines above (do not pgrep-kill this process)"
+export npm_config_fund=false
+export npm_config_audit=false
+echo "==> npm install --no-audit --no-fund"
+if ! npm install --no-audit --no-fund --no-progress; then
+  echo "ERROR: npm install failed"
   exit 1
 fi
+test -x node_modules/.bin/next && test -x node_modules/.bin/tsx
 echo "==> npm run build"
+export NODE_OPTIONS="--max-old-space-size=4096"
 if ! npm run build; then
   echo "ERROR: next build failed"
   exit 1

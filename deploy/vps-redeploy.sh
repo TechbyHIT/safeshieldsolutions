@@ -33,6 +33,10 @@ if ! swapon --show 2>/dev/null | grep -q .; then
 fi
 
 sysctl -w vm.overcommit_memory=1 >/dev/null 2>&1 || true
+sysctl -w vm.overcommit_ratio=100 >/dev/null 2>&1 || true
+# Drop kernel OOM killer / earlyoom if they exist so npm is not SIGKILL'd.
+systemctl stop systemd-oomd.service systemd-oomd.socket 2>/dev/null || true
+systemctl stop earlyoom 2>/dev/null || true
 
 UNIT="/etc/systemd/system/safeshield-deploy.service"
 sed "s|@ROOT@|$ROOT|g" "$ROOT/deploy/safeshield-deploy.service" > "$UNIT"
@@ -44,7 +48,7 @@ chmod 644 /var/log/safeshield-deploy.log
 echo "==> Starting systemd redeploy (log: /var/log/safeshield-deploy.log)"
 : > /var/log/safeshield-deploy.log
 systemctl start --no-block safeshield-deploy.service
-sleep 4
+sleep 12
 
 state="$(systemctl show safeshield-deploy.service -p ActiveState --value 2>/dev/null || echo unknown)"
 sub="$(systemctl show safeshield-deploy.service -p SubState --value 2>/dev/null || echo unknown)"
