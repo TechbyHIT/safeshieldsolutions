@@ -26,7 +26,12 @@ npm run deploy:prod    # npm ci + build + standalone + prune
 
 `prepare-standalone` copies runtime `public/` + `.next/static` into `.next/standalone/` and strips `.map` files. `deploy:prune` then removes `node_modules` and leftover `.next/*` except `standalone/`.
 
-This VPS cannot run `npm` or `next build` (kernel SIGKILL). Sitemap XML is committed in `public/`. Deploy copies it to nginx and starts PM2 only if `.next/standalone` already exists.
+This VPS cannot run `npm` (kernel SIGKILL). Sitemap XML is committed in `public/` and published by nginx. HTML pages need `.next/standalone`. Rebuild without npm by borrowing `next` from a sibling site:
+
+```bash
+bash deploy/vps-rebuild.sh /root/safeshieldsolutions
+journalctl -u safeshield-rebuild -f
+```
 
 To **publish** from GitHub (survives SSH disconnect — use this on the VPS):
 
