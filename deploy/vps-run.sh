@@ -48,27 +48,47 @@ if [ ! -f .env ]; then
   echo "Created .env from .env.example — edit NEXT_PUBLIC_SITE_URL if needed"
 fi
 
-echo "==> npm install + build + prune"
-# npm ci + rm -rf node_modules is SIGKILL'd on this VPS (kernel overcommit).
-# npm install reuses existing modules and does not trigger that kill.
-export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=2048}"
+echo "==> Build from existing node_modules (npm is SIGKILL'd on this VPS)"
 export NEXT_TELEMETRY_DISABLED=1
-export npm_config_fund=false
-export npm_config_audit=false
-echo "==> npm install --no-audit --no-fund"
-if ! npm install --no-audit --no-fund --no-progress; then
-  echo "ERROR: npm install failed"
+export NODE_OPTIONS="--max-old-space-size=3072"
+
+run_tsx() {
+  if [ -f node_modules/tsx/dist/cli.mjs ]; then
+    node node_modules/tsx/dist/cli.mjs "$@"
+  elif [ -x node_modules/.bin/tsx ]; then
+    node_modules/.bin/tsx "$@"
+  else
+    echo "ERROR: tsx missing under node_modules/"
+    exit 1
+  fi
+}
+
+run_next() {
+  if [ -f node_modules/next/dist/bin/next ]; then
+    node node_modules/next/dist/bin/next "$@"
+  elif [ -x node_modules/.bin/next ]; then
+    node_modules/.bin/next "$@"
+  else
+    echo "ERROR: next missing under node_modules/"
+    ls -la node_modules/next/dist/bin 2>/dev/null || true
+    exit 1
+  fi
+}
+
+echo "==> catalog:build"
+run_tsx scripts/build-catalog.mjs
+echo "==> sitemap:build"
+run_tsx scripts/generate-sitemap.mjs
+if ! grep -q '<sitemapindex' public/sitemap.xml; then
+  echo "ERROR: public/sitemap.xml is not a sitemap index"
   exit 1
 fi
-test -x node_modules/.bin/next && test -x node_modules/.bin/tsx
-echo "==> npm run build"
-export NODE_OPTIONS="--max-old-space-size=4096"
-if ! npm run build; then
-  echo "ERROR: next build failed"
-  exit 1
-fi
-echo "==> npm run deploy:prune"
-npm run deploy:prune
+echo "==> next build"
+run_next build
+echo "==> prepare-standalone"
+node scripts/prepare-standalone.mjs
+echo "==> deploy:prune"
+node scripts/prune-production.mjs
 
 if [ ! -f .next/standalone/server.js ] && [ ! -f .next/standalone/safeshieldsolutions/server.js ]; then
   echo "ERROR: standalone server.js missing — build failed"

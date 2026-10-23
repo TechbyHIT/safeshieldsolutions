@@ -48,7 +48,7 @@ chmod 644 /var/log/safeshield-deploy.log
 echo "==> Starting systemd redeploy (log: /var/log/safeshield-deploy.log)"
 : > /var/log/safeshield-deploy.log
 systemctl start --no-block safeshield-deploy.service
-sleep 12
+sleep 8
 
 state="$(systemctl show safeshield-deploy.service -p ActiveState --value 2>/dev/null || echo unknown)"
 sub="$(systemctl show safeshield-deploy.service -p SubState --value 2>/dev/null || echo unknown)"

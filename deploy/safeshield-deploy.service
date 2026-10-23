@@ -1,7 +1,7 @@
 # Full redeploy from GitHub (survives SSH disconnect).
 # Installed by: bash deploy/vps-redeploy.sh /root/safeshieldsolutions
 [Unit]
-Description=SafeShield Solutions — pull, npm install, build, PM2, nginx
+Description=SafeShield Solutions — pull, build from existing node_modules, PM2, nginx
 After=network-online.target
 Wants=network-online.target
 
