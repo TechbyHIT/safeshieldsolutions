@@ -26,7 +26,9 @@ npm run deploy:prod    # npm ci + build + standalone + prune
 
 `prepare-standalone` copies runtime `public/` + `.next/static` into `.next/standalone/` and strips `.map` files. `deploy:prune` then removes `node_modules` and leftover `.next/*` except `standalone/`.
 
-To **full redeploy** from GitHub (survives SSH disconnect — use this on the VPS):
+This VPS cannot run `npm` or `next build` (kernel SIGKILL). Sitemap XML is committed in `public/`. Deploy copies it to nginx and starts PM2 only if `.next/standalone` already exists.
+
+To **publish** from GitHub (survives SSH disconnect — use this on the VPS):
 
 ```bash
 cd /root/safeshieldsolutions

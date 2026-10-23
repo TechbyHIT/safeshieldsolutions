@@ -43,9 +43,7 @@ prisma/*.db-journal
 /reports/*.csv
 !/reports/.gitkeep
 
-# public sitemaps (generated at build; index is /sitemap.xml, children are named urlsets)
-/public/sitemap.xml
-/public/sitemap-*.xml
+# gzip copies of sitemaps (XML is committed so the VPS can publish without npm)
 /public/sitemap.xml.gz
 /public/sitemap-*.xml.gz
 
