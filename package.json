@@ -10,7 +10,7 @@
     "dev": "next dev --turbopack -p 3010",
     "catalog:build": "tsx scripts/build-catalog.mjs",
     "sitemap:build": "tsx scripts/generate-sitemap.mjs",
-    "build": "npm run catalog:build && npm run sitemap:build && next build && node scripts/prepare-standalone.mjs",
+    "build": "npm run catalog:build && npm run sitemap:build && next build && node scripts/prepare-standalone.mjs && node scripts/add-linux-sharp.mjs",
     "build:next": "next build",
     "storage:report": "node scripts/storage-report.mjs",
     "deploy:prune": "node scripts/prune-production.mjs",
