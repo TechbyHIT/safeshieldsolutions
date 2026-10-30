@@ -17,7 +17,7 @@ export function MaterialsHonest() {
         {materialGrades.map((item) => (
           <li key={item.grade} className="bg-white p-6 ring-1 ring-neutral-200">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent-600">{item.grade}</p>
-            <h3 className="mt-2 font-display text-xl font-semibold text-brand-950">{item.title}</h3>
+            <p className="mt-2 font-display text-xl font-semibold text-brand-950">{item.title}</p>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600 md:text-base">{item.note}</p>
           </li>
         ))}

@@ -19,7 +19,7 @@ export function WhySafeShield() {
             <span className="font-display text-3xl font-semibold text-brand-200" aria-hidden>
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="mt-3 font-display text-lg font-semibold text-brand-950">{item.title}</h3>
+            <p className="mt-3 font-display text-lg font-semibold text-brand-950">{item.title}</p>
             <p className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{item.body}</p>
           </li>
         ))}

@@ -19,7 +19,7 @@ export function OpeningDecides() {
             <span className="font-display text-5xl font-semibold text-white/15" aria-hidden>
               {step.step}
             </span>
-            <h3 className="mt-2 font-display text-xl font-semibold text-white">{step.title}</h3>
+            <p className="mt-2 font-display text-xl font-semibold text-white">{step.title}</p>
             <p className="mt-3 text-sm leading-relaxed text-neutral-300 md:text-base">{step.description}</p>
           </li>
         ))}

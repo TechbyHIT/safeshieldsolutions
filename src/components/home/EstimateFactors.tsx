@@ -16,7 +16,7 @@ export function EstimateFactors() {
       <ul className="mt-10 grid gap-6 sm:grid-cols-2">
         {priceFactors.map((factor) => (
           <li key={factor.title} className="border-l-2 border-accent-500 pl-5">
-            <h3 className="font-display text-lg font-semibold text-brand-950">{factor.title}</h3>
+            <p className="font-display text-lg font-semibold text-brand-950">{factor.title}</p>
             <p className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{factor.description}</p>
           </li>
         ))}

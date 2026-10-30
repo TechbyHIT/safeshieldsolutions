@@ -23,7 +23,7 @@ export function PopularServices() {
         {materialGrades.map((item) => (
           <div key={item.grade} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-bold uppercase tracking-wide text-accent-600">{item.grade} quality</p>
-            <h3 className="mt-1 text-lg font-bold text-neutral-900">{item.title}</h3>
+            <p className="mt-1 text-lg font-bold text-neutral-900">{item.title}</p>
             <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.note}</p>
           </div>
         ))}

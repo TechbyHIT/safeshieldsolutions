@@ -28,6 +28,14 @@ export const RAIPUR_SERVICE_LINKS = [
   { slug: "child-safety-grills", name: "Child safety grills" },
   { slug: "mosquito-nets", name: "Mosquito nets" },
   { slug: "cloth-hangers", name: "Cloth hangers" },
+  { slug: "staircase-invisible-grills", name: "Staircase invisible grills" },
+  { slug: "staircase-safety-nets", name: "Staircase safety nets" },
+  { slug: "open-area-safety-nets", name: "Open area and courtyard nets" },
+  { slug: "monkey-safety-nets", name: "Monkey safety nets" },
+  { slug: "sparrow-protection-nets", name: "Sparrow protection nets" },
+  { slug: "car-parking-safety-nets", name: "Car parking safety nets" },
+  { slug: "swimming-pool-safety-nets", name: "Swimming pool safety nets" },
+  { slug: "shade-nets", name: "Shade nets" },
 ] as const;
 
 export function raipurLocalityLinks() {

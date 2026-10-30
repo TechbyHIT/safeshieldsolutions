@@ -54,6 +54,30 @@ export function buildLocalBusinessSchema(areaServedName?: string, neighborhood?:
       ...(areaServedName ? [{ "@type": "City", name: areaServedName }] : []),
       ...(neighborhood ? [{ "@type": "Place", name: neighborhood }] : []),
     ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Invisible grills, safety nets and home safety installation",
+      itemListElement: [
+        "Invisible Grills",
+        "Balcony Safety Nets",
+        "Pigeon Safety Nets",
+        "Child Safety Nets",
+        "Bird Spikes",
+        "Mosquito Nets",
+        "Cloth Hangers",
+        "Staircase Invisible Grills",
+        "Monkey Safety Nets",
+        "Shade Nets",
+      ].map((name) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name,
+          provider: { "@id": entityId("organization") },
+          areaServed: { "@type": "State", name: "Chhattisgarh" },
+        },
+      })),
+    },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
