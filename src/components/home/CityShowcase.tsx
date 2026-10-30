@@ -79,27 +79,22 @@ interface FaqSectionProps {
 export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
   return (
     <Section id={id} ariaLabel="Frequently asked questions">
-      <div className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
-          Helpful answers
+      <div>
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">
+          Before you book
         </p>
-        <h2 className="mt-2 text-3xl font-bold text-neutral-900">
+        <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950">
           Questions worth asking before installation
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-          These answers help you compare design, price, and purpose without unsupported claims.
+        <p className="mt-3 max-w-2xl text-neutral-600">
+          Straight answers on grade, price, and Raipur coverage — without “best” or invented stats.
         </p>
       </div>
-      <dl className="mx-auto mt-10 max-w-3xl space-y-4">
+      <dl className="mx-auto mt-10 max-w-3xl divide-y divide-neutral-200 border-y border-neutral-200">
         {faqs.map((faq) => (
-          <div
-            key={faq.question}
-            className="rounded-xl border border-neutral-200 bg-white p-5"
-          >
-            <dt className="font-semibold text-neutral-900">{faq.question}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-neutral-600">
-              {faq.answer}
-            </dd>
+          <div key={faq.question} className="py-5">
+            <dt className="font-display text-lg font-semibold text-brand-950">{faq.question}</dt>
+            <dd className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{faq.answer}</dd>
           </div>
         ))}
       </dl>
@@ -110,14 +105,16 @@ export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
 export function FinalCta() {
   const telUrl = `tel:${business.phone.replace(/\s/g, "")}`;
   return (
-    <Section className="bg-gradient-to-r from-brand-950 to-brand-800" ariaLabel="Contact">
-      <div className="text-center text-white">
-        <h2 className="text-3xl font-bold">Ready to compare the right fitting for your opening?</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-neutral-300">
-          Send the opening, your town, and the main concern — children, pets, birds, visibility,
-          or sports use. That is enough to start a useful conversation.
+    <Section className="bg-brand-950" ariaLabel="Contact">
+      <div className="max-w-3xl text-white">
+        <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+          Get a free site inspection in Raipur
+        </h2>
+        <p className="mt-4 max-w-2xl text-neutral-300">
+          Tell us the locality, the opening, and the worry — children, pets, pigeons, drying, or a
+          practice net. We answer with a visit slot where we serve.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="mt-8 flex flex-wrap gap-4">
           <Button href={routes.contact} size="lg" className="bg-accent-500 text-white hover:bg-accent-400">
             Send a photo for a quote
           </Button>

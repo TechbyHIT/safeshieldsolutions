@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --font-sans: "Inter", system-ui, sans-serif;
+    --font-sans: var(--font-sans), system-ui, sans-serif;
+    --font-display: var(--font-display), Georgia, serif;
 
     --color-primary-50: #e8f1fc;
     --color-primary-100: #d0e3f8;
@@ -149,6 +150,19 @@
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 

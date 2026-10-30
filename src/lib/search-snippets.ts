@@ -193,11 +193,11 @@ export function buildSearchSnippet(input: SearchSnippetInput): SearchSnippet {
   switch (input.kind) {
     case "home":
       title = "Invisible Grills & Safety Nets in Raipur | SafeShield";
-      h1 = "Invisible grills and safety nets for Raipur homes";
+      h1 = "Invisible grills and safety nets. Fitted to the opening you actually use.";
       description =
-        "Invisible grills, balcony safety nets, and pigeon nets in Raipur — Shankar Nagar, Telibandha, VIP Road, Naya Raipur and other listed areas. Free site survey; written quote after measurement.";
+        "Invisible grills, balcony safety nets, and pigeon nets in Raipur — Shankar Nagar, Telibandha, VIP Road, Naya Raipur and other listed areas. SS304 by default; free survey; written quote after measurement.";
       intro =
-        "SafeShield Solutions surveys and fits invisible grills, safety nets, and pigeon nets in Raipur first, then the other served Chhattisgarh towns. Each listed Raipur locality has its own pages. The quote follows a measurement of the opening.";
+        "SafeShield Solutions surveys and fits invisible grills, safety nets, and pigeon nets in Raipur first, then the other served Chhattisgarh towns. Each listed Raipur locality has its own pages. The quote follows a measurement of the opening — not a statewide package rate.";
       break;
     case "service":
       title = `${service} | SafeShield Solutions`;

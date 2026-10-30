@@ -17,8 +17,8 @@ export function RaipurFocus() {
 
   return (
     <Section className="bg-white" ariaLabel="Raipur invisible grills and safety nets">
-      <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">Raipur first</p>
-      <h2 className="mt-2 max-w-3xl text-3xl font-bold text-neutral-900">
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">Raipur first</p>
+      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
         Invisible grills, safety nets and pigeon nets in Raipur
       </h2>
       <p className="mt-3 max-w-3xl text-neutral-700">

@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
+import { StarterFittings } from "@/components/home/StarterFittings";
 import { RaipurFocus } from "@/components/home/RaipurFocus";
-import { RaipurEntryLinks } from "@/components/seo/RaipurEntryLinks";
-import { ProblemSelector } from "@/components/home/ProblemSelector";
+import { OpeningDecides } from "@/components/home/OpeningDecides";
+import { EstimateFactors } from "@/components/home/EstimateFactors";
+import { MaterialsHonest } from "@/components/home/MaterialsHonest";
+import { WhySafeShield } from "@/components/home/WhySafeShield";
 import { PopularServices } from "@/components/home/PopularServices";
-import { ExtendedServices } from "@/components/home/ExtendedServices";
-import { PriceGuide } from "@/components/home/PriceGuide";
 import { ProcessSteps } from "@/components/home/ProcessSteps";
 import { ProjectGalleryPreview } from "@/components/home/ProjectGalleryPreview";
-import { HomePhotoStream } from "@/components/home/HomePhotoStream";
-import { NearMeKeywordHub } from "@/components/home/NearMeKeywordHub";
-import { AreaExplorer } from "@/components/home/AreaExplorer";
-import {
-  CityShowcase,
-  FaqSection,
-  FinalCta,
-} from "@/components/home/CityShowcase";
 import { Testimonials } from "@/components/home/Testimonials";
+import { FaqSection, FinalCta } from "@/components/home/CityShowcase";
 import { homeFaqs } from "@/config/home-content";
 import { buildBrandKeywordPlan } from "@/lib/keyword-targeting";
 import { buildPageMetadata } from "@/lib/metadata";
@@ -40,19 +34,15 @@ export default function HomePage() {
       <JsonLd data={[buildWebsiteSchema(), buildLocalBusinessSchema("Raipur"), buildFaqSchema(homeFaqs)]} />
 
       <HomeHero />
-      <RaipurEntryLinks />
+      <StarterFittings />
       <RaipurFocus />
-
-      <ProblemSelector />
+      <OpeningDecides />
+      <EstimateFactors />
+      <MaterialsHonest />
+      <WhySafeShield />
       <PopularServices />
-      <ProjectGalleryPreview />
-      <HomePhotoStream />
-      <ExtendedServices />
-      <AreaExplorer />
-      <NearMeKeywordHub />
-      <CityShowcase />
-      <PriceGuide />
       <ProcessSteps />
+      <ProjectGalleryPreview />
       <Testimonials />
       <FaqSection faqs={homeFaqs} />
       <FinalCta />

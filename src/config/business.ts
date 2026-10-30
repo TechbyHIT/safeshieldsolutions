@@ -1,9 +1,9 @@
 export const business = {
   name: "SafeShield Solutions",
   legalName: "SafeShield Solutions",
-  tagline: "Premium invisible grills, safety nets & home protection across Chhattisgarh",
+  tagline: "Measurement-led invisible grills and safety nets for Raipur and Chhattisgarh",
   description:
-    "Professional installation of invisible grills, safety nets, mosquito nets, cloth hangers, sports nets, zip screens, mesh doors, cricket box grass, and bird protection solutions for apartments, villas, and commercial properties.",
+    "SafeShield Solutions surveys and fits invisible grills, balcony safety nets, pigeon nets, bird spikes, cloth hangers, and related home protection across Raipur first, then other served Chhattisgarh towns. Grades are named; quotes follow a site measurement.",
   phone: "+91-8977235565",
   whatsapp: "+918977235565",
   email: "info@safeshieldsolutions.in",

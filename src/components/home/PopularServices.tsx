@@ -7,14 +7,15 @@ import { routes } from "@/config/routes";
 export function PopularServices() {
   return (
     <Section className="bg-neutral-50" ariaLabel="Our services">
-      <div className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-accent-600">Our services</p>
-        <h2 className="mt-2 text-3xl font-bold text-neutral-900 md:text-4xl">
-          Complete home and building safety fittings
+      <div>
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-600">Full catalogue</p>
+        <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+          Invisible grills, nets, and related fittings
         </h2>
-        <p className="mx-auto mt-3 max-w-3xl text-neutral-600">
-          Invisible grills, safety nets, pigeon nets, and child protection — specified in SS304
-          or SS316 after the opening is measured.
+        <p className="mt-3 max-w-2xl text-neutral-600">
+          Invisible grills, safety nets, pigeon nets, and child protection — specified in SS304 or
+          SS316 after the opening is measured. Each service page explains the system before the town
+          pages name where we survey.
         </p>
       </div>
 

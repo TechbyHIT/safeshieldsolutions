@@ -3,32 +3,24 @@ import { installSteps } from "@/config/home-content";
 
 export function ProcessSteps() {
   return (
-    <Section ariaLabel="Installation process">
-      <div className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
-          Simple installation process
-        </p>
-        <h2 className="mt-2 text-3xl font-bold text-neutral-900">
-          From one photo to a checked fitting
-        </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-          The exact steps can vary by opening and access, but the decision should
-          always be clear before work starts.
-        </p>
-      </div>
-      <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <Section className="bg-neutral-50" ariaLabel="Installation process">
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">From message to handover</p>
+      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+        How installation works
+      </h2>
+      <p className="mt-3 max-w-2xl text-neutral-600">
+        A clear path from the first message to handover, for a busy flat in Raipur or a terrace in
+        Bhilai.
+      </p>
+
+      <ol className="mt-10 space-y-0 divide-y divide-neutral-200 border-y border-neutral-200">
         {installSteps.map((step) => (
-          <li
-            key={step.step}
-            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-card"
-          >
-            <span className="text-3xl font-bold text-brand-700">{step.step}</span>
-            <h3 className="mt-3 text-lg font-semibold text-neutral-900">
-              {step.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-600">
-              {step.description}
-            </p>
+          <li key={step.step} className="grid gap-2 py-6 sm:grid-cols-[4rem_1fr] sm:gap-6">
+            <span className="font-display text-2xl font-semibold text-accent-600">{step.step}</span>
+            <div>
+              <h3 className="font-display text-lg font-semibold text-brand-950">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{step.description}</p>
+            </div>
           </li>
         ))}
       </ol>
