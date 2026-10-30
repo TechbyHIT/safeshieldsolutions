@@ -115,6 +115,14 @@ export const servicePhotoFolders: Record<string, string> = {
   "badminton-court-nets": "cricket-nets",
   "volleyball-nets": "cricket-nets",
   "tennis-court-nets": "cricket-nets",
+  "staircase-invisible-grills": "balcony-invisible-grills",
+  "staircase-safety-nets": "safety-nets",
+  "open-area-safety-nets": "safety-nets",
+  "monkey-safety-nets": "safety-nets",
+  "sparrow-protection-nets": "pigeon-safety-nets",
+  "car-parking-safety-nets": "pigeon-safety-nets",
+  "swimming-pool-safety-nets": "safety-nets",
+  "shade-nets": "safety-nets",
 };
 
 function buildPhoto(folder: string, filename: string): ProjectPhoto {

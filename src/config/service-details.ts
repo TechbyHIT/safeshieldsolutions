@@ -598,6 +598,301 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       },
     ],
   },
+  "staircase-invisible-grills": {
+    overview:
+      "Staircase invisible grills run slim SS304 cables along open stair sides, duplex voids, and stair-landing windows. They close the gap a child or pet could slip through while keeping the staircase open to light. The cable spacing follows the stair pitch, so each run is measured on site.",
+    issuesSolved: [
+      "Open banister gaps wide enough for a child to slip through",
+      "Duplex and villa voids beside the staircase",
+      "Stair-landing windows on upper floors",
+      "Old MS grills on stairs that rust or block light",
+    ],
+    whereWorksBest: [
+      "Duplex apartments and independent houses with internal stairs",
+      "Open-riser and floating staircases",
+      "Stair-landing windows in apartment blocks",
+    ],
+    materials: [
+      "SS304 stainless-steel cable as standard",
+      "SS316 only where the stair is exposed to constant damp",
+      "Top and bottom channels or anchors sized to the stair stringer or wall",
+    ],
+    priceFactors: [
+      "Length of the stair run and number of landings",
+      "Angled versus straight channels",
+      "Cable spacing chosen for children or pets",
+      "Fixing surface: concrete, wood, or steel stringer",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check cable tension once or twice a year and wipe channels clean. Angled stair runs are checked at handover so cables stay evenly spaced along the slope.",
+    extraSections: [
+      {
+        heading: "Invisible grill or safety net for a staircase?",
+        body: "Grills suit stairs where the look matters and the opening is fixed. Nets suit temporary needs, very irregular gaps, or rented homes where drilling must stay minimal. We show both options on site.",
+      },
+    ],
+    extraFaqs: [
+      {
+        question: "Can invisible grills follow the slope of a staircase?",
+        answer:
+          "Yes. The channels are fixed parallel to the stair pitch, and the cables run vertically or along the slope. We measure the angle on site so the spacing stays even from the bottom step to the landing.",
+      },
+    ],
+  },
+  "staircase-safety-nets": {
+    overview:
+      "Staircase safety nets close open banister gaps, stairwell voids, and duplex staircase sides with UV-stable mesh. They are a quick, low-drilling way to stop toddlers, pets, or dropped objects from going through gaps in a railing.",
+    issuesSolved: [
+      "Wide gaps between banister rails",
+      "Open stairwells in apartment blocks and schools",
+      "Duplex staircases beside a double-height void",
+    ],
+    whereWorksBest: [
+      "Homes with toddlers or elderly family members",
+      "Rented homes where drilling has to stay minimal",
+      "School and office stairwells with open sides",
+    ],
+    materials: [
+      "UV-stabilised HDPE or nylon mesh",
+      "Mesh size chosen for children or pets",
+      "SS or coated hooks and border rope",
+    ],
+    priceFactors: [
+      "Total measured area of the gaps",
+      "Number of landings and turns",
+      "Mesh type and colour",
+      "Fixing points available on the railing or wall",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check the border rope and hooks every few months, especially where the net is pushed by children or pets. Replace sections that show cuts or UV wear.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Will a staircase net damage my railing?",
+        answer:
+          "Most staircase nets are tied to the existing railing with border rope and a few small hooks. We check the railing first, explain where any drilling is needed, and agree it with you before fitting.",
+      },
+    ],
+  },
+  "open-area-safety-nets": {
+    overview:
+      "Open area safety nets cover courtyards, atriums, central voids, and gaps beside glass railings. They stop falls, dropped objects, and birds in large open spaces without roofing them over, so light and air still come through.",
+    issuesSolved: [
+      "Central courtyards and atrium voids in apartments",
+      "Double-height voids in villas and duplexes",
+      "Gaps beside or below glass balcony railings",
+      "Birds entering open internal spaces",
+    ],
+    whereWorksBest: [
+      "Residential complexes with open central voids",
+      "Villas and bungalows with internal courtyards",
+      "Commercial lobbies and atriums",
+    ],
+    materials: [
+      "UV-stabilised HDPE or nylon mesh",
+      "Steel wire rope perimeter for large spans",
+      "Anchors sized to the slab or beam edge",
+    ],
+    priceFactors: [
+      "Span and total area of the opening",
+      "Perimeter wire rope and anchor count",
+      "Working height and access equipment",
+      "Mesh type chosen for falls, objects, or birds",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Large spans are checked for sag after the monsoon. Clearing leaves and debris from the net keeps it from stretching.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Can you net a large courtyard without blocking light?",
+        answer:
+          "Yes. Open area nets use mesh that lets most light and air through. On larger spans we run a steel wire rope around the edge so the net stays taut. We measure the span and suggest the mesh during the site visit.",
+      },
+    ],
+  },
+  "monkey-safety-nets": {
+    overview:
+      "Monkey safety nets use heavier, tear-resistant mesh and stronger fixing to keep monkeys out of balconies, terraces, and gardens. Monkeys pull and climb, so a standard pigeon net is not enough; the mesh, border, and anchors are all upgraded.",
+    issuesSolved: [
+      "Monkeys entering balconies and kitchens",
+      "Damage to plants, clothes, and terrace items",
+      "Torn pigeon nets that monkeys have pulled down",
+    ],
+    whereWorksBest: [
+      "Homes near trees, gardens, and open land",
+      "Terraces and terrace gardens",
+      "Balconies on lower and middle floors",
+    ],
+    materials: [
+      "Heavy-gauge nylon or HDPE mesh",
+      "Steel wire rope border",
+      "Stronger anchors at closer spacing",
+    ],
+    priceFactors: [
+      "Measured area and number of openings",
+      "Mesh thickness",
+      "Wire rope border and anchor count",
+      "Access height",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check the net after any monkey activity, and repair cuts early so a small tear does not grow. Anchors are rechecked during routine visits.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Is a monkey net different from a pigeon net?",
+        answer:
+          "Yes. Monkeys pull, bite, and climb, so a monkey net uses thicker mesh, a steel wire rope border, and more anchors. A pigeon net is lighter and is mainly meant to block birds, so it usually tears under monkey pressure.",
+      },
+    ],
+  },
+  "sparrow-protection-nets": {
+    overview:
+      "Sparrow protection nets use a finer mesh than standard pigeon nets. Small birds such as sparrows and mynas can pass through pigeon mesh, so this net closes those smaller gaps on balconies, ducts, and window openings.",
+    issuesSolved: [
+      "Small birds getting through an existing pigeon net",
+      "Nesting in ducts, AC ledges, and window frames",
+      "Droppings in utility and drying areas",
+    ],
+    whereWorksBest: [
+      "Utility balconies and ducts",
+      "Window openings and ventilators",
+      "Open areas where pigeon nets are already fitted",
+    ],
+    materials: [
+      "Fine-gauge UV-stabilised HDPE bird mesh",
+      "Transparent or black mesh to suit the facade",
+      "Border rope and corrosion-resistant hooks",
+    ],
+    priceFactors: [
+      "Measured area",
+      "Mesh size and colour",
+      "Number of separate openings",
+      "Access height",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check the edges after the monsoon, as small birds look for the smallest gap. Clean the mesh gently with water when dust builds up.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Do I need a sparrow net if I already have a pigeon net?",
+        answer:
+          "Only if small birds are still getting in. Pigeon mesh stops pigeons but can let sparrows and mynas through. A finer sparrow net can be fitted over the same opening. We check the gap size during the site visit.",
+      },
+    ],
+  },
+  "car-parking-safety-nets": {
+    overview:
+      "Car parking safety nets are fitted overhead or along the sides of stilt and open parking. They keep pigeons from roosting above parked cars and catch small falling debris from balconies above.",
+    issuesSolved: [
+      "Bird droppings on parked cars",
+      "Pigeons roosting on parking beams and pipes",
+      "Small objects falling from upper floors into parking",
+    ],
+    whereWorksBest: [
+      "Stilt parking in apartment blocks",
+      "Open parking under balconies",
+      "Covered parking with exposed beams and pipes",
+    ],
+    materials: [
+      "UV-stabilised HDPE bird mesh",
+      "Steel wire rope support for wide spans",
+      "Anchors fixed to beams and columns",
+    ],
+    priceFactors: [
+      "Parking area and ceiling height",
+      "Overhead versus side netting",
+      "Wire rope support and anchor count",
+      "Society working hours and access",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check overhead nets for sag and clear any debris that collects. Pipe and beam edges are rechecked so birds do not find a new gap.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Can parking nets be fitted without blocking lights and pipes?",
+        answer:
+          "Yes. The net is shaped around lights, pipes, and sprinklers, with small access openings where maintenance is needed. We map these points during the survey and plan the net layout with the society before installation.",
+      },
+    ],
+  },
+  "swimming-pool-safety-nets": {
+    overview:
+      "Swimming pool safety nets are tensioned across the pool or along its edge when the pool is not in use. They add a protective layer for children and pets around home and club pools. A net is an added layer and does not replace fencing or adult supervision.",
+    issuesSolved: [
+      "Unsupervised access to a home or villa pool",
+      "Leaves and debris falling into the pool",
+      "Pets falling into the water",
+    ],
+    whereWorksBest: [
+      "Villa and bungalow pools",
+      "Terrace pools in apartments",
+      "Clubhouse pools outside opening hours",
+    ],
+    materials: [
+      "UV- and chlorine-resistant mesh",
+      "Tensioning straps and deck anchors",
+      "SS hardware for wet surroundings",
+    ],
+    priceFactors: [
+      "Pool size and shape",
+      "Deck material for anchors",
+      "Removable versus fixed tensioning",
+      "Mesh size chosen for children or debris",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Rinse the net and hardware after heavy use and check the tension straps regularly. SS hardware near pools is checked more often for chlorine wear.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Can a pool net be removed when we want to swim?",
+        answer:
+          "Yes. Most pool nets use tensioning straps that can be released and refitted by an adult. We show you how to remove and refit it at handover, and recommend keeping supervision and fencing in place as well.",
+      },
+    ],
+  },
+  "shade-nets": {
+    overview:
+      "Shade nets are UV-stabilised HDPE nets that cut direct sunlight on terraces, terrace gardens, parking areas, and nurseries. Different shade percentages let you choose how much sun passes through.",
+    issuesSolved: [
+      "Hot terraces that cannot be used in summer",
+      "Plants burning in direct sun",
+      "Cars parked in open sun",
+    ],
+    whereWorksBest: [
+      "Terrace gardens and sit-outs",
+      "Open parking areas",
+      "Plant nurseries and kitchen gardens",
+    ],
+    materials: [
+      "UV-stabilised HDPE shade net in several shade percentages",
+      "Steel wire rope or GI pipe frame",
+      "Corrosion-resistant fixing hardware",
+    ],
+    priceFactors: [
+      "Area to be covered",
+      "Shade percentage",
+      "Frame type: wire rope or pipe structure",
+      "Height and access",
+    ],
+    installSteps: defaultInstallSteps,
+    maintenance:
+      "Check the net and ties before the monsoon and after strong winds. Removable shade nets can be taken down during the rains if you prefer.",
+    extraSections: [],
+    extraFaqs: [
+      {
+        question: "Which shade percentage should I choose?",
+        answer:
+          "It depends on use. Lower shade percentages suit plants that need some sun, and higher percentages suit sit-outs and parking. We show samples during the site visit so you can see how much light each one lets through.",
+      },
+    ],
+  },
 };
 
 export function getServiceDetail(slug: string): ServiceDetail {

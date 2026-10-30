@@ -71,6 +71,14 @@ const SERVICE_HOOK: Record<string, string> = {
   "cricket-nets": "practice nets that contain balls on terraces and grounds",
   "cricket-box-grass": "artificial turf specified for box-cricket bounce",
   "sports-nets": "multi-sport practice nets for terraces and academies",
+  "staircase-invisible-grills": "SS304 cables along open stair sides and duplex voids",
+  "staircase-safety-nets": "mesh across banister gaps and open stairwells",
+  "open-area-safety-nets": "nets across courtyards, atriums, and internal voids",
+  "monkey-safety-nets": "heavier mesh that keeps monkeys off balconies and terraces",
+  "sparrow-protection-nets": "finer mesh for small birds that slip through pigeon nets",
+  "car-parking-safety-nets": "overhead nets that keep birds and debris off parked cars",
+  "swimming-pool-safety-nets": "tensioned cover and edge nets for home and club pools",
+  "shade-nets": "UV-stabilised HDPE shade for terraces, gardens, and parking",
 };
 
 const PLACE_HOOK: Record<string, string> = {
