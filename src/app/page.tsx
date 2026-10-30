@@ -29,12 +29,18 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const brandPlan = buildBrandKeywordPlan();
 const homeSnippet = buildSearchSnippet({ kind: "home" });
 
-export const metadata: Metadata = buildPageMetadata({
-  title: homeSnippet.title,
-  description: homeSnippet.description,
-  path: "/",
-  keywords: brandPlan.metaKeywords,
-});
+export const metadata: Metadata = {
+  ...buildPageMetadata({
+    title: homeSnippet.title,
+    description: homeSnippet.description,
+    path: "/",
+    keywords: brandPlan.metaKeywords,
+  }),
+  other: {
+    "geo.region": "IN-CT",
+    "geo.placename": "Raipur, Chhattisgarh",
+  },
+};
 
 export default function HomePage() {
   return (

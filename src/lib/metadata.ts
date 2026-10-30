@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
+import { business } from "@/config/business";
 import { seoDefaults } from "@/config/seo";
 import {
   isPageIndexable,
@@ -51,6 +52,9 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
   return {
     title,
     description,
+    authors: [{ name: business.name, url: site.url }],
+    creator: business.name,
+    publisher: business.name,
     keywords: [...(input.keywords ?? seoDefaults.defaultKeywords)],
     alternates: {
       canonical,
