@@ -5,7 +5,7 @@ export function EstimateFactors() {
   return (
     <Section id="estimate-factors" ariaLabel="What shapes your estimate">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-600">Pricing</p>
-      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+      <h2 id="estimate-factors-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
         What shapes your estimate?
       </h2>
       <p className="mt-3 max-w-2xl text-neutral-600">

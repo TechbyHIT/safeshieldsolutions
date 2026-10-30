@@ -3,9 +3,9 @@ import { openingSteps } from "@/config/home-content";
 
 export function OpeningDecides() {
   return (
-    <Section className="bg-brand-950 text-white" ariaLabel="How the opening decides the system">
+    <Section id="how-we-choose" className="bg-brand-950 text-white" ariaLabel="How the opening decides the system">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-shield-300">How we work</p>
-      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">
+      <h2 id="how-we-choose-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">
         The opening decides the system
       </h2>
       <p className="mt-3 max-w-2xl text-neutral-300">

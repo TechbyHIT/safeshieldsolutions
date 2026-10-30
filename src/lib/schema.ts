@@ -3,6 +3,7 @@ import { site } from "@/config/site";
 import { TOPIC_CLUSTERS, entityId } from "@/lib/entity-seo";
 import { buildCanonicalUrl } from "@/lib/metadata";
 import { videoObjectSchema, type EligibleVideo } from "@/lib/media-seo";
+import { SEO_CONTENT_UPDATED_ISO } from "@/lib/seo-freshness";
 
 export interface BreadcrumbItem {
   name: string;
@@ -23,6 +24,16 @@ export function buildOrganizationSchema() {
     telephone: business.phone,
     email: business.email,
     areaServed: { "@type": "State", name: "Chhattisgarh" },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: business.phone,
+        email: business.email,
+        areaServed: "IN-CT",
+        availableLanguage: ["English", "Hindi"],
+      },
+    ],
     sameAs: Object.values(business.social),
   };
 }
@@ -95,13 +106,15 @@ export function buildBreadcrumbSchema(items: BreadcrumbItem[]) {
   };
 }
 
-export function buildFaqSchema(faqs: { question: string; answer: string }[]) {
+export function buildFaqSchema(faqs: { question: string; answer: string }[], description?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    ...(description ? { description } : {}),
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
+      text: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
         text: faq.answer,
@@ -117,12 +130,18 @@ export function buildWebsiteSchema() {
     "@id": `${site.url.replace(/\/$/, "")}/#website`,
     name: site.name,
     url: site.url,
+    description: business.description,
     inLanguage: site.locale,
     publisher: { "@id": entityId("organization") },
   };
 }
 
-export function buildWebPageSchema(title: string, description: string, path: string) {
+export function buildWebPageSchema(
+  title: string,
+  description: string,
+  path: string,
+  dateModified: string = SEO_CONTENT_UPDATED_ISO,
+) {
   const url = buildCanonicalUrl(path);
   return {
     "@context": "https://schema.org",
@@ -131,8 +150,16 @@ export function buildWebPageSchema(title: string, description: string, path: str
     name: title,
     description,
     url,
+    inLanguage: site.locale,
+    dateModified,
     isPartOf: { "@id": `${site.url.replace(/\/$/, "")}/#website` },
+    about: { "@id": entityId("organization") },
+    author: { "@id": entityId("organization") },
     publisher: { "@id": entityId("organization") },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "[data-speakable]"],
+    },
   };
 }
 

@@ -7,12 +7,12 @@ export function Testimonials() {
   if (balconyPhotos.length === 0) return null;
 
   return (
-    <Section ariaLabel="Installation photos">
+    <Section id="installation-photos" ariaLabel="Installation photos">
       <div className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
           Installation photos
         </p>
-        <h2 className="mt-2 text-3xl font-bold text-neutral-900">
+        <h2 id="installation-photos-heading" className="mt-2 text-3xl font-bold text-neutral-900">
           Finished invisible-grill work
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-neutral-600">

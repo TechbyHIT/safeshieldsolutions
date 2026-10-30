@@ -3,9 +3,9 @@ import { materialGrades } from "@/config/home-content";
 
 export function MaterialsHonest() {
   return (
-    <Section className="bg-neutral-50" ariaLabel="Materials we are willing to name">
+    <Section id="materials" className="bg-neutral-50" ariaLabel="Materials we are willing to name">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">Materials</p>
-      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+      <h2 id="materials-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
         What we are willing to name
       </h2>
       <p className="mt-3 max-w-2xl text-neutral-600">

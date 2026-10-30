@@ -23,7 +23,7 @@ export function HomeHero() {
         priority
         quality={90}
         sizes="100vw"
-        className="object-cover object-center animate-hero- ken"
+        className="object-cover object-center animate-hero-ken"
       />
       <div
         className="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-950/88 to-brand-950/45"
@@ -45,7 +45,7 @@ export function HomeHero() {
           <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
             {homeHero.title}
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-neutral-200 md:text-lg">
+          <p data-speakable className="mt-5 max-w-xl text-base leading-relaxed text-neutral-200 md:text-lg">
             {homeHero.description}
           </p>
 

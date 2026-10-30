@@ -3,7 +3,7 @@ import { routes } from "./routes";
 export const homeHero = {
   brand: "SafeShield Solutions",
   eyebrow: "Raipur first · then served Chhattisgarh towns",
-  title: "Invisible grills and safety nets. Fitted to the opening you actually use.",
+  title: "Invisible grills and safety nets in Raipur, fitted to the opening you actually use",
   description:
     "Balcony nets, pigeon protection, and slim cable grills for Raipur homes — then Bhilai, Durg, Bilaspur, and the other towns we serve. The plan follows the opening, the view, and how the space is used every day.",
 };
@@ -326,21 +326,25 @@ export const designComparisons = [
     title: "Balcony safety net",
     use: "Family, pet, and everyday fall-risk openings",
     look: "Visible square mesh with flexible edge fixing",
+    material: "UV-stabilised HDPE or nylon mesh",
   },
   {
     title: "Pigeon or anti-bird net",
     use: "Balconies, ducts, shafts, ledges, and bird-entry gaps",
     look: "Fine full-opening mesh planned around entry points",
+    material: "Fine HDPE bird mesh",
   },
   {
     title: "Mosquito net",
     use: "Windows and doors needing insect protection with airflow",
     look: "Fine mesh in frameless, sliding, or openable systems",
+    material: "Fibreglass or stainless insect mesh",
   },
   {
     title: "Invisible grill",
     use: "Modern balconies and windows needing a clear view",
-    look: "Slim vertical SS304 or SS316 stainless-steel cables in fixed channels",
+    look: "Slim vertical stainless-steel cables in fixed channels",
+    material: "SS304 cable; SS316 where damp or splash is constant",
   },
 ];
 
@@ -381,62 +385,62 @@ export const homeFaqs = [
   {
     question: "Do you use SS304 or SS316 steel?",
     answer:
-      "Both. SS304 is the standard rust-resistant grade for most Raipur and inland Chhattisgarh apartments. SS316 is specified where pool splash or persistent damp raises corrosion risk. The survey recommends the grade after the exposure is checked — we do not sell SS316 as default for every balcony.",
+      "We use both. SS304 is our standard grade for most Raipur apartments because it resists rust in normal humidity. SS316 costs more and suits pool-facing or always-damp openings. We check the exposure during the site visit and name the grade in your written quote.",
   },
   {
     question: "Which safety solution fits a balcony?",
     answer:
-      "It depends on the job. A balcony or child-safety net suits fall-risk openings, a pigeon net closes bird-entry gaps, and an invisible grill suits homes where a clear view is the priority. The opening and anchor points still need to be checked before fitting.",
+      "It depends on the problem you want to solve. A balcony safety net suits fall risk for children and pets. A pigeon net closes the gaps where birds enter. An invisible grill suits homes that want a clear view. We confirm the choice after checking the opening and anchor points.",
   },
   {
     question: "How much does a balcony safety net cost in Raipur?",
     answer:
-      "There is no honest single price for every Raipur balcony. The figure depends on measured area, mesh or cable type, access, fixing surface, border finish, and warranty terms. Ask for the price unit and included installation work in writing so quotes can be compared fairly.",
+      "There is no single honest price for every balcony. The cost depends on the measured area, mesh or cable type, floor height, fixing surface, and edge finish. We measure first, then give a written quote that lists materials, labour, and warranty, so you can compare quotes fairly.",
   },
   {
     question: "Is the site visit free?",
     answer:
-      "Yes for residential surveys in the towns we serve. Measurement, a look at the wall or slab, and a recommendation are free. The written quote follows that visit.",
+      "Yes. Residential site visits are free in the Raipur localities and Chhattisgarh towns we serve. We measure the opening, check the wall or slab, and recommend a system. The written quote comes after that visit, and you are under no obligation to book the work.",
   },
   {
     question: "Do you publish one price for all of Chhattisgarh?",
     answer:
-      "No. A rate that ignores opening size, metal grade, height, and access would be inaccurate in both Raipur and Korba. We measure, then we write the price.",
+      "No. One rate cannot cover different opening sizes, steel grades, floor heights, and access needs. A small window in Raipur and a high balcony in Korba are very different jobs. We measure each opening first and then write the price for that specific job.",
   },
   {
     question: "Will a safety net block airflow or the balcony view?",
     answer:
-      "Most mesh still allows daylight and airflow, but visibility changes with strand thickness, colour, mesh size, distance, and lighting. Slim invisible grills reduce visual weight when the view is especially important.",
+      "Most safety nets still let in daylight and air. How visible a net looks depends on strand thickness, colour, mesh size, and lighting. If the view matters most, slim invisible grills are less noticeable. We can show you both options during the site visit before you decide.",
   },
   {
     question: "Are pigeon nets and children safety nets the same?",
     answer:
-      "No. Bird-control and fall-risk needs should be assessed separately because mesh, strength, fixing, edge treatment, and expected loads can differ. A net is an added protective layer and does not replace a sound railing or adult supervision.",
+      "No, they do different jobs. A pigeon net is chosen to keep birds out. A child safety net must take a fall load, so its mesh strength, fixing, and edges differ. Neither one replaces a sound railing or adult supervision. We assess each need separately on site.",
   },
   {
     question: "What should I send for a clear installation estimate?",
     answer:
-      "Send a full photo of the opening, one closer photo of the top and side fixing surfaces, approximate width and height if known, your Raipur locality or other town, and whether the priority is children, pets, birds, visibility, or sports use.",
+      "Send one full photo of the opening and one close photo of the top and side walls. Add the rough width and height if you know them, plus your locality or town. Then tell us the main concern: children, pets, birds, keeping the view, or sports use.",
   },
   {
     question: "Where should I start if I live in Raipur?",
     answer:
-      "Start with the Raipur city service pages (invisible grills, safety nets, pigeon nets), then open your locality hub — Shankar Nagar, Telibandha, VIP Road, Naya Raipur, and the other listed areas each have their own pages.",
+      "Start with our Raipur pages for invisible grills, safety nets, or pigeon nets. Then open your locality page. Shankar Nagar, Telibandha, VIP Road, Naya Raipur, and the other listed areas each have a page that shows the services we measure and fit there.",
   },
   {
     question: "Do you cover only Raipur?",
     answer:
-      "Raipur is the priority market. We also survey and fit in other served Chhattisgarh towns such as Bhilai, Durg, and Bilaspur when those pages and travel slots allow. Towns without a published page are confirmed before we lock the day.",
+      "Raipur is our main service area, but not the only one. We also survey and fit in Bhilai, Durg, Bilaspur, and other Chhattisgarh towns that have their own pages. For a town without a page, we confirm travel and a visit slot before booking the day.",
   },
   {
     question: "What warranty do you give?",
     answer:
-      "A five-year warranty on the work we fit is stated on the quote for that job. Care after monsoon and what the system is not for are explained at handover.",
+      "We give a five-year warranty on the work we install. The warranty terms are written on the quote for your specific job. At handover we also explain basic care, what to check after the monsoon, and what the system is not designed to do.",
   },
   {
     question: "How quickly can installation happen after a quote?",
     answer:
-      "Survey slots depend on the town and the photos you send. Installation is scheduled after the quote is approved and the material is cut. Society working hours also affect the date.",
+      "Survey timing depends on your town and the photos you send. Once you approve the quote, we cut the material and schedule the installation. Many apartment societies also set working hours, which can affect the date. We confirm the installation slot with you in advance.",
   },
 ];
 

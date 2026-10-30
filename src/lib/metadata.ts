@@ -74,7 +74,7 @@ export function buildPageMetadata(input: MetadataInput): Metadata {
       description,
       url: canonical,
       siteName: site.name,
-      locale: site.locale,
+      locale: site.ogLocale,
       type: "website",
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },

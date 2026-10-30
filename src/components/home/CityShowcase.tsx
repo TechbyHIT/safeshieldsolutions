@@ -6,6 +6,8 @@ import { serviceCities } from "@/config/home-content";
 import { getHdPhotoSet } from "@/config/photo-catalog";
 import { business } from "@/config/business";
 import { routes } from "@/config/routes";
+import { slugify } from "@/lib/slug";
+import { formatContentDate } from "@/lib/seo-freshness";
 
 export function CityShowcase() {
   const photos = getHdPhotoSet(5);
@@ -74,30 +76,42 @@ export function CityShowcase() {
 interface FaqSectionProps {
   faqs: { question: string; answer: string }[];
   id?: string;
+  updatedIso?: string;
 }
 
-export function FaqSection({ faqs, id = "faq" }: FaqSectionProps) {
+export function FaqSection({ faqs, id = "faq", updatedIso }: FaqSectionProps) {
   return (
     <Section id={id} ariaLabel="Frequently asked questions">
       <div>
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">
           Before you book
         </p>
-        <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950">
-          Questions worth asking before installation
+        <h2
+          id={`${id}-heading`}
+          className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950"
+        >
+          Questions about invisible grills and safety nets
         </h2>
-        <p className="mt-3 max-w-2xl text-neutral-600">
-          Straight answers on grade, price, and Raipur coverage — without “best” or invented stats.
+        <p data-speakable className="mt-3 max-w-2xl text-neutral-600">
+          Short answers on steel grade, price, coverage, and warranty. Each answer reflects how we
+          actually survey and quote.
         </p>
+        {updatedIso ? (
+          <p className="mt-2 text-xs text-neutral-500">
+            Page updated <time dateTime={updatedIso}>{formatContentDate(updatedIso)}</time>
+          </p>
+        ) : null}
       </div>
-      <dl className="mx-auto mt-10 max-w-3xl divide-y divide-neutral-200 border-y border-neutral-200">
+      <div className="mx-auto mt-10 max-w-3xl divide-y divide-neutral-200 border-y border-neutral-200">
         {faqs.map((faq) => (
-          <div key={faq.question} className="py-5">
-            <dt className="font-display text-lg font-semibold text-brand-950">{faq.question}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{faq.answer}</dd>
-          </div>
+          <article key={faq.question} className="py-5">
+            <h3 id={slugify(faq.question)} className="font-display text-lg font-semibold text-brand-950">
+              {faq.question}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-600 md:text-base">{faq.answer}</p>
+          </article>
         ))}
-      </dl>
+      </div>
     </Section>
   );
 }

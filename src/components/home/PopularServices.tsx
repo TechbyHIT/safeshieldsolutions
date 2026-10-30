@@ -6,10 +6,10 @@ import { routes } from "@/config/routes";
 
 export function PopularServices() {
   return (
-    <Section className="bg-neutral-50" ariaLabel="Our services">
+    <Section id="services" className="bg-neutral-50" ariaLabel="Our services">
       <div>
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-600">Full catalogue</p>
-        <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+        <h2 id="services-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
           Invisible grills, nets, and related fittings
         </h2>
         <p className="mt-3 max-w-2xl text-neutral-600">

@@ -16,9 +16,9 @@ export function RaipurFocus() {
   const areas = raipurLocalityLinks().filter((area) => isIndexableInternalPath(area.href));
 
   return (
-    <Section className="bg-white" ariaLabel="Raipur invisible grills and safety nets">
+    <Section id="raipur" className="bg-white" ariaLabel="Raipur invisible grills and safety nets">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">Raipur first</p>
-      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+      <h2 id="raipur-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
         Invisible grills, safety nets and pigeon nets in Raipur
       </h2>
       <p className="mt-3 max-w-3xl text-neutral-700">

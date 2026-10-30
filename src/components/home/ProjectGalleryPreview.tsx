@@ -9,18 +9,18 @@ export function ProjectGalleryPreview() {
   const featured = categories
     .flatMap((c) => {
       const hd = getHdPhoto(c.folder);
-      const rest = c.photos.filter((photo) => photo.src !== hd.src).slice(0, 5);
+      const rest = c.photos.filter((photo) => photo.src !== hd.src).slice(0, 1);
       return [hd, ...rest];
     })
-    .slice(0, 40);
+    .slice(0, 12);
 
   return (
-    <Section className="bg-white" ariaLabel="Project gallery">
+    <Section id="gallery" className="bg-white" ariaLabel="Project gallery">
       <div className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
           Installation gallery
         </p>
-        <h2 className="mt-2 text-3xl font-bold text-neutral-900">
+        <h2 id="gallery-heading" className="mt-2 text-3xl font-bold text-neutral-900">
           Completed invisible grill and safety net photos
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-600">

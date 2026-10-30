@@ -2,6 +2,7 @@ import type { PageContent } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { business } from "@/config/business";
 import { TableOfContents, sectionAnchorId } from "@/components/content/TableOfContents";
+import { slugify } from "@/lib/slug";
 
 interface PageContentRendererProps {
   content: PageContent;
@@ -12,7 +13,7 @@ interface PageContentRendererProps {
 function BulletList({ items, title }: { items: string[]; title: string }) {
   return (
     <section className="mt-8">
-      <h2 className="text-xl font-semibold text-neutral-900">{title}</h2>
+      <h2 id={slugify(title)} className="scroll-mt-24 text-xl font-semibold text-neutral-900">{title}</h2>
       <ul className="mt-3 space-y-2">
         {items.map((item) => (
           <li key={item} className="flex gap-2 text-sm text-neutral-700">
@@ -33,7 +34,7 @@ export function PageContentRenderer({ content, h1, hideH1 = false }: PageContent
           {h1}
         </h1>
       )}
-      <p className={`prose-content text-lg ${hideH1 ? "mt-0" : "mt-6"}`}>{content.intro}</p>
+      <p data-speakable className={`prose-content text-lg ${hideH1 ? "mt-0" : "mt-6"}`}>{content.intro}</p>
 
       <TableOfContents sections={content.sections} faqCount={content.faqs.length} />
 
@@ -86,8 +87,8 @@ export function PageContentRenderer({ content, h1, hideH1 = false }: PageContent
 
       {content.installSteps && content.installSteps.length > 0 && (
         <section className="mt-10" aria-labelledby="install-process">
-          <h2 id="install-process" className="text-2xl font-semibold text-neutral-900">
-            Installation process
+          <h2 id="install-process" className="scroll-mt-24 text-2xl font-semibold text-neutral-900">
+            How the installation is done, step by step
           </h2>
           <ol className="mt-6 space-y-4">
             {content.installSteps.map((step, i) => (
@@ -110,7 +111,7 @@ export function PageContentRenderer({ content, h1, hideH1 = false }: PageContent
 
       {content.maintenance && (
         <section className="mt-10">
-          <h2 className="text-2xl font-semibold text-neutral-900">
+          <h2 id="maintenance" className="scroll-mt-24 text-2xl font-semibold text-neutral-900">
             Maintenance and long-term performance
           </h2>
           <p className="prose-content mt-4">{content.maintenance}</p>
@@ -127,18 +128,18 @@ export function PageContentRenderer({ content, h1, hideH1 = false }: PageContent
               </span>
             )}
           </h2>
-          <dl className="mt-6 space-y-4">
+          <div className="mt-6 space-y-4">
             {content.faqs.map((faq, index) => (
-              <div
+              <article
                 key={faq.question}
                 id={index === 0 ? undefined : `faq-${index}`}
-                className="rounded-xl border border-neutral-200 p-5"
+                className="scroll-mt-24 rounded-xl border border-neutral-200 p-5"
               >
-                <dt className="font-semibold text-neutral-900">{faq.question}</dt>
-                <dd className="prose-content mt-2">{faq.answer}</dd>
-              </div>
+                <h3 className="text-base font-semibold text-neutral-900">{faq.question}</h3>
+                <p className="prose-content mt-2">{faq.answer}</p>
+              </article>
             ))}
-          </dl>
+          </div>
         </section>
       )}
 

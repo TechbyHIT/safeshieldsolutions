@@ -2,6 +2,7 @@ import Link from "next/link";
 import { navigation } from "@/config/navigation";
 import { business } from "@/config/business";
 import { raipurLocalityLinks } from "@/config/raipur-seo";
+import { SEO_CONTENT_UPDATED_ISO, formatContentDate } from "@/lib/seo-freshness";
 
 export function Footer() {
   return (
@@ -75,6 +76,10 @@ export function Footer() {
       <div className="border-t border-brand-800 py-6">
         <div className="container text-center text-sm">
           © {new Date().getFullYear()} {business.legalName}. All rights reserved.
+          <span className="mt-1 block text-xs text-neutral-400">
+            Service information reviewed{" "}
+            <time dateTime={SEO_CONTENT_UPDATED_ISO}>{formatContentDate(SEO_CONTENT_UPDATED_ISO)}</time>
+          </span>
         </div>
       </div>
     </footer>

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
+import { HomeContents } from "@/components/home/HomeContents";
 import { StarterFittings } from "@/components/home/StarterFittings";
 import { RaipurFocus } from "@/components/home/RaipurFocus";
 import { OpeningDecides } from "@/components/home/OpeningDecides";
+import { CompareSystems } from "@/components/home/CompareSystems";
 import { EstimateFactors } from "@/components/home/EstimateFactors";
 import { MaterialsHonest } from "@/components/home/MaterialsHonest";
 import { WhySafeShield } from "@/components/home/WhySafeShield";
@@ -15,7 +17,13 @@ import { homeFaqs } from "@/config/home-content";
 import { buildBrandKeywordPlan } from "@/lib/keyword-targeting";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildSearchSnippet } from "@/lib/search-snippets";
-import { buildFaqSchema, buildLocalBusinessSchema, buildWebsiteSchema } from "@/lib/schema";
+import { HOME_CONTENT_UPDATED_ISO } from "@/lib/seo-freshness";
+import {
+  buildFaqSchema,
+  buildLocalBusinessSchema,
+  buildWebPageSchema,
+  buildWebsiteSchema,
+} from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const brandPlan = buildBrandKeywordPlan();
@@ -31,12 +39,24 @@ export const metadata: Metadata = buildPageMetadata({
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={[buildWebsiteSchema(), buildLocalBusinessSchema("Raipur"), buildFaqSchema(homeFaqs)]} />
+      <JsonLd
+        data={[
+          buildWebsiteSchema(),
+          buildWebPageSchema(homeSnippet.title, homeSnippet.description, "/", HOME_CONTENT_UPDATED_ISO),
+          buildLocalBusinessSchema("Raipur"),
+          buildFaqSchema(
+            homeFaqs,
+            "Answers about invisible grills, safety nets, steel grades, pricing, coverage, and warranty from SafeShield Solutions.",
+          ),
+        ]}
+      />
 
       <HomeHero />
+      <HomeContents />
       <StarterFittings />
       <RaipurFocus />
       <OpeningDecides />
+      <CompareSystems />
       <EstimateFactors />
       <MaterialsHonest />
       <WhySafeShield />
@@ -44,7 +64,7 @@ export default function HomePage() {
       <ProcessSteps />
       <ProjectGalleryPreview />
       <Testimonials />
-      <FaqSection faqs={homeFaqs} />
+      <FaqSection faqs={homeFaqs} updatedIso={HOME_CONTENT_UPDATED_ISO} />
       <FinalCta />
     </>
   );

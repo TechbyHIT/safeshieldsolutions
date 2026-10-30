@@ -6,9 +6,9 @@ import { isIndexableInternalPath } from "@/lib/indexable-href";
 
 export function StarterFittings() {
   return (
-    <Section ariaLabel="Three fittings most homes start with">
+    <Section id="start-here" ariaLabel="Three fittings most homes start with">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-600">Start here</p>
-      <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
+      <h2 id="start-here-heading" className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight text-brand-950 md:text-4xl">
         Three fittings most Raipur homes start with
       </h2>
       <p className="mt-3 max-w-2xl text-neutral-600">
