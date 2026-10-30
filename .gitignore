@@ -16,6 +16,9 @@ next-env.d.ts
 
 # production
 /build
+/deploy/dist/
+*.tar.gz
+safeshield-standalone.tar.gz
 
 # misc
 .DS_Store

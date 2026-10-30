@@ -26,31 +26,46 @@ npm run deploy:prod    # npm ci + build + standalone + prune
 
 `prepare-standalone` copies runtime `public/` + `.next/static` into `.next/standalone/` and strips `.map` files. `deploy:prune` then removes `node_modules` and leftover `.next/*` except `standalone/`.
 
-This VPS cannot run `npm` (kernel SIGKILL). Sitemap XML is committed in `public/` and published by nginx. HTML pages need `.next/standalone`. Rebuild without npm by borrowing `next` from a sibling site:
+This VPS **cannot run `npm`** (kernel SIGKILL). Do not run `npm install`, `npm ci`, or `next build` on the server.
 
-```bash
-bash deploy/vps-rebuild.sh /root/safeshieldsolutions
-journalctl -u safeshield-rebuild -f
+### Fast path (recommended): prebuilt standalone
+
+Build on your PC, upload the tarball, install on the VPS.
+
+**On Windows (project folder):**
+
+```powershell
+npm run build
+tar -czf safeshield-standalone.tar.gz -C .next standalone
 ```
 
-To **publish** from GitHub (survives SSH disconnect — use this on the VPS):
+Upload `safeshield-standalone.tar.gz` to `/root/` on the VPS (Hostinger File Manager or SCP).
+
+**On the VPS:**
 
 ```bash
 cd /root/safeshieldsolutions
 git fetch origin && git reset --hard origin/main
-bash deploy/vps-redeploy.sh /root/safeshieldsolutions
-tail -f /var/log/safeshield-deploy.log
+bash deploy/vps-install-standalone.sh /root/safeshieldsolutions /root/safeshield-standalone.tar.gz
 ```
 
-Foreground one-shot (keep SSH open):
+That extracts `.next/standalone`, starts PM2 on port **3010**, and refreshes nginx sitemaps. No npm.
+
+### Sitemap-only publish (already live without Node)
+
+Sitemap XML is committed in `public/` and served by nginx:
 
 ```bash
 bash deploy/vps-run.sh /root/safeshieldsolutions
 ```
 
-**Never** run `pgrep -f safeshieldsolutions | xargs kill` during a deploy — it kills `npm` / `next build` because their command line includes the repo path.
+### Do not
 
-`git pull` alone does **not** update the live site. PM2 serves `.next/standalone/server.js`, so you must run a full build and restart PM2.
+- `pgrep -f safeshieldsolutions | xargs kill` during deploy
+- `npm install` / `npm ci` / `next build` on this VPS
+- Delete `.next/standalone` unless you have a new tarball ready
+
+`git pull` alone does **not** update HTML pages. PM2 serves `.next/standalone/server.js`.
 
 ## Run with PM2
 
