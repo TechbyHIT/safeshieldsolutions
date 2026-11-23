@@ -14,15 +14,31 @@ import {
 } from "@/lib/quote-lead";
 
 const SERVICES = [
-  "Invisible Grills",
-  "Safety Nets",
+  "Balcony Safety Nets",
   "Pigeon Safety Nets",
+  "Invisible Grills",
+  "Balcony Invisible Grills",
+  "Window Invisible Grills",
+  "Children Safety Nets",
+  "Pet Safety Nets",
+  "Cricket Practice Nets",
+  "Box Cricket Nets",
+  "Construction Safety Nets",
   "Bird Spikes",
+  "Balcony Cloth Hangers",
   "Mosquito Nets",
   "Other",
 ] as const;
 
-const empty: QuoteRequest = { name: "", phone: "", place: "Raipur", service: "Invisible Grills", note: "" };
+const empty: QuoteRequest = {
+  name: "",
+  phone: "",
+  place: "Raipur",
+  service: "Balcony Safety Nets",
+  note: "",
+  width: "",
+  height: "",
+};
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
@@ -140,6 +156,40 @@ export function QuoteForm() {
           </select>
           <FieldError id="quote-service-error" message={errors.service} />
         </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="quote-width" className="text-sm font-medium text-neutral-900">
+              Width in feet <span className="font-normal text-neutral-500">(optional)</span>
+            </label>
+            <input
+              id="quote-width"
+              name="width"
+              inputMode="decimal"
+              value={values.width ?? ""}
+              onChange={(event) => update("width", event.target.value)}
+              aria-invalid={Boolean(errors.width)}
+              aria-describedby={errors.width ? "quote-width-error" : undefined}
+              className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-3 text-base"
+            />
+            <FieldError id="quote-width-error" message={errors.width} />
+          </div>
+          <div>
+            <label htmlFor="quote-height" className="text-sm font-medium text-neutral-900">
+              Height in feet <span className="font-normal text-neutral-500">(optional)</span>
+            </label>
+            <input
+              id="quote-height"
+              name="height"
+              inputMode="decimal"
+              value={values.height ?? ""}
+              onChange={(event) => update("height", event.target.value)}
+              aria-invalid={Boolean(errors.height)}
+              aria-describedby={errors.height ? "quote-height-error" : undefined}
+              className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-3 text-base"
+            />
+            <FieldError id="quote-height-error" message={errors.height} />
+          </div>
+        </div>
         <div>
           <label htmlFor="quote-note" className="text-sm font-medium text-neutral-900">
             Opening, floor, and what it is for
@@ -155,7 +205,7 @@ export function QuoteForm() {
             className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-3 text-base"
           />
           <p id="quote-note-help" className="mt-1 text-sm text-neutral-500">
-            A width, a floor, and a photo on WhatsApp are enough to book the survey.
+            Add the floor and what the opening is for. Attach a photo when WhatsApp opens. The size is only a guide — the written quote follows a site measurement.
           </p>
           <FieldError id="quote-note-error" message={errors.note} />
         </div>

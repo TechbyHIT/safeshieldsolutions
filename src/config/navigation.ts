@@ -4,11 +4,9 @@ export const navigation = {
   main: [
     { label: "Home", href: routes.home },
     { label: "Services", href: routes.services },
-    { label: "Locations", href: routes.locations },
-    { label: "Gallery", href: routes.gallery },
-    { label: "Guides", href: routes.guides },
-    { label: "Blog", href: routes.blog },
+    { label: "Projects", href: routes.gallery },
     { label: "About", href: routes.about },
+    { label: "Service Areas", href: routes.locations },
     { label: "FAQ", href: routes.faq },
     { label: "Contact", href: routes.contact },
   ],
@@ -36,6 +34,8 @@ export const navigation = {
     { label: "Bird Spikes in Raipur", href: "/chhattisgarh/raipur/bird-spikes" },
   ],
   footer: [
+    { label: "Guides", href: routes.guides },
+    { label: "Blog", href: routes.blog },
     { label: "FAQ", href: routes.faq },
     { label: "Glossary", href: routes.glossary },
     { label: "HTML Sitemap", href: routes.htmlSitemap },

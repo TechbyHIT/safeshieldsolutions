@@ -201,7 +201,7 @@ export function buildSearchSnippet(input: SearchSnippetInput): SearchSnippet {
   switch (input.kind) {
     case "home":
       title = "Invisible Grills & Safety Nets in Raipur | SafeShield";
-      h1 = "Invisible grills and safety nets in Raipur, fitted to the opening you actually use";
+      h1 = "Safety nets and invisible grill installation in Raipur";
       description =
         "Invisible grills, balcony safety nets and pigeon nets in Raipur. SS304 steel, 5-year warranty, free site survey and written quote. Call +91-8977235565.";
       intro =

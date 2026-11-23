@@ -57,6 +57,12 @@ export function HomeHero() {
               Get free site survey
               <span aria-hidden>→</span>
             </Link>
+            <Link
+              href={routes.services}
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15 active:scale-[0.98] md:text-base"
+            >
+              Explore services
+            </Link>
             <a
               href={whatsappUrl}
               target="_blank"

@@ -12,7 +12,7 @@ const whatsappHref = `https://wa.me/${business.whatsapp.replace(/\D/g, "")}`;
 const telHref = `tel:${business.phone.replace(/\s/g, "")}`;
 
 const simpleLinks = navigation.main.filter(
-  (item) => item.label !== "Services" && item.label !== "Locations",
+  (item) => item.label !== "Services" && item.label !== "Service Areas",
 );
 
 interface MobileMenuProps {
@@ -117,7 +117,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
               aria-expanded={locationsOpen}
               onClick={() => setLocationsOpen((value) => !value)}
             >
-              Locations
+              Service Areas
               <span aria-hidden className="site-mobile-nav__chevron">
                 {locationsOpen ? "▴" : "▾"}
               </span>

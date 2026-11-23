@@ -19,7 +19,7 @@ export function Header() {
   const mega = useMegaMenu();
 
   const simpleLinks = navigation.main.filter(
-    (item) => item.label !== "Services" && item.label !== "Locations",
+    (item) => item.label !== "Services" && item.label !== "Service Areas",
   );
 
   const openMobile = () => {
@@ -68,7 +68,7 @@ export function Header() {
               className="site-header__link site-header__link--btn"
               onClick={() => mega.toggle("areas")}
             >
-              Locations
+              Service Areas
               <span aria-hidden className="text-[10px]">
                 ▾
               </span>

@@ -10,6 +10,8 @@ export interface QuoteRequest {
   place: string;
   service: string;
   note: string;
+  width?: string;
+  height?: string;
 }
 
 export interface QuoteErrors {
@@ -18,6 +20,8 @@ export interface QuoteErrors {
   place?: string;
   service?: string;
   note?: string;
+  width?: string;
+  height?: string;
 }
 
 export type LeadChannel = "form" | "call" | "whatsapp";
@@ -60,7 +64,14 @@ export function validateQuote(input: QuoteRequest): QuoteErrors {
   if (input.place.trim().length < 2) errors.place = "Enter the town or neighbourhood.";
   if (input.service.trim().length < 2) errors.service = "Choose the work you need.";
   if (input.note.trim().length > 500) errors.note = "Keep the note under 500 characters.";
+  if (input.width?.trim() && !positiveMeasure(input.width)) errors.width = "Enter the width in feet, or leave it blank.";
+  if (input.height?.trim() && !positiveMeasure(input.height)) errors.height = "Enter the height in feet, or leave it blank.";
   return errors;
+}
+
+function positiveMeasure(value: string): boolean {
+  const number = Number(value.trim());
+  return Number.isFinite(number) && number > 0 && number < 500;
 }
 
 export function quoteMessage(input: QuoteRequest): string {
@@ -71,8 +82,11 @@ export function quoteMessage(input: QuoteRequest): string {
     `Phone: +91${phone}`,
     `Place: ${input.place.trim()}`,
   ];
+  if (input.width?.trim() && input.height?.trim()) {
+    lines.push(`Approx size: ${input.width.trim()} ft wide × ${input.height.trim()} ft high`);
+  }
   if (input.note.trim()) lines.push(`Opening: ${input.note.trim()}`);
-  lines.push("Please arrange a free site survey.");
+  lines.push("Please arrange a free site survey. This is not a final price.");
   return lines.join("\n");
 }
 

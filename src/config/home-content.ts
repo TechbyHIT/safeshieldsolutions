@@ -3,9 +3,9 @@ import { routes } from "./routes";
 export const homeHero = {
   brand: "SafeShield Solutions",
   eyebrow: "Raipur first · then served Chhattisgarh towns",
-  title: "Invisible grills and safety nets in Raipur, fitted to the opening you actually use",
+  title: "Safety nets and invisible grill installation in Raipur",
   description:
-    "Balcony nets, pigeon protection, and slim cable grills for Raipur homes — then Bhilai, Durg, Bilaspur, and the other towns we serve. The plan follows the opening, the view, and how the space is used every day.",
+    "Custom balcony safety nets, pigeon protection, and invisible grill solutions for homes, apartments, and commercial spaces. We measure the opening, then send a written quote.",
 };
 
 export const heroBullets = [
