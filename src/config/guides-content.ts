@@ -13,6 +13,10 @@ export interface GuideArticle {
   summary: string;
   serviceSlug: string;
   keywords: string[];
+  /** Other catalogue services this guide should link from. */
+  relatedServiceSlugs?: string[];
+  intent?: "transactional" | "commercial" | "informational" | "local";
+  sections?: { heading: string; body: string }[];
 }
 
 export const guideArticles: GuideArticle[] = [
@@ -119,6 +123,78 @@ export const guideArticles: GuideArticle[] = [
       "Double sliding mesh doors, track installation, repair vs replacement, and patio applications.",
     serviceSlug: "sliding-mesh-doors",
     keywords: ["sliding mesh door guide", "how sliding mesh doors are measured", "patio mesh door checklist"],
+  },
+  {
+    slug: "ss304-vs-ss316-invisible-grills",
+    title: "SS304 vs SS316 for Invisible Grills",
+    summary:
+      "SS304 is the standard cable for most Raipur balconies. SS316 is specified only where pool splash or constant damp raises corrosion risk.",
+    serviceSlug: "invisible-grills",
+    relatedServiceSlugs: ["balcony-invisible-grills", "window-invisible-grills", "stainless-steel-invisible-grills"],
+    intent: "commercial",
+    keywords: ["SS304 vs SS316 invisible grill", "invisible grill steel grade", "which steel for a balcony grill"],
+    sections: [
+      {
+        heading: "Which grade we fit by default",
+        body: "For inland Raipur apartments we specify SS304 cable unless the opening stays wet. The grade is written on the quote after the survey, with the cable diameter and spacing. We do not sell SS316 as the default for every balcony.",
+      },
+      {
+        heading: "When SS316 is the better specification",
+        body: "SS316 costs more and is worth it beside a pool, on a splash-facing edge, or where the cables stay damp. A dry living-room balcony does not need it. The survey checks exposure before the grade is named.",
+      },
+      {
+        heading: "What else changes the quote",
+        body: "Grade is one line on the quote. Width, height, floor access, channel type, and openable sections change the figure as well. There is no single rate per square foot that fits every opening.",
+      },
+    ],
+  },
+  {
+    slug: "safety-net-vs-invisible-grill",
+    title: "Balcony Safety Net or Invisible Grill",
+    summary:
+      "A safety net closes a fall-risk opening with mesh. An invisible grill uses slim steel cables when the view matters more than a soft edge.",
+    serviceSlug: "balcony-safety-nets",
+    relatedServiceSlugs: ["safety-nets", "invisible-grills", "balcony-invisible-grills", "child-safety-nets"],
+    intent: "commercial",
+    keywords: ["balcony safety net vs invisible grill", "net or grill for a balcony", "which balcony protection to choose"],
+    sections: [
+      {
+        heading: "Choose the net when the job is a fall",
+        body: "Balcony and child safety nets suit openings where children or pets use the edge every day. The mesh is visible. It is an added layer and does not replace a sound railing or adult supervision.",
+      },
+      {
+        heading: "Choose the grill when the view is the priority",
+        body: "Invisible grills use vertical SS304 cables in fixed channels. They keep more of the outlook than a mesh net. Corners, AC cut-outs, and the fixing surface still have to be measured.",
+      },
+      {
+        heading: "You can need both",
+        body: "A pigeon problem and a fall-risk opening are different jobs. A bird net does not take a child-fall load, and a grill does not stop nesting in a duct. We name the system after seeing the opening.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-keep-pigeons-off-a-balcony",
+    title: "How to Keep Pigeons Off a Balcony",
+    summary:
+      "A full-opening pigeon net stops nesting on ledges and ducts. Spikes suit a narrow ledge. Neither one is a fall-protection net.",
+    serviceSlug: "pigeon-safety-nets",
+    relatedServiceSlugs: ["bird-protection-nets", "bird-spikes", "sparrow-protection-nets"],
+    intent: "informational",
+    keywords: ["how to keep pigeons off a balcony", "pigeon net or bird spikes", "balcony bird control"],
+    sections: [
+      {
+        heading: "Close the opening they use",
+        body: "Pigeons return to the same ledge, duct, or shaft. A pigeon net is planned around those entry points, not hung as a loose curtain. Send one wide photo and one close photo of the gap before the visit.",
+      },
+      {
+        heading: "Spikes are for a narrow perch",
+        body: "Bird spikes discourage perching on a parapet, AC ledge, or sign band. They do not cover a balcony opening. If birds are entering the flat, a net is the usual fit.",
+      },
+      {
+        heading: "Small birds need a finer mesh",
+        body: "Sparrows and mynas can pass through standard pigeon mesh. If those birds are still getting in after a pigeon net, a finer sparrow mesh is a separate specification.",
+      },
+    ],
   },
 ];
 
@@ -233,6 +309,13 @@ export const blogPosts: BlogPost[] = [
     date: "2026-07-16",
   },
 ];
+
+export function guidesForService(serviceSlug: string): GuideArticle[] {
+  return guideArticles.filter(
+    (article) =>
+      article.serviceSlug === serviceSlug || article.relatedServiceSlugs?.includes(serviceSlug),
+  );
+}
 
 export function guideAreaLinks(article: GuideArticle, limit = 16) {
   const name = getSeoService(article.serviceSlug)?.name ?? article.serviceSlug.replace(/-/g, " ");

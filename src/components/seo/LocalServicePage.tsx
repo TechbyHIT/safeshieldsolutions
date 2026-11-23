@@ -18,6 +18,7 @@ import {
   buildLocalLandingCopy,
   type LocalIntent,
 } from "@/lib/local-landing-content";
+import { guidesForService } from "@/config/guides-content";
 
 function whatsappHref(placeName: string, serviceName: string) {
   const text = `Hi, I need a quote for ${serviceName.toLowerCase()} in ${placeName}, Chhattisgarh.`;
@@ -149,6 +150,14 @@ export function LocalServicePage({
               </a>
               <Link href={routes.contact} className="text-center text-sm font-medium text-brand-700 hover:underline">
                 Request a quote
+              </Link>
+              {guidesForService(service.slug).slice(0, 2).map((guide) => (
+                <Link key={guide.slug} href={routes.guide(guide.slug)} className="text-center text-sm font-medium text-brand-700 hover:underline">
+                  {guide.title}
+                </Link>
+              ))}
+              <Link href={routes.gallery} className="text-center text-sm font-medium text-brand-700 hover:underline">
+                Installation photos
               </Link>
             </div>
           </aside>

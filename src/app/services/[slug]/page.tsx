@@ -22,6 +22,7 @@ import {
 import { getServiceBySlug, getActiveServices } from "@/lib/queries";
 import { evaluateSeoPath } from "@/lib/seo-quality-gate";
 import { RAIPUR_ENTRY_LINKS } from "@/lib/seo-priority";
+import { guidesForService } from "@/config/guides-content";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -116,6 +117,17 @@ export default async function ServicePage({ params }: PageProps) {
 
       <Section>
         <RelatedLinks heading={`${service.name} by City`} links={cityLinks} />
+        <RelatedLinks
+          heading="Guides, photos, and a measurement"
+          links={[
+            ...guidesForService(service.slug).map((guide) => ({
+              href: routes.guide(guide.slug),
+              label: guide.title,
+            })),
+            { href: routes.gallery, label: `${service.name} installation photos` },
+            { href: routes.contact, label: `Request a measurement for ${service.name}` },
+          ]}
+        />
         <RelatedLinks
           heading="Other Services"
           links={allServices

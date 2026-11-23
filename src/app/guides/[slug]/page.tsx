@@ -68,17 +68,33 @@ export default async function GuideArticlePage({ params }: PageProps) {
         breadcrumbs={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
       />
       <Section>
-        <p className="prose-content max-w-3xl">
-          This guide covers buying, installation, and local intent searches for{" "}
-          {guide.serviceSlug.replace(/-/g, " ")} across Chhattisgarh, with Raipur listed first.
-          Use the locality links below for neighbourhood-specific quotes and dealer pages.
-        </p>
-        <p className="mt-6">
+        {guide.sections && guide.sections.length > 0 ? (
+          <div className="max-w-3xl space-y-8">
+            {guide.sections.map((section) => (
+              <section key={section.heading}>
+                <h2 className="text-2xl font-semibold text-neutral-900">{section.heading}</h2>
+                <p className="prose-content mt-3">{section.body}</p>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <p className="prose-content max-w-3xl">
+            This guide covers buying and installation choices for {guide.serviceSlug.replace(/-/g, " ")} in
+            Chhattisgarh, with Raipur listed first. The written quote follows a measurement of the opening.
+          </p>
+        )}
+        <p className="mt-8 flex flex-wrap gap-4">
           <Link
             href={routes.service(guide.serviceSlug)}
             className="font-semibold text-brand-700 hover:underline"
           >
             Open the {guide.serviceSlug.replace(/-/g, " ")} service hub →
+          </Link>
+          <Link href={routes.gallery} className="font-semibold text-brand-700 hover:underline">
+            See installation photos
+          </Link>
+          <Link href={routes.contact} className="font-semibold text-brand-700 hover:underline">
+            Request a free measurement
           </Link>
         </p>
         <h2 className="mt-12 text-xl font-bold text-neutral-900">Local pages for this guide</h2>
