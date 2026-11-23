@@ -53,6 +53,9 @@ prisma/*.db-journal
 # typescript
 *.tsbuildinfo
 
+# enquiry log written by /api/quote
+/.data
+
 # IDE
 .idea
 .vscode/*

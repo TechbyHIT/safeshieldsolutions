@@ -131,7 +131,7 @@ export function LocalServicePage({
               </ul>
             </section>
           </div>
-          <aside className="h-fit rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
+          <aside className="h-fit rounded-2xl border border-neutral-200 bg-neutral-50 p-6 lg:sticky lg:top-24">
             <h2 className="text-lg font-bold">Get a measured quote</h2>
             <p className="mt-2 text-sm text-neutral-600">{copy.cta}</p>
             <div className="mt-4 flex flex-col gap-3">

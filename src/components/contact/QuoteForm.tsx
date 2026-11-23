@@ -53,20 +53,24 @@ export function QuoteForm() {
   const [values, setValues] = useState<QuoteRequest>(empty);
   const [errors, setErrors] = useState<QuoteErrors>({});
   const [ready, setReady] = useState<QuoteRequest | null>(null);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "failed">("idle");
 
   function update<K extends keyof QuoteRequest>(key: K, value: QuoteRequest[K]) {
     setValues((current) => ({ ...current, [key]: value }));
     setReady(null);
+    setStatus("idle");
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next = validateQuote(values);
     setErrors(next);
     if (Object.keys(next).length > 0) {
       setReady(null);
+      setStatus("idle");
       return;
     }
+    setStatus("saving");
     const lead: LeadEvent = leadEvent({
       channel: "form",
       page: "/contact",
@@ -74,7 +78,25 @@ export function QuoteForm() {
       place: values.place,
     });
     window.dispatchEvent(new CustomEvent("safeshield:lead", { detail: lead }));
-    setReady(values);
+    try {
+      const response = await fetch("/api/quote", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = (await response.json()) as { ok?: boolean; errors?: QuoteErrors };
+      if (!response.ok || !data.ok) {
+        setErrors(data.errors ?? {});
+        setStatus("failed");
+        setReady(values);
+        return;
+      }
+      setStatus("saved");
+      setReady(values);
+    } catch {
+      setStatus("failed");
+      setReady(values);
+    }
   }
 
   const message = ready ? quoteMessage(ready) : "";
@@ -210,12 +232,25 @@ export function QuoteForm() {
           <FieldError id="quote-note-error" message={errors.note} />
         </div>
       </div>
-      <button type="submit" className="mt-5 w-full rounded-full bg-brand-900 px-6 py-3 text-base font-semibold text-white">
-        Check and prepare the enquiry
+      <button
+        type="submit"
+        disabled={status === "saving"}
+        className="mt-5 w-full rounded-md bg-brand-900 px-6 py-3 text-base font-semibold text-white disabled:opacity-70"
+      >
+        {status === "saving" ? "Saving the enquiry…" : "Send enquiry"}
       </button>
+      {status === "failed" && (
+        <p className="mt-3 text-sm text-red-700" role="alert">
+          The enquiry was not saved on the server. You can still send it on WhatsApp.
+        </p>
+      )}
       {ready && (
         <div className="mt-4 space-y-3 rounded-xl bg-brand-50 p-4" role="status">
-          <p className="text-sm text-brand-900">The enquiry is ready. Send it on WhatsApp, or call.</p>
+          <p className="text-sm text-brand-900">
+            {status === "saved"
+              ? "Enquiry saved. Send it on WhatsApp as well so the survey team sees it on the phone."
+              : "Send the same details on WhatsApp, or call."}
+          </p>
           <a
             href={whatsappHref(message)}
             target="_blank"

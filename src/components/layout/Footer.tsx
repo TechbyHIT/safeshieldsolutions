@@ -12,9 +12,17 @@ export function Footer() {
           <p className="text-lg font-bold text-white">{business.name}</p>
           <p className="mt-3 text-sm leading-relaxed">{business.tagline}</p>
           <p className="mt-4 text-sm">
-            <a href={`tel:${business.phone}`} className="hover:text-accent-400">
+            <a href={`tel:${business.phone.replace(/\s/g, "")}`} className="font-semibold text-white hover:text-accent-400">
               {business.phone}
             </a>
+          </p>
+          <p className="mt-2 text-sm">
+            <a href={`mailto:${business.email}`} className="hover:text-accent-400">
+              {business.email}
+            </a>
+          </p>
+          <p className="mt-3 text-sm leading-relaxed">
+            Weekdays {business.workingHours.weekdays}. Saturday {business.workingHours.saturday}. Surveys in Raipur and the other towns we serve.
           </p>
         </div>
 
